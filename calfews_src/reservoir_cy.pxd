@@ -14,7 +14,7 @@ cdef class Reservoir():
 
     public bint nodd_meets_envmin, has_downstream_target_flow, has_delta_target
 
-    public str key, name, forecastWYT
+    public str key, name, forecastWYT, initial_condition  #Should i add initial_condition to here?
 
     public list days_through_month, hist_wyt, S, R, tocs, available_storage, flood_storage, Rtarget, R_to_delta, days_til_full, \
                 flood_spill, flood_deliveries, nodd, Q, E, fci, SNPK, precip, downstream, fnf, wytlist, rainfnf_stds, snowfnf_stds, \

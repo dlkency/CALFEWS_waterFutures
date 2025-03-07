@@ -1271,9 +1271,9 @@ struct __pyx_ctuple_int__and_int__and_double__and_double__and_double {
 /* "calfews_src/model_cy.pxd":107
  * 
  * ######### init
- *   cdef tuple northern_initialization_routine(self, scenario=*)             # <<<<<<<<<<<<<<
+ *   cdef tuple northern_initialization_routine(self, str initial_condition, scenario=*)             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_northern_res(self) except *
+ *   cdef void initialize_northern_res(self, initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine {
   int __pyx_n;
@@ -1283,9 +1283,9 @@ struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_rou
 /* "calfews_src/model_cy.pxd":113
  *   cdef void initialize_delta_ops(self) except *
  * 
- *   cdef void southern_initialization_routine(self, scenario=*) except *             # <<<<<<<<<<<<<<
+ *   cdef void southern_initialization_routine(self, str initial_condition, scenario=*) except *             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_southern_res(self) except *
+ *   cdef void initialize_southern_res(self,  initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine {
   int __pyx_n;
@@ -1364,6 +1364,7 @@ struct __pyx_obj_11calfews_src_12reservoir_cy_Reservoir {
   PyObject *key;
   PyObject *name;
   PyObject *forecastWYT;
+  PyObject *initial_condition;
   PyObject *days_through_month;
   PyObject *hist_wyt;
   PyObject *S;
@@ -2505,11 +2506,11 @@ struct __pyx_vtabstruct_11calfews_src_8model_cy_Model {
   void (*update_leiu_capacity)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   PyObject *(*proj_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int);
   __pyx_ctuple_int__and_int__and_double__and_double__and_double (*find_pumping_release)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int, PyObject *, PyObject *, PyObject *, double, double, PyObject *, int, PyObject *);
-  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
-  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
+  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*initialize_delta_ops)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
-  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
-  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
+  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*project_urban)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, PyObject *, PyObject *);
   void (*predict_delta_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   void (*initialize_water_districts)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_initialize_water_districts *__pyx_optional_args);
@@ -2547,7 +2548,7 @@ static struct __pyx_vtabstruct_11calfews_src_11inputter_cy_Inputter *__pyx_vtabp
  */
 
 struct __pyx_vtabstruct_7main_cy_main_cy {
-  int (*initialize)(struct __pyx_obj_7main_cy_main_cy *);
+  int (*initialize)(struct __pyx_obj_7main_cy_main_cy *, PyObject *);
   int (*run_sim)(struct __pyx_obj_7main_cy_main_cy *, PyObject *);
 };
 static struct __pyx_vtabstruct_7main_cy_main_cy *__pyx_vtabptr_7main_cy_main_cy;
@@ -3541,7 +3542,7 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self); /* proto*/
+static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_initial_condition); /* proto*/
 static int __pyx_f_7main_cy_7main_cy_run_sim(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_start_time); /* proto*/
 static PyObject *__pyx_array_get_memview(struct __pyx_array_obj *__pyx_v_self); /* proto*/
 static char *__pyx_memoryview_get_item_pointer(struct __pyx_memoryview_obj *__pyx_v_self, PyObject *__pyx_v_index); /* proto*/
@@ -4025,7 +4026,7 @@ static PyObject *__pyx_n_s_values;
 static PyObject *__pyx_n_u_wy;
 static PyObject *__pyx_n_s_zeros;
 static int __pyx_pf_7main_cy_7main_cy___init__(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_results_folder, PyObject *__pyx_v_runtime_file, PyObject *__pyx_v_model_mode, PyObject *__pyx_v_flow_input_type, PyObject *__pyx_v_flow_input_source); /* proto */
-static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_initial_condition); /* proto */
 static PyObject *__pyx_pf_7main_cy_7main_cy_4run_sim_py(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_start_time); /* proto */
 static PyObject *__pyx_pf_7main_cy_7main_cy_6calc_objectives(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_7main_cy_7main_cy_8output_results(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self); /* proto */
@@ -4749,25 +4750,25 @@ static int __pyx_pf_7main_cy_7main_cy___init__(struct __pyx_obj_7main_cy_main_cy
 /* "main_cy.pyx":76
  * ### Northern/southern model initialization
  * ################################################################################################################################
- *   def initialize_py(self):             # <<<<<<<<<<<<<<
- *     return self.initialize()
+ *   def initialize_py(self, initial_condition):  #add initial_condition             # <<<<<<<<<<<<<<
+ *     return self.initialize(initial_condition)   #add initial_condition
  * 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7main_cy_7main_cy_3initialize_py(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7main_cy_7main_cy_3initialize_py(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7main_cy_7main_cy_3initialize_py(PyObject *__pyx_v_self, PyObject *__pyx_v_initial_condition); /*proto*/
+static PyObject *__pyx_pw_7main_cy_7main_cy_3initialize_py(PyObject *__pyx_v_self, PyObject *__pyx_v_initial_condition) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("initialize_py (wrapper)", 0);
-  __pyx_r = __pyx_pf_7main_cy_7main_cy_2initialize_py(((struct __pyx_obj_7main_cy_main_cy *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7main_cy_7main_cy_2initialize_py(((struct __pyx_obj_7main_cy_main_cy *)__pyx_v_self), ((PyObject *)__pyx_v_initial_condition));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self) {
+static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_initial_condition) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -4781,13 +4782,14 @@ static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7mai
 
   /* "main_cy.pyx":77
  * ################################################################################################################################
- *   def initialize_py(self):
- *     return self.initialize()             # <<<<<<<<<<<<<<
+ *   def initialize_py(self, initial_condition):  #add initial_condition
+ *     return self.initialize(initial_condition)   #add initial_condition             # <<<<<<<<<<<<<<
  * 
- *   cdef int initialize(self) except -1:
+ *   cdef int initialize(self, str initial_condition) except -1:   #add initial_condition
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_7main_cy_main_cy *)__pyx_v_self->__pyx_vtab)->initialize(__pyx_v_self); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 77, __pyx_L1_error)
+  if (!(likely(PyUnicode_CheckExact(__pyx_v_initial_condition))||((__pyx_v_initial_condition) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_v_initial_condition)->tp_name), 0))) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_7main_cy_main_cy *)__pyx_v_self->__pyx_vtab)->initialize(__pyx_v_self, ((PyObject*)__pyx_v_initial_condition)); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 77, __pyx_L1_error)
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
@@ -4797,8 +4799,8 @@ static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7mai
   /* "main_cy.pyx":76
  * ### Northern/southern model initialization
  * ################################################################################################################################
- *   def initialize_py(self):             # <<<<<<<<<<<<<<
- *     return self.initialize()
+ *   def initialize_py(self, initial_condition):  #add initial_condition             # <<<<<<<<<<<<<<
+ *     return self.initialize(initial_condition)   #add initial_condition
  * 
  */
 
@@ -4815,14 +4817,14 @@ static PyObject *__pyx_pf_7main_cy_7main_cy_2initialize_py(struct __pyx_obj_7mai
 }
 
 /* "main_cy.pyx":79
- *     return self.initialize()
+ *     return self.initialize(initial_condition)   #add initial_condition
  * 
- *   cdef int initialize(self) except -1:             # <<<<<<<<<<<<<<
+ *   cdef int initialize(self, str initial_condition) except -1:   #add initial_condition             # <<<<<<<<<<<<<<
  *     cdef:
  *       str expected_release_datafile, demand_type, base_data_file, input_data_file
  */
 
-static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self) {
+static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_cy *__pyx_v_self, PyObject *__pyx_v_initial_condition) {
   PyObject *__pyx_v_expected_release_datafile = 0;
   PyObject *__pyx_v_demand_type = 0;
   PyObject *__pyx_v_base_data_file = 0;
@@ -5809,7 +5811,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *     PyErr_CheckSignals()
  *     if True:
  *       self.modelso.max_tax_free = {}             # <<<<<<<<<<<<<<
- *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(scenario)
+ *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(initial_condition, scenario)    #add initial_condition
  *     PyErr_CheckSignals()
  */
   __pyx_t_16 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 155, __pyx_L1_error)
@@ -5823,13 +5825,13 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
   /* "main_cy.pyx":156
  *     if True:
  *       self.modelso.max_tax_free = {}
- *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(scenario)             # <<<<<<<<<<<<<<
+ *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(initial_condition, scenario)    #add initial_condition             # <<<<<<<<<<<<<<
  *     PyErr_CheckSignals()
  *     if True:
  */
   __pyx_t_17.__pyx_n = 1;
   __pyx_t_17.scenario = __pyx_v_scenario;
-  __pyx_t_16 = ((struct __pyx_vtabstruct_11calfews_src_8model_cy_Model *)__pyx_v_self->modelno->__pyx_vtab)->northern_initialization_routine(__pyx_v_self->modelno, &__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_16 = ((struct __pyx_vtabstruct_11calfews_src_8model_cy_Model *)__pyx_v_self->modelno->__pyx_vtab)->northern_initialization_routine(__pyx_v_self->modelno, __pyx_v_initial_condition, &__pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_16);
   if (likely(__pyx_t_16 != Py_None)) {
     PyObject* sequence = __pyx_t_16;
@@ -5866,7 +5868,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
 
   /* "main_cy.pyx":157
  *       self.modelso.max_tax_free = {}
- *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(scenario)
+ *       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(initial_condition, scenario)    #add initial_condition
  *     PyErr_CheckSignals()             # <<<<<<<<<<<<<<
  *     if True:
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
@@ -5877,7 +5879,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *     PyErr_CheckSignals()
  *     if True:
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI             # <<<<<<<<<<<<<<
- *       self.modelso.southern_initialization_routine(scenario)
+ *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
  *       try:
  */
   __pyx_t_16 = __pyx_v_self->modelno->delta->forecastSRI;
@@ -5891,17 +5893,17 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
   /* "main_cy.pyx":160
  *     if True:
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
- *       self.modelso.southern_initialization_routine(scenario)             # <<<<<<<<<<<<<<
+ *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition             # <<<<<<<<<<<<<<
  *       try:
  *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
  */
   __pyx_t_18.__pyx_n = 1;
   __pyx_t_18.scenario = __pyx_v_scenario;
-  ((struct __pyx_vtabstruct_11calfews_src_8model_cy_Model *)__pyx_v_self->modelso->__pyx_vtab)->southern_initialization_routine(__pyx_v_self->modelso, &__pyx_t_18); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
+  ((struct __pyx_vtabstruct_11calfews_src_8model_cy_Model *)__pyx_v_self->modelso->__pyx_vtab)->southern_initialization_routine(__pyx_v_self->modelso, __pyx_v_initial_condition, &__pyx_t_18); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
 
   /* "main_cy.pyx":161
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
- *       self.modelso.southern_initialization_routine(scenario)
+ *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
  *       try:             # <<<<<<<<<<<<<<
  *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
  *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
@@ -5965,7 +5967,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
 
       /* "main_cy.pyx":161
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
- *       self.modelso.southern_initialization_routine(scenario)
+ *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
  *       try:             # <<<<<<<<<<<<<<
  *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
  *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
@@ -6078,9 +6080,9 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
   goto __pyx_L0;
 
   /* "main_cy.pyx":79
- *     return self.initialize()
+ *     return self.initialize(initial_condition)   #add initial_condition
  * 
- *   cdef int initialize(self) except -1:             # <<<<<<<<<<<<<<
+ *   cdef int initialize(self, str initial_condition) except -1:   #add initial_condition             # <<<<<<<<<<<<<<
  *     cdef:
  *       str expected_release_datafile, demand_type, base_data_file, input_data_file
  */
@@ -9539,7 +9541,7 @@ static int __pyx_pf_7main_cy_7main_cy_4objs_4__del__(struct __pyx_obj_7main_cy_m
  *     public dict objs
  *     public Model modelno, modelso             # <<<<<<<<<<<<<<
  * 
- *   cdef int initialize(self) except -1
+ *   cdef int initialize(self, str initial_condition) except -1
  */
 
 /* Python wrapper */
@@ -24618,7 +24620,7 @@ static int __pyx_setprop_7main_cy_7main_cy_modelso(PyObject *o, PyObject *v, CYT
 }
 
 static PyMethodDef __pyx_methods_7main_cy_main_cy[] = {
-  {"initialize_py", (PyCFunction)__pyx_pw_7main_cy_7main_cy_3initialize_py, METH_NOARGS, 0},
+  {"initialize_py", (PyCFunction)__pyx_pw_7main_cy_7main_cy_3initialize_py, METH_O, 0},
   {"run_sim_py", (PyCFunction)__pyx_pw_7main_cy_7main_cy_5run_sim_py, METH_O, 0},
   {"calc_objectives", (PyCFunction)__pyx_pw_7main_cy_7main_cy_7calc_objectives, METH_NOARGS, 0},
   {"output_results", (PyCFunction)__pyx_pw_7main_cy_7main_cy_9output_results, METH_NOARGS, 0},
@@ -26283,7 +26285,7 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   __pyx_vtabptr_7main_cy_main_cy = &__pyx_vtable_7main_cy_main_cy;
-  __pyx_vtable_7main_cy_main_cy.initialize = (int (*)(struct __pyx_obj_7main_cy_main_cy *))__pyx_f_7main_cy_7main_cy_initialize;
+  __pyx_vtable_7main_cy_main_cy.initialize = (int (*)(struct __pyx_obj_7main_cy_main_cy *, PyObject *))__pyx_f_7main_cy_7main_cy_initialize;
   __pyx_vtable_7main_cy_main_cy.run_sim = (int (*)(struct __pyx_obj_7main_cy_main_cy *, PyObject *))__pyx_f_7main_cy_7main_cy_run_sim;
   if (PyType_Ready(&__pyx_type_7main_cy_main_cy) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1

@@ -255,13 +255,13 @@ cdef class Waterbank():
       absorb_fraction = min(self.recharge_rate/self.tot_current_storage,1.0)
       self.tot_current_storage -= self.tot_current_storage*absorb_fraction
       for x in self.participant_list:
-        print(x, end = " ")
-        print(self.banked[x], end = " ")
-        print(self.storage[x], end = " ")
-        print(absorb_fraction*(1.0-self.loss_rate), end = " ")
+        #print(x, end = " ")
+        #print(self.banked[x], end = " ")
+        #print(self.storage[x], end = " ")
+        #print(absorb_fraction*(1.0-self.loss_rate), end = " ")
         self.banked[x] += self.storage[x]*absorb_fraction*(1.0-self.loss_rate)#bank account (only credit a portion of the recharge to the bank acct)
         self.storage[x] -= self.storage[x]*absorb_fraction#capacity use
-        print(self.banked[x])
+        #print(self.banked[x])
 
 
   cdef void accounting(self, t):

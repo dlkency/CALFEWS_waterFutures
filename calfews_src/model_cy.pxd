@@ -104,15 +104,15 @@ cdef class Model():
   cdef (int, int, double, double, double) find_pumping_release(self, int m, int da, int year_index, int start_storage, dict month_demand, dict month_demand_must_fill, dict expected_pumping, double projected_carryover, double current_carryover, str wyt, int t, str key)
 
 ######### init
-  cdef tuple northern_initialization_routine(self, scenario=*)
+  cdef tuple northern_initialization_routine(self, str initial_condition, scenario=*)
 
-  cdef void initialize_northern_res(self) except *
+  cdef void initialize_northern_res(self, initial_condition) except *
 
   cdef void initialize_delta_ops(self) except *
 
-  cdef void southern_initialization_routine(self, scenario=*) except *
+  cdef void southern_initialization_routine(self, str initial_condition, scenario=*) except *
 
-  cdef void initialize_southern_res(self) except *
+  cdef void initialize_southern_res(self,  initial_condition) except *
 
   cdef void project_urban(self, str datafile, str datafile_cvp, str datafile_pumping) except *
 

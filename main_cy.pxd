@@ -11,7 +11,11 @@ cdef class main_cy():
     public dict objs
     public Model modelno, modelso
 
-  cdef int initialize(self) except -1
+  cdef int initialize(self, str initial_condition) except -1
+
+  #cdef void northern_initialization_routine(self, scenario, initial_condition)
+
+  #cdef void southern_initialization_routine(self, scenario, initial_condition)
 
   cdef int run_sim(self, start_time) except -1
 

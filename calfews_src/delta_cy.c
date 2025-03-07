@@ -1152,9 +1152,9 @@ struct __pyx_ctuple_int__and_int__and_double__and_double__and_double {
 /* "model_cy.pxd":107
  * 
  * ######### init
- *   cdef tuple northern_initialization_routine(self, scenario=*)             # <<<<<<<<<<<<<<
+ *   cdef tuple northern_initialization_routine(self, str initial_condition, scenario=*)             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_northern_res(self) except *
+ *   cdef void initialize_northern_res(self, initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine {
   int __pyx_n;
@@ -1164,9 +1164,9 @@ struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_rou
 /* "model_cy.pxd":113
  *   cdef void initialize_delta_ops(self) except *
  * 
- *   cdef void southern_initialization_routine(self, scenario=*) except *             # <<<<<<<<<<<<<<
+ *   cdef void southern_initialization_routine(self, str initial_condition, scenario=*) except *             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_southern_res(self) except *
+ *   cdef void initialize_southern_res(self,  initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine {
   int __pyx_n;
@@ -1245,6 +1245,7 @@ struct __pyx_obj_11calfews_src_12reservoir_cy_Reservoir {
   PyObject *key;
   PyObject *name;
   PyObject *forecastWYT;
+  PyObject *initial_condition;
   PyObject *days_through_month;
   PyObject *hist_wyt;
   PyObject *S;
@@ -2229,11 +2230,11 @@ struct __pyx_vtabstruct_11calfews_src_8model_cy_Model {
   void (*update_leiu_capacity)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   PyObject *(*proj_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int);
   __pyx_ctuple_int__and_int__and_double__and_double__and_double (*find_pumping_release)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int, PyObject *, PyObject *, PyObject *, double, double, PyObject *, int, PyObject *);
-  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
-  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
+  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*initialize_delta_ops)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
-  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
-  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
+  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*project_urban)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, PyObject *, PyObject *);
   void (*predict_delta_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   void (*initialize_water_districts)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_initialize_water_districts *__pyx_optional_args);

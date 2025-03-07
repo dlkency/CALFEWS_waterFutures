@@ -79,7 +79,7 @@ cdef class Model():
   #####################################################################################################################
   #############################     Object Creation     ###############################################################
   #####################################################################################################################
-  cdef tuple northern_initialization_routine(self, scenario='baseline'):
+  cdef tuple northern_initialization_routine(self, str initial_condition, scenario='baseline'):
     ######################################################################################
     ######################################################################################
     # preprocessing for the northern system
@@ -92,7 +92,7 @@ cdef class Model():
     # self.res.rainfnf_stds; self.res.snowfnf_stds
     # self.res.raininf_stds; self.res.snowinf_stds; self.res.baseinf_stds
     # self.res.flow_shape - monthly fractions of total period flow
-    self.initialize_northern_res()
+    self.initialize_northern_res(initial_condition)   # add initial_condition
     # initialize delta rules, calcluate expected environmental releases at each reservoir
     # generates - cumulative environmental/delta releases remaining (at each reservoir)
     # self.res.cum_min_release; self.res.aug_sept_min_release; self.res.oct_nov_min_release
@@ -124,7 +124,7 @@ cdef class Model():
 
 
 
-  cdef void southern_initialization_routine(self, scenario='baseline') except *:
+  cdef void southern_initialization_routine(self, str initial_condition, scenario='baseline') except *:
     ######################################################################################
     # preprocessing for the southern system
     ######################################################################################
@@ -132,7 +132,7 @@ cdef class Model():
 
     # initialize the southern reservoirs -
     # generates - same values as initialize_northern_res(), but for southern reservoirs
-    self.initialize_southern_res()
+    self.initialize_southern_res(initial_condition)
     # initialize water districts for southern model
     # generates - water district parameters (see calfews_src-combined/calfews_src/districts/readme.txt)
     # self.district_list - list of district objects
@@ -192,7 +192,7 @@ cdef class Model():
 
 
 
-  cdef void initialize_northern_res(self) except *:
+  cdef void initialize_northern_res(self, initial_condition) except *:
     #########################################################################################
 	#reservoir initialization for the northern delta system
     #########################################################################################
@@ -201,21 +201,21 @@ cdef class Model():
       Reservoir reservoir_obj
 
     #4 Sacramento River Reservoirs (CVP & SWP)
-    self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode)
-    self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)
-    self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)
-    self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)
+    self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode, initial_condition)
+    self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, initial_condition)
+    self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, initial_condition)
+    self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, initial_condition)
 
     #3 San Joaquin River Reservoirs (to meet Vernalis flow targets)
-    self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode)
-    self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode)
-    self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode)
+    self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode, initial_condition)
+    self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode, initial_condition)
+    self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode, initial_condition)
 
     self.reservoir_list = [self.shasta, self.oroville, self.yuba, self.folsom, self.newmelones, self.donpedro,
                            self.exchequer]
 
     #Millerton Reservoir (flows used to calculate San Joaquin River index, not in northern simulation)
-    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode)
+    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode, initial_condition)
     reservoir_list = [self.shasta, self.oroville, self.folsom, self.yuba, self.newmelones, self.donpedro, self.exchequer, self.millerton]
     ##Regression flow & standard deviations read from file
     #### Find regression information for all 8 reservoirs
@@ -296,7 +296,7 @@ cdef class Model():
 
 
 
-  cdef void initialize_southern_res(self) except *:
+  cdef void initialize_southern_res(self, initial_condition) except *:
     ############################################################################
     ###Reservoir Initialization
 	############################################################################
@@ -307,16 +307,16 @@ cdef class Model():
       dict expected_outflow_releases
       Reservoir reservoir_obj
 
-    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode)
-    self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)
-    self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)
-    self.success = Reservoir(self, 'success', 'SUC', self.model_mode)
-    self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode)
+    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode, initial_condition)
+    self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, initial_condition)
+    self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, initial_condition)
+    self.success = Reservoir(self, 'success', 'SUC', self.model_mode, initial_condition)
+    self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, initial_condition)
     ###San Luis is initialized as a Reservoir, but
     ###has none of the watershed data that goes along with the other reservoirs
-    self.sanluis = Reservoir(self, 'sanluis', 'SNL', self.model_mode)
-    self.sanluisstate = Reservoir(self, 'sanluisstate', 'SLS', self.model_mode)
-    self.sanluisfederal = Reservoir(self, 'sanluisfederal', 'SLF', self.model_mode)
+    self.sanluis = Reservoir(self, 'sanluis', 'SNL', self.model_mode, initial_condition)
+    self.sanluisstate = Reservoir(self, 'sanluisstate', 'SLS', self.model_mode, initial_condition)
+    self.sanluisfederal = Reservoir(self, 'sanluisfederal', 'SLF', self.model_mode, initial_condition)
     self.reservoir_list = [self.sanluisstate, self.sanluisfederal, self.millerton, self.isabella, self.success, self.kaweah, self.pineflat]
 
     if self.model_mode == 'climate_ensemble':
@@ -1888,8 +1888,9 @@ cdef class Model():
     urban_list = [self.socal, self.centralcoast, self.southbay]
     self.observed_hro = (df_urban['HRO_pump'].values *cfs_tafd).tolist()
     self.observed_trp = (df_urban['TRP_pump'].values *cfs_tafd).tolist()
-    #self.observed_hro_pred = df_pumping_prediction_control['DEL_SWP_allocation'].tolist()
-    self.observed_hro_pred = (df_urban['HRO_pump'].values *cfs_tafd).tolist()
+    self.observed_hro_pred = df_pumping_prediction_control['DEL_SWP_allocation'].tolist()
+    #df_urban_annual = df_urban.resample('AS-OCT').sum()
+    #self.observed_hro_pred = (df_urban_annual['HRO_pump'].values *cfs_tafd).tolist()
     SRI_forecast = df_urban['DEL_SCINDEX'].values
     regression_annual_hro = [0.0 for _ in range(numYears_urban)]
     regression_annual_trp = [0.0 for _ in range(numYears_urban)]
@@ -2083,6 +2084,13 @@ cdef class Model():
         np_list_1_logi = np.logical_and(day_pumping_changes > pumping_forecast_min, day_pumping_changes < pumping_forecast_max)
         day_error_cleaned = day_error_changes[np_list_1_logi]
         day_pumping_cleaned = day_pumping_changes[np_list_1_logi]
+        #print(district_obj.key, end = " ")
+        #print(wateryear_day, end = " ")
+        #print(day_pumping_changes, end = " ")
+        #print(day_error_changes, end = " ")
+        #print(day_pumping_cleaned)
+        #print(day_error_cleaned)
+        #print(np_list_1_logi)
         coef = np.polyfit(day_pumping_cleaned, day_error_cleaned, 1)
         district_obj.delivery_percent_coefficient[0][wateryear_day][2] = coef[0]
         district_obj.delivery_percent_coefficient[0][wateryear_day][3] = coef[1]

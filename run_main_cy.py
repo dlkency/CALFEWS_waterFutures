@@ -6,13 +6,14 @@ import pandas as pd
 from configobj import ConfigObj
 from distutils.util import strtobool
 from datetime import datetime
-import main_cy
+import main_cy  #bring in the main_cy class
 
 start_time = datetime.now()
 
 results_folder = sys.argv[1]  ### folder directory to store results, relative to base calfews directory
 redo_init = int(sys.argv[2])   ### this should be 0 if we want to use saved initialized model, else 1
 run_sim = int(sys.argv[3])   ### this should be 1 if we want to run sim, else 0 to just do init
+initial_condition = sys.argv[4] ###this it the argument to pass to the start date of the reservoirs
 
 config = ConfigObj('runtime_params.ini')
 cluster_mode = bool(strtobool(config['cluster_mode']))
@@ -55,7 +56,7 @@ if redo_init == 1:
   
   ### setup new model
   main_cy_obj = main_cy.main_cy(results_folder)
-  a = main_cy_obj.initialize_py()
+  a = main_cy_obj.initialize_py(initial_condition)  # add the intital_condition 
 
   if a == 0:
     ### save initialized model
@@ -67,8 +68,8 @@ if redo_init == 1:
 
 if run_sim == 1:
   ### main simulation loop
-  a = main_cy_obj.run_sim_py(start_time)
-  print ('Simulation complete,  right?', datetime.now() - start_time)
+  a = main_cy_obj.run_sim_py(start_time) 
+  print ('Simulation complete', datetime.now() - start_time)
   sys.stdout.flush()
 
   if a == 0:

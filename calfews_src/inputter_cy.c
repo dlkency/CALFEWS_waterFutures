@@ -1262,9 +1262,9 @@ struct __pyx_ctuple_int__and_int__and_double__and_double__and_double {
 /* "model_cy.pxd":107
  * 
  * ######### init
- *   cdef tuple northern_initialization_routine(self, scenario=*)             # <<<<<<<<<<<<<<
+ *   cdef tuple northern_initialization_routine(self, str initial_condition, scenario=*)             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_northern_res(self) except *
+ *   cdef void initialize_northern_res(self, initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine {
   int __pyx_n;
@@ -1274,9 +1274,9 @@ struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_rou
 /* "model_cy.pxd":113
  *   cdef void initialize_delta_ops(self) except *
  * 
- *   cdef void southern_initialization_routine(self, scenario=*) except *             # <<<<<<<<<<<<<<
+ *   cdef void southern_initialization_routine(self, str initial_condition, scenario=*) except *             # <<<<<<<<<<<<<<
  * 
- *   cdef void initialize_southern_res(self) except *
+ *   cdef void initialize_southern_res(self,  initial_condition) except *
  */
 struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine {
   int __pyx_n;
@@ -2066,6 +2066,7 @@ struct __pyx_obj_11calfews_src_12reservoir_cy_Reservoir {
   PyObject *key;
   PyObject *name;
   PyObject *forecastWYT;
+  PyObject *initial_condition;
   PyObject *days_through_month;
   PyObject *hist_wyt;
   PyObject *S;
@@ -2543,11 +2544,11 @@ struct __pyx_vtabstruct_11calfews_src_8model_cy_Model {
   void (*update_leiu_capacity)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   PyObject *(*proj_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int);
   __pyx_ctuple_int__and_int__and_double__and_double__and_double (*find_pumping_release)(struct __pyx_obj_11calfews_src_8model_cy_Model *, int, int, int, int, PyObject *, PyObject *, PyObject *, double, double, PyObject *, int, PyObject *);
-  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
-  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  PyObject *(*northern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_northern_initialization_routine *__pyx_optional_args);
+  void (*initialize_northern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*initialize_delta_ops)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
-  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
-  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
+  void (*southern_initialization_routine)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_southern_initialization_routine *__pyx_optional_args);
+  void (*initialize_southern_res)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *);
   void (*project_urban)(struct __pyx_obj_11calfews_src_8model_cy_Model *, PyObject *, PyObject *, PyObject *);
   void (*predict_delta_gains)(struct __pyx_obj_11calfews_src_8model_cy_Model *);
   void (*initialize_water_districts)(struct __pyx_obj_11calfews_src_8model_cy_Model *, struct __pyx_opt_args_11calfews_src_8model_cy_5Model_initialize_water_districts *__pyx_optional_args);
@@ -4151,6 +4152,7 @@ static const char __pyx_k_snowpack[] = "snowpack";
 static const char __pyx_k_strptime[] = "strptime";
 static const char __pyx_k_suptitle[] = "suptitle";
 static const char __pyx_k_whitened[] = "whitened";
+static const char __pyx_k_1996_10_1[] = "1996-10-1";
 static const char __pyx_k_DataFrame[] = "DataFrame";
 static const char __pyx_k_SAC_gains[] = "SAC_gains";
 static const char __pyx_k_TypeError[] = "TypeError";
@@ -4320,6 +4322,7 @@ static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to alloca
 static const char __pyx_k_whiten_by_historical_moments_del[] = "whiten_by_historical_moments_delta";
 static const char __pyx_k_Inputter_generate_relationships_2[] = "Inputter.generate_relationships_delta.<locals>.genexpr";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0_2[] = "Incompatible checksums (0x%x vs (0xb068931, 0x82a3537, 0x6ae9995) = (name))";
+static PyObject *__pyx_kp_u_1996_10_1;
 static PyObject *__pyx_n_u_AR_coef;
 static PyObject *__pyx_n_u_AR_residuals;
 static PyObject *__pyx_n_s_ASCII;
@@ -7110,11 +7113,11 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   /* "calfews_src/inputter_cy.pyx":106
  *       Reservoir reservoir_obj
  * 
- *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)
- *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)
+ *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, '1996-10-1')
+ *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, '1996-10-1')
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7128,6 +7131,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7139,12 +7145,12 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
 
   /* "calfews_src/inputter_cy.pyx":107
  * 
- *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode)
- *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)
- *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)
+ *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode, '1996-10-1')
+ *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, '1996-10-1')
+ *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, '1996-10-1')
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7158,6 +7164,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7168,13 +7177,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_1 = 0;
 
   /* "calfews_src/inputter_cy.pyx":108
- *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode)
- *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)
- *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)
+ *     self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode, '1996-10-1')
+ *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, '1996-10-1')
+ *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, '1996-10-1')
  * 
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7188,6 +7197,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7198,13 +7210,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_2 = 0;
 
   /* "calfews_src/inputter_cy.pyx":109
- *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)
- *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)
- *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)             # <<<<<<<<<<<<<<
+ *     self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, '1996-10-1')
+ *     self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, '1996-10-1')
+ *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
  * 
- *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode)
+ *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode, '1996-10-1')
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7218,6 +7230,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7228,13 +7243,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_1 = 0;
 
   /* "calfews_src/inputter_cy.pyx":111
- *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)
+ *     self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, '1996-10-1')
  * 
- *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode)
- *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode)
+ *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode, '1996-10-1')
+ *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode, '1996-10-1')
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7248,6 +7263,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7256,12 +7274,12 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
 
   /* "calfews_src/inputter_cy.pyx":112
  * 
- *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode)
- *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode)
+ *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode, '1996-10-1')
+ *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode, '1996-10-1')
  * 
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7275,6 +7293,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7282,13 +7303,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "calfews_src/inputter_cy.pyx":113
- *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode)
- *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode)
- *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode)             # <<<<<<<<<<<<<<
+ *     self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode, '1996-10-1')
+ *     self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode, '1996-10-1')
+ *     self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
  * 
  *     # 3 San Joaquin River Reservoirs (to meet Vernalis flow targets)
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7302,6 +7323,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7311,11 +7335,11 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   /* "calfews_src/inputter_cy.pyx":116
  * 
  *     # 3 San Joaquin River Reservoirs (to meet Vernalis flow targets)
- *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode)
- *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode)
+ *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode, '1996-10-1')
+ *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode, '1996-10-1')
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7329,6 +7353,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7340,12 +7367,12 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
 
   /* "calfews_src/inputter_cy.pyx":117
  *     # 3 San Joaquin River Reservoirs (to meet Vernalis flow targets)
- *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode)
- *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode)
+ *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode, '1996-10-1')
+ *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode, '1996-10-1')
  * 
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7359,6 +7386,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7369,13 +7399,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_2 = 0;
 
   /* "calfews_src/inputter_cy.pyx":118
- *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode)
- *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode)
- *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode)             # <<<<<<<<<<<<<<
+ *     self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode, '1996-10-1')
+ *     self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode, '1996-10-1')
+ *     self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
  * 
  *     # Millerton Reservoir (flows used to calculate San Joaquin River index, not in northern simulation)
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7389,6 +7419,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7401,11 +7434,11 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   /* "calfews_src/inputter_cy.pyx":121
  * 
  *     # Millerton Reservoir (flows used to calculate San Joaquin River index, not in northern simulation)
- *     self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode)             # <<<<<<<<<<<<<<
+ *     self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
  * 
- *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)
+ *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, '1996-10-1')
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7419,6 +7452,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7429,13 +7465,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_2 = 0;
 
   /* "calfews_src/inputter_cy.pyx":123
- *     self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode)
+ *     self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode, '1996-10-1')
  * 
- *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)
- *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode)
+ *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')
+ *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7449,6 +7485,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7460,12 +7499,12 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
 
   /* "calfews_src/inputter_cy.pyx":124
  * 
- *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)
- *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode)
- *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode)
+ *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, '1996-10-1')
+ *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')
+ *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, '1996-10-1')
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7479,6 +7518,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7489,13 +7531,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_2 = 0;
 
   /* "calfews_src/inputter_cy.pyx":125
- *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)
- *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)
- *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode)             # <<<<<<<<<<<<<<
- *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode)
+ *     self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, '1996-10-1')
+ *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')
+ *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
+ *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, '1996-10-1')
  * 
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7509,6 +7551,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7519,13 +7564,13 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __pyx_t_1 = 0;
 
   /* "calfews_src/inputter_cy.pyx":126
- *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)
- *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode)
- *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode)             # <<<<<<<<<<<<<<
+ *     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')
+ *     self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')
+ *     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, '1996-10-1')             # <<<<<<<<<<<<<<
  * 
  *     #self.reservoir_list = [self.shasta, self.oroville, self.folsom, self.yuba, self.newmelones, self.donpedro,
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -7539,6 +7584,9 @@ static void __pyx_f_11calfews_src_11inputter_cy_8Inputter_initialize_reservoirs(
   __Pyx_INCREF(__pyx_v_self->model_mode);
   __Pyx_GIVEREF(__pyx_v_self->model_mode);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_self->model_mode);
+  __Pyx_INCREF(__pyx_kp_u_1996_10_1);
+  __Pyx_GIVEREF(__pyx_kp_u_1996_10_1);
+  PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_1996_10_1);
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_11calfews_src_12reservoir_cy_Reservoir), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -65169,6 +65217,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_kp_u_1996_10_1, __pyx_k_1996_10_1, sizeof(__pyx_k_1996_10_1), 0, 1, 0, 0},
   {&__pyx_n_u_AR_coef, __pyx_k_AR_coef, sizeof(__pyx_k_AR_coef), 0, 1, 0, 1},
   {&__pyx_n_u_AR_residuals, __pyx_k_AR_residuals, sizeof(__pyx_k_AR_residuals), 0, 1, 0, 1},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},

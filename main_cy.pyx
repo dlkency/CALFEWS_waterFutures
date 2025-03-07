@@ -73,10 +73,10 @@ cdef class main_cy():
 ################################################################################################################################
 ### Northern/southern model initialization
 ################################################################################################################################
-  def initialize_py(self):
-    return self.initialize()
+  def initialize_py(self, initial_condition):  #add initial_condition
+    return self.initialize(initial_condition)   #add initial_condition
 
-  cdef int initialize(self) except -1:  
+  cdef int initialize(self, str initial_condition) except -1:   #add initial_condition
     cdef:
       str expected_release_datafile, demand_type, base_data_file, input_data_file
     
@@ -153,11 +153,11 @@ cdef class main_cy():
     PyErr_CheckSignals()
     if True:
       self.modelso.max_tax_free = {}
-      self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(scenario)
+      self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(initial_condition, scenario)    #add initial_condition 
     PyErr_CheckSignals()
     if True:
       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
-      self.modelso.southern_initialization_routine(scenario)
+      self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition 
       try:
         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")

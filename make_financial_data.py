@@ -1,3 +1,7 @@
+#
+# Description: This script calculates the financial data for each district in CALFEWS model output.
+
+#%%
 import numpy as np
 import pandas as pd
 import h5py
@@ -5,9 +9,12 @@ import json
 import matplotlib.pyplot as plt
 from itertools import compress
 import calfews_src
-from read_hdf5_output import get_results_sensitivity_number
+from calfews_src import *
+from calfews_src.visualizer import Visualizer
+from calfews_src.util import * 
 import seaborn as sns
-
+import os
+#%%
 sns.set_style('darkgrid')
 
 def set_district_keys():
@@ -42,121 +49,136 @@ def set_district_keys():
   
   return district_pmp_keys
 
-  
-def calculate_district_reveneues(year_range, sensitivity_range, district_display_key, district_pmp_keys):
-  
-  ###district delivery data are cumulative through each year, to find annual tota
-  ###we need an index of the last day in each year
-  numYears = len(year_range)
-  fig, ax = plt.subplots()
-  dayNum = -1
-  leapCount = 0
-  end_of_year = np.zeros(numYears)
-  for yearNum in range(0, numYears):
-    dayNum += 365
-    leapCount += 1
-    if leapCount == 4:
-      leapCount = 0
-      dayNum += 1
-    end_of_year[yearNum] = dayNum
-  
-  #read model data (so we know district contracts, etc..)
-  modelno = pd.read_pickle('calfews_src/data/results/baseline_wy2017/p0/modelno0.pkl')
-  modelso = pd.read_pickle('calfews_src/data/results/baseline_wy2017/p0/modelso0.pkl')
-  #read price data from PMP
-  district_prices = pd.read_csv('calfews_src\postprocess\district_water_prices.csv')
-  district_prices.set_index('PMPDKEY', inplace = True)
-  banking_price = 50.0#volumetric rate to deliver water to a bank
-  #create dictionary to store annual district revenues
-  district_revenues = {}
-  for x in district_pmp_keys:
-    district_revenues[x] = np.zeros((numYears, len(sensitivity_range)))
-	
-  #read CALFEWS output data
-  output_file = 'calfews_src/data/results/baseline_wy2017/results.hdf5'
-  revenues_save_file = {}
-  for sensitivity_realization in sensitivity_range:
-    #read CALFEWS output by sensitivity run
-    df_data_by_sensitivity_number, df_factors_by_sensitivity_number = get_results_sensitivity_number(output_file, sensitivity_realization)
+ 
+# %%
+save_folder = 'calfews_src/postprocess/'
+
+def calculate_district_revenues(district_display_key, district_pmp_keys):
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+
+    # Assume daily data in each DataFrame indexed by DateTime
+    # Read price data from PMP
+    district_prices = pd.read_csv('calfews_src/postprocess/district_water_prices.csv')
+    district_prices.set_index('PMPDKEY', inplace=True)
+    banking_price = 50.0  # Volumetric rate to deliver water to a bank
+
+    # Create dictionary to store daily district revenues
+    district_revenues_daily = {}
+
+    # Read CALFEWS output data
+    output_file = 'results/1_2024/results.hdf5'
+    df_data = get_results_sensitivity_number_outside_model(output_file, '')
+
     for x in district_pmp_keys:
-      ##FOR EACH DISTRICT - REVENUES
-      direct_deliveries = np.zeros(numYears)##direct deliveries - revenue to district 
-      use_bank = np.zeros(numYears)##district banked/recovered their water at another's bank (cost to district)
-      sell_bank = np.zeros(numYears)##district banked/recovered another's water at their bank (revenue to district)
-      #find district's price to their customers
-      district_position = district_prices.loc[x]
-      water_price = district_position['PMPWCST']
-	  
-      #Deliveries made directly to customers (not accounting for seasonal price changes)
-      for contract in modelso.__getattribute__(district_pmp_keys[x]).contract_list:
-        for output in ['delivery', 'carryover', 'flood']:          # list district outputs, for contract/right allocations
-          output_key = district_pmp_keys[x] + '_' + contract + '_' + output
-          if output_key in df_data_by_sensitivity_number:
-            type_value = df_data_by_sensitivity_number[output_key]
-            for yearNum in range(0, len(end_of_year)):
-              direct_deliveries[yearNum] += type_value[end_of_year[yearNum]]
+        # Initialize arrays for daily calculations
+        direct_deliveries = pd.Series(0, index=default_date_range)
+        use_bank = pd.Series(0, index=default_date_range)
+        sell_bank = pd.Series(0, index=default_date_range)
 
-      #Recharged water is not delivered to customers (but it is counted in above deliveries), so no revenue is generated
-      output_key = district_pmp_keys[x] + '_recharged'   	  
-      if output_key in df_data_by_sensitivity_number:
-        type_value = df_data_by_sensitivity_number[output_key]
-        for yearNum in range(0, len(end_of_year)):
-          direct_deliveries[yearNum] -= type_value[end_of_year[yearNum]]
-          direct_deliveries[yearNum] = max(direct_deliveries[yearNum], 0.0)
-	
-      #Deliveries/withdrawals from district bank by banking partners (revenue generating)
-      for output in ['inleiu_recharge', 'leiupumping']:
-        output_key = district_pmp_keys[x] + '_' + output
-        if output_key in df_data_by_sensitivity_number:
-          type_value = df_data_by_sensitivity_number[output_key]
-          for yearNum in range(0, len(end_of_year)):
-            sell_bank[yearNum] += type_value[end_of_year[yearNum]]
-    	
-      #Deliveries to district bank by banking partners (revenue generating) PLUS irrigation sale to in-district customer
-      output_key = district_pmp_keys[x] + '_inleiu_irrigation'
-      if output_key in df_data_by_sensitivity_number:
-        type_value = df_data_by_sensitivity_number[output_key]
-        for yearNum in range(0, len(end_of_year)):
-          direct_deliveries[yearNum] += type_value[end_of_year[yearNum]]
-          sell_bank[yearNum] += type_value[end_of_year[yearNum]]
-		  
-      ##Withdrawals from out-of-district bank by district (cost generating), delivered to customers (revenue generating)      
-      output_key = district_pmp_keys[x] + '_recover_banked'
-      if output_key in df_data_by_sensitivity_number:
-        type_value = df_data_by_sensitivity_number[output_key]
-        for yearNum in range(0, len(end_of_year)):
-          direct_deliveries[yearNum] += type_value[end_of_year[yearNum]]
-          use_bank[yearNum] += type_value[end_of_year[yearNum]]
-    
-      ##Withdrawals from out-of-district bank by district (cost generating), exchanged with another district (revenue is already counted under contract delivery)
-      output_key = district_pmp_keys[x] + '_exchanged_GW'
-      if output_key in df_data_by_sensitivity_number:
-        type_value = df_data_by_sensitivity_number[output_key]
-        for yearNum in range(0, len(end_of_year)):
-          use_bank[yearNum] += type_value[end_of_year[yearNum]]
-    
-      #Recovered groundwater from another district delivered to district customers (revenue generating) that was exchanged for district surface water
-      output_key = district_pmp_keys[x] + '_exchanged_SW'
-      if output_key in df_data_by_sensitivity_number:
-        type_value = df_data_by_sensitivity_number[output_key]
-        for yearNum in range(0, len(end_of_year)):
-          direct_deliveries[yearNum] += type_value[end_of_year[yearNum]]
-      
+        # Find district's price to their customers
+        if x in district_prices.index:
+            water_price = district_prices.loc[x, 'PMPWCST']
+            
+        else:
+            continue  # Skip if the key not found
 
-      if district_display_key == district_pmp_keys[x]:
-        total_revenues = (direct_deliveries * water_price + sell_bank * banking_price - use_bank * banking_price)/1000.0#total revenue in million $
-        ax.plot(year_range, total_revenues)
-        revenues_save_file['S' + str(sensitivity_realization)] = total_revenues
-        del total_revenues
-  revenues_save_file = pd.DataFrame(revenues_save_file, index = year_range)
-  revenues_save_file.to_csv('calfews_src/data/results/baseline_wy2017/' + district_display_key + '_revenues.csv')
-  ax.set_xlim((min(year_range), max(year_range)))
-  ax.set_xticks(np.arange(min(year_range), max(year_range), np.round(len(year_range)/10)))
-  ax.set_ylabel('Total Irrigation District Revenue, Banking and Deliveries')
-  plt.show()      
-	  
+        # Custom rule for losthills
+        if district_display_key == 'losthills':  #losthill has part of the district being accounted for in Wonderfull 
+            output_key_lh = 'losthills_tableA_delivery'
+            output_key_wf = 'wonderful_LHL_tableA_delivery'
+            # output_key_bel = 'belridge_tableA_delivery'
+            # output_key_wbel = 'wonderful_BLR_tableA_delivery'
+            # output_key_bdm = 'berrenda_tableA_delivery'
+            # output_key_wbdm = 'wonderful_BDM_tableA_delivery'
+            if output_key_lh in df_data and output_key_wf in df_data:
+                direct_deliveries = df_data[output_key_lh] + df_data[output_key_wf] 
+                # + df_data[output_key_bel] + df_data[output_key_wbel] + df_data[output_key_bdm] + df_data[output_key_wbdm]
+        
+        # Deliveries made directly to customers
+        else: 
+            contract_list = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2', 'kings', 'kaweah', 'tule', 'kern']
+            for contract in contract_list:
+                for output in ['delivery', 'flood_irrigation', 'flood']:
+                    output_key = f"{district_pmp_keys[x]}_{contract}_{output}"
+                    if output_key in df_data:
+                        direct_deliveries = direct_deliveries.add(df_data[output_key], fill_value=0)
+
+
+        #Recharged water is not delivered to customers (but it is counted in above deliveries), so no revenue is generated
+        output_key = f"{district_pmp_keys[x]}_recharged"
+        if output_key in df_data:
+            direct_deliveries = direct_deliveries.sub(df_data[output_key], fill_value=0)
+            direct_deliveries = direct_deliveries.clip(lower=0)  # Ensure no negative deliveries
+
+        # Banking transactions:  Deliveries/withdrawals from district bank by banking partners (revenue generating)
+        for output in ['inleiu_recharge', 'leiupumping']:
+            output_key = f"{district_pmp_keys[x]}_{output}"
+            if output_key in df_data:
+                sell_bank = sell_bank.add(df_data[output_key], fill_value=0)
+
+        #Deliveries to district bank by banking partners (revenue generating) PLUS irrigation sale to in-district customer
+        output_key = f"{district_pmp_keys[x]}_inleiu_irrigation"
+        if output_key in df_data:
+            direct_deliveries = direct_deliveries.add(df_data[output_key], fill_value=0)
+            sell_bank = sell_bank.add(df_data[output_key], fill_value=0)
+
+        #Withdrawals from out-of-district bank by district (cost generating), delivered to customers (revenue generating)
+        output_key = f"{district_pmp_keys[x]}_recover_banked"
+        if output_key in df_data:
+            direct_deliveries = direct_deliveries.add(df_data[output_key], fill_value=0)
+            use_bank = use_bank.add(df_data[output_key], fill_value=0)
+    
+        #Withdrawals from out-of-district bank by district (cost generating), exchanged with another district (revenue is already counted under contract delivery)
+        output_key = f"{district_pmp_keys[x]}_exchanged_GW"
+        if output_key in df_data:
+            use_bank = use_bank.add(df_data[output_key], fill_value=0)
+
+        #Recovered groundwater from another district delivered to district customers (revenue generating) that was exchanged for district surface water
+        output_key = f"{district_pmp_keys[x]}_exchanged_SW"
+        if output_key in df_data:
+            direct_deliveries = direct_deliveries.add(df_data[output_key], fill_value=0)
+
+        if district_display_key == district_pmp_keys[x]:
+            # total_revenues_daily = (direct_deliveries * water_price ) / 1000.0
+            total_revenues_daily = (direct_deliveries * water_price + sell_bank * banking_price - use_bank * banking_price) / 1000.0
+
+            total_revenues_annually = total_revenues_daily.resample('AS-OCT').last() #resample to yearly revenue
+            # print(water_price)
+            print(direct_deliveries * water_price)
+            print(sell_bank * banking_price)
+            print(use_bank * banking_price)
+            # print(use_bank)
+            plt.figure(figsize=(12, 6))
+            plt.plot(total_revenues_daily.index, total_revenues_daily.values, label="Daily Revenue")
+            plt.title(f"Total Daily Revenue for {district_display_key}")
+            plt.ylabel("Revenue in Million $")
+            plt.xlabel("Date")
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+
+            plt.figure(figsize=(12, 6))
+            plt.plot(total_revenues_annually.index, total_revenues_annually.values, label="Annual Revenue", color='orange')
+            plt.title(f"Total Annual Revenue for {district_display_key} (Water Year)")
+            plt.ylabel("Revenue in Million $")
+            plt.xlabel("Water Year Start")
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+
+            daily_filename = os.path.join(save_folder, f"{district_display_key}_daily_revenue_syn_1_2024.csv")
+            annual_filename = os.path.join(save_folder, f"{district_display_key}_annual_revenue_syn_1_2024.csv")
+
+            # Save to CSV
+            total_revenues_daily.to_csv(daily_filename, header=True)
+            total_revenues_annually.to_csv(annual_filename, header=True)
+
+
+# Usage
 district_pmp_keys = set_district_keys()
-year_range = np.arange(1997, 2017)
-sensitivity_range = np.arange(2)
-district_display_key = 'semitropic'
-calculate_district_reveneues(year_range, sensitivity_range, district_display_key, district_pmp_keys)
+district_display_key = 'losthills'
+default_date_range = pd.date_range(start='1924-10-01', end='2027-9-30', freq='D')
+calculate_district_revenues(district_display_key, district_pmp_keys)
+# %%

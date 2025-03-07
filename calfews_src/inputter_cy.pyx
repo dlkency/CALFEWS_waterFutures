@@ -103,27 +103,27 @@ cdef class Inputter():
       str data_type, monthname, deltaname
       Reservoir reservoir_obj
 
-    self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode)
-    self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode)
-    self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode)
-    self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode)
+    self.shasta = Reservoir(self, 'shasta', 'SHA', self.model_mode, '1996-10-1')
+    self.folsom = Reservoir(self, 'folsom', 'FOL', self.model_mode, '1996-10-1')
+    self.oroville = Reservoir(self, 'oroville', 'ORO', self.model_mode, '1996-10-1')
+    self.yuba = Reservoir(self, 'yuba', 'YRS', self.model_mode, '1996-10-1')
 
-    self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode)
-    self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode)
-    self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode)
+    self.newhogan = Reservoir(self, 'newhogan', 'NHG', self.model_mode, '1996-10-1')
+    self.pardee = Reservoir(self, 'pardee', 'PAR', self.model_mode, '1996-10-1')
+    self.consumnes = Reservoir(self, 'consumnes', 'MHB', self.model_mode, '1996-10-1')
 
     # 3 San Joaquin River Reservoirs (to meet Vernalis flow targets)
-    self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode)
-    self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode)
-    self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode)
+    self.newmelones = Reservoir(self, 'newmelones', 'NML', self.model_mode, '1996-10-1')
+    self.donpedro = Reservoir(self, 'donpedro', 'DNP', self.model_mode, '1996-10-1')
+    self.exchequer = Reservoir(self, 'exchequer', 'EXC', self.model_mode, '1996-10-1')
 
     # Millerton Reservoir (flows used to calculate San Joaquin River index, not in northern simulation)
-    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode)
+    self.millerton = Reservoir(self, 'millerton', 'MIL', self.model_mode, '1996-10-1')
 
-    self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode)
-    self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode)
-    self.success = Reservoir(self, 'success', 'SUC', self.model_mode)
-    self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode)
+    self.pineflat = Reservoir(self, 'pineflat', 'PFT', self.model_mode, '1996-10-1')
+    self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')
+    self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')
+    self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, '1996-10-1')
     
     #self.reservoir_list = [self.shasta, self.oroville, self.folsom, self.yuba, self.newmelones, self.donpedro,
                  #self.exchequer, self.millerton, self.pineflat, self.kaweah, self.success, self.isabella,

@@ -340,7 +340,11 @@ cdef class Private():
           todays_demand_regression_error[district] = allocation_change * self.delivery_percent_coefficient[district][dowy][2] + self.delivery_percent_coefficient[district][dowy][3] + self.last_days_demand_regression_error[district] - self.demand_auto_errors[district][dowy][random_component]
           self.last_days_demand_regression_error[district] = todays_demand_regression_error[district] * 1.0
         sri_estimate = total_delta_pumping * (sri_estimate_int - todays_demand_regression_error[district])
+        #print(f"SRI Estimate for district {district}: {sri_estimate}")
+        #print(f"SRI Estimate int for district {district}: {sri_estimate_int}")
+        #print(f"SRI Estimate error for district {district}: {todays_demand_regression_error}")
         self.annualdemand[district] = max(sri_estimate - self.ytd_pumping[district][wateryear], 1.0)
+        #rint(f"Annual Demand for district {district}: {self.annualdemand[district]}")
 
         for sort_year in range(0, len(self.hist_demand_dict[district]['annual_sorted'][dowy])):
           if total_delta_pumping > self.hist_demand_dict[district]['annual_sorted'][dowy][sort_year]:
