@@ -3491,22 +3491,26 @@ cdef class Model():
               contract_obj.tot_carryover += carryover
               contract_obj.tot_new_alloc += new_alloc
 
-        if contract_obj.name == 'tableA' and use_contract == 1:
-          current_carryover_storage = self.sanluisstate.S[t] - contract_obj.tot_new_alloc - 40.0
-          fudge_factor = current_carryover_storage/contract_obj.tot_carryover
-          contract_obj.tot_carryover = self.sanluisstate.S[t] - contract_obj.tot_new_alloc - 40.0
-          sum_carryover = 0.0
-          for district_obj in self.district_list:
-            district_obj.carryover[contract_obj.name] = district_obj.carryover[contract_obj.name]*fudge_factor
-            sum_carryover += district_obj.carryover[contract_obj.name]
-          for private_obj in self.private_list:
-            for district_key in private_obj.district_list:
-              private_obj.carryover[district_key][contract_obj.name] = private_obj.carryover[district_key][contract_obj.name]*fudge_factor
-              sum_carryover += private_obj.carryover[district_key][contract_obj.name]
-          for private_obj in self.city_list:
-            for district_key in private_obj.district_list:
-              private_obj.carryover[district_key][contract_obj.name] = private_obj.carryover[district_key][contract_obj.name]*fudge_factor
-              sum_carryover += private_obj.carryover[district_key][contract_obj.name]
+        #if contract_obj.name == 'tableA' and use_contract == 1:
+          #current_carryover_storage = self.sanluisstate.S[t] - contract_obj.tot_new_alloc - 40.0
+          #carryover_difference = current_carryover_storage - contract_obj.tot_carryover
+          #fudge_factor = carryover_difference/contract_obj.tot_carryover
+          #contract_obj.tot_carryover = self.sanluisstate.S[t] - contract_obj.tot_new_alloc - 40.0
+          #sum_carryover = 0.0
+          #print(contract_obj.name, end = " ")
+          #print(current_carryover_storage, end = " ")
+          #print(fudge_factor)
+          #for district_obj in self.district_list:
+            #district_obj.carryover[contract_obj.name] = district_obj.carryover[contract_obj.name]*fudge_factor
+            #sum_carryover += district_obj.carryover[contract_obj.name]
+          #for private_obj in self.private_list:
+            #for district_key in private_obj.district_list:
+              #private_obj.carryover[district_key][contract_obj.name] = private_obj.carryover[district_key][contract_obj.name]*fudge_factor
+              #sum_carryover += private_obj.carryover[district_key][contract_obj.name]
+          #for private_obj in self.city_list:
+            #for district_key in private_obj.district_list:
+              #private_obj.carryover[district_key][contract_obj.name] = private_obj.carryover[district_key][contract_obj.name]*fudge_factor
+              #sum_carryover += private_obj.carryover[district_key][contract_obj.name]
 
         contract_obj.running_carryover = contract_obj.tot_carryover
 

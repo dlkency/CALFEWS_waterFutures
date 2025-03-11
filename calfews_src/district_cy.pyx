@@ -418,12 +418,25 @@ cdef class District():
     elif balance_type == 'right':
       annual_allocation = existing_balance*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       max_carryover = self.contract_carryover_list[key]
+    if self.name == 'losthills' and key == 'tableA':
+      print(f"District Name: {self.name}")
+      print(f"Annual allocation: {annual_allocation}, Max carryover: {max_carryover}")
+      print(f"Max carryover: {max_carryover}")
+      print(f"Existing balance: {existing_balance}")
+      print(f"Contract: {self.project_contract[key]}")
+      print(f"District Fraction: {frac_to_district}")
+      print(f"Deliveries: {self.deliveries[key][wateryear]}")
+      print(f"Carryover: {self.carryover[key]}")
+      print(f"paper balance: {self.paper_balance[key]}")
+      print(f"turnback balance: {self.turnback_pool[key]}")
 
     reallocated_water = max(annual_allocation - max_carryover, 0.0)
     carryover = min(max_carryover, annual_allocation)
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
+    if self.name == 'losthills' and key == 'tableA':
+      print(f"Carryover: {self.carryover[key]}")
 	
     return reallocated_water, carryover
 
@@ -441,8 +454,12 @@ cdef class District():
     
     max_carryover = self.contract_carryover_list[key]
 
+    print(f" Wateryear: {wateryear}, balance_type: {balance_type}, key: {key}")
+    print(f"Initial projected: {initial_projected}, Max carryover: {max_carryover}, Fraction to district: {frac_to_district}")
+
     reallocated_water = max(initial_projected - max_carryover, 0.0)
     carryover = min(max_carryover, initial_projected)
+    print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0

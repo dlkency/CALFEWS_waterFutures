@@ -517,11 +517,24 @@ cdef class Private():
       annual_allocation = existing_balance*rights[key]['capacity']*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.carryover[district_name][key] + self.paper_balance[district_name][key] + self.turnback_pool[district_name][key]
       max_carryover = self.contract_carryover_list[district_name][key]
 	  
+    if key == 'tableA':
+      print(f"District Name: {district_name}")
+      print(f"Annual allocation: {annual_allocation}, Max carryover: {max_carryover}")
+      print(f"Max carryover: {max_carryover}")
+      print(f"Existing balance: {existing_balance}")
+      print(f"Contract: {project_contract[key]}")
+      print(f"District Fraction: {self.private_fraction[district_name][wateryear]}")
+      print(f"Deliveries: {self.deliveries[district_name][key][wateryear]}")
+      print(f"Carryover: {self.carryover[district_name][key]}")
+      print(f"paper balance: {self.paper_balance[district_name][key]}")
+      print(f"turnback balance: {self.turnback_pool[district_name][key]}")
     reallocated_water = max(annual_allocation - max_carryover, 0.0)
     carryover = min(max_carryover, annual_allocation)
     self.carryover[district_name][key] = carryover
     self.turnback_pool[district_name][key] = 0.0	
     self.paper_balance[district_name][key] = 0.0
+    if key == 'tableA':
+      print(f"Carryover: {self.carryover[district_name][key]}")
     return reallocated_water, carryover
 
   cdef (double, double) calc_carryover_from_pre(self, int wateryear, str balance_type, str key, str district_name, double initial_projected):

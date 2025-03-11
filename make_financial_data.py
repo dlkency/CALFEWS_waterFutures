@@ -54,9 +54,9 @@ def set_district_keys():
 save_folder = 'calfews_src/postprocess/'
 
 def calculate_district_revenues(district_display_key, district_pmp_keys):
-    import matplotlib.pyplot as plt
-    import numpy as np
-    import pandas as pd
+    # import matplotlib.pyplot as plt
+    # import numpy as np
+    # import pandas as pd
 
     # Assume daily data in each DataFrame indexed by DateTime
     # Read price data from PMP
@@ -68,7 +68,7 @@ def calculate_district_revenues(district_display_key, district_pmp_keys):
     district_revenues_daily = {}
 
     # Read CALFEWS output data
-    output_file = 'results/1_2024/results.hdf5'
+    output_file = 'results/110_year/results.hdf5'
     df_data = get_results_sensitivity_number_outside_model(output_file, '')
 
     for x in district_pmp_keys:
@@ -88,13 +88,8 @@ def calculate_district_revenues(district_display_key, district_pmp_keys):
         if district_display_key == 'losthills':  #losthill has part of the district being accounted for in Wonderfull 
             output_key_lh = 'losthills_tableA_delivery'
             output_key_wf = 'wonderful_LHL_tableA_delivery'
-            # output_key_bel = 'belridge_tableA_delivery'
-            # output_key_wbel = 'wonderful_BLR_tableA_delivery'
-            # output_key_bdm = 'berrenda_tableA_delivery'
-            # output_key_wbdm = 'wonderful_BDM_tableA_delivery'
             if output_key_lh in df_data and output_key_wf in df_data:
                 direct_deliveries = df_data[output_key_lh] + df_data[output_key_wf] 
-                # + df_data[output_key_bel] + df_data[output_key_wbel] + df_data[output_key_bdm] + df_data[output_key_wbdm]
         
         # Deliveries made directly to customers
         else: 
@@ -168,8 +163,8 @@ def calculate_district_revenues(district_display_key, district_pmp_keys):
             plt.legend()
             plt.show()
 
-            daily_filename = os.path.join(save_folder, f"{district_display_key}_daily_revenue_syn_1_2024.csv")
-            annual_filename = os.path.join(save_folder, f"{district_display_key}_annual_revenue_syn_1_2024.csv")
+            daily_filename = os.path.join(save_folder, f"{district_display_key}_daily_revenue_110.csv")
+            annual_filename = os.path.join(save_folder, f"{district_display_key}_annual_revenue_110.csv")
 
             # Save to CSV
             total_revenues_daily.to_csv(daily_filename, header=True)
@@ -178,7 +173,7 @@ def calculate_district_revenues(district_display_key, district_pmp_keys):
 
 # Usage
 district_pmp_keys = set_district_keys()
-district_display_key = 'losthills'
-default_date_range = pd.date_range(start='1924-10-01', end='2027-9-30', freq='D')
+district_display_key = 'semitropic'
+default_date_range = pd.date_range(start='1905-10-01', end='2016-9-30', freq='D')
 calculate_district_revenues(district_display_key, district_pmp_keys)
 # %%
