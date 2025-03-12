@@ -3730,7 +3730,6 @@ static const char __pyx_k_pandas[] = "pandas";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_random[] = "random";
 static const char __pyx_k_reduce[] = "__reduce__";
-static const char __pyx_k_remove[] = "remove";
 static const char __pyx_k_shutil[] = "shutil";
 static const char __pyx_k_stdout[] = "stdout";
 static const char __pyx_k_struct[] = "struct";
@@ -3987,7 +3986,6 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
-static PyObject *__pyx_n_s_remove;
 static PyObject *__pyx_n_s_results_folder;
 static PyObject *__pyx_n_s_runtime_file;
 static PyObject *__pyx_kp_u_runtime_params_ini;
@@ -5880,7 +5878,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *     if True:
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI             # <<<<<<<<<<<<<<
  *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
- *       try:
+ *       #try:
  */
   __pyx_t_16 = __pyx_v_self->modelno->delta->forecastSRI;
   __Pyx_INCREF(__pyx_t_16);
@@ -5894,146 +5892,44 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *     if True:
  *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
  *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition             # <<<<<<<<<<<<<<
- *       try:
+ *       #try:
  *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
  */
   __pyx_t_18.__pyx_n = 1;
   __pyx_t_18.scenario = __pyx_v_scenario;
   ((struct __pyx_vtabstruct_11calfews_src_8model_cy_Model *)__pyx_v_self->modelso->__pyx_vtab)->southern_initialization_routine(__pyx_v_self->modelso, __pyx_v_initial_condition, &__pyx_t_18); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L1_error)
 
-  /* "main_cy.pyx":161
- *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
- *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
- *       try:             # <<<<<<<<<<<<<<
- *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
- *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
- */
-  {
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    __Pyx_ExceptionSave(&__pyx_t_2, &__pyx_t_8, &__pyx_t_7);
-    __Pyx_XGOTREF(__pyx_t_2);
-    __Pyx_XGOTREF(__pyx_t_8);
-    __Pyx_XGOTREF(__pyx_t_7);
-    /*try:*/ {
-
-      /* "main_cy.pyx":163
- *       try:
- *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
- *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")             # <<<<<<<<<<<<<<
- *       except:
- *         pass
- */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_remove); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyUnicode_ConcatSafe(__pyx_v_self->results_folder, __pyx_kp_u__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      if (unlikely(!__pyx_v_new_inputs)) { __Pyx_RaiseUnboundLocalError("new_inputs"); __PYX_ERR(0, 163, __pyx_L26_error) }
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_new_inputs), __pyx_n_s_export_series); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_t_5, __pyx_v_self->flow_input_type); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_t_4, __pyx_v_self->flow_input_source); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Add(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Add(__pyx_t_4, __pyx_kp_u_0_csv); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_1);
-        if (likely(__pyx_t_4)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-          __Pyx_INCREF(__pyx_t_4);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_1, function);
-        }
-      }
-      __pyx_t_16 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5);
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 163, __pyx_L26_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-
-      /* "main_cy.pyx":161
- *       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
- *       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition
- *       try:             # <<<<<<<<<<<<<<
- *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
- *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
- */
-    }
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    goto __pyx_L31_try_end;
-    __pyx_L26_error:;
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-
-    /* "main_cy.pyx":164
- *         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
- *         os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
- *       except:             # <<<<<<<<<<<<<<
- *         pass
- *     gc.collect()
- */
-    /*except:*/ {
-      __Pyx_ErrRestore(0,0,0);
-      goto __pyx_L27_exception_handled;
-    }
-    __pyx_L27_exception_handled:;
-    __Pyx_XGIVEREF(__pyx_t_2);
-    __Pyx_XGIVEREF(__pyx_t_8);
-    __Pyx_XGIVEREF(__pyx_t_7);
-    __Pyx_ExceptionReset(__pyx_t_2, __pyx_t_8, __pyx_t_7);
-    __pyx_L31_try_end:;
-  }
-
   /* "main_cy.pyx":166
- *       except:
- *         pass
+ *       #except:
+ *         #pass
  *     gc.collect()             # <<<<<<<<<<<<<<
  *     use_validation_init = True
  *     if use_validation_init:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_gc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_gc); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_collect); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_collect); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_1)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
+      __Pyx_DECREF_SET(__pyx_t_1, function);
     }
   }
-  __pyx_t_16 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_16 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_16);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
   /* "main_cy.pyx":167
- *         pass
+ *         #pass
  *     gc.collect()
  *     use_validation_init = True             # <<<<<<<<<<<<<<
  *     if use_validation_init:
@@ -25840,7 +25736,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
-  {&__pyx_n_s_remove, __pyx_k_remove, sizeof(__pyx_k_remove), 0, 0, 1, 1},
   {&__pyx_n_s_results_folder, __pyx_k_results_folder, sizeof(__pyx_k_results_folder), 0, 0, 1, 1},
   {&__pyx_n_s_runtime_file, __pyx_k_runtime_file, sizeof(__pyx_k_runtime_file), 0, 0, 1, 1},
   {&__pyx_kp_u_runtime_params_ini, __pyx_k_runtime_params_ini, sizeof(__pyx_k_runtime_params_ini), 0, 1, 0, 0},

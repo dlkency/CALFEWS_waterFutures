@@ -158,11 +158,11 @@ cdef class main_cy():
     if True:
       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition 
-      try:
+      #try:
         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
-        os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
-      except:
-        pass
+        #os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")
+      #except:
+        #pass
     gc.collect()
     use_validation_init = True
     if use_validation_init:    

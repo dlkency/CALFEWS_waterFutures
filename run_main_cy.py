@@ -60,7 +60,7 @@ if redo_init == 1:
 
   if a == 0:
     ### save initialized model
-    pd.to_pickle(main_cy_obj, save_init)
+    # pd.to_pickle(main_cy_obj, save_init)
     print('Initialization complete, ', datetime.now() - start_time)
     sys.stdout.flush()
   else:

@@ -459,7 +459,7 @@ cdef class District():
 
     reallocated_water = max(initial_projected - max_carryover, 0.0)
     carryover = min(max_carryover, initial_projected)
-    print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
+    #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0

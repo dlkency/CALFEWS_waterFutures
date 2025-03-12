@@ -2386,7 +2386,6 @@ static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_tot_demand[] = "tot_demand";
 static const char __pyx_k_validation[] = "validation";
 static const char __pyx_k_year_index[] = "year_index";
-static const char __pyx_k_Carryover_2[] = ", Carryover: ";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_leiupumping[] = "leiupumping";
@@ -2430,7 +2429,6 @@ static const char __pyx_k_Fraction_to_district[] = ", Fraction to district: ";
 static const char __pyx_k_dynamic_recharge_cap[] = "_dynamic_recharge_cap";
 static const char __pyx_k_dynamic_recovery_cap[] = "dynamic_recovery_cap";
 static const char __pyx_k_pyx_unpickle_District[] = "__pyx_unpickle_District";
-static const char __pyx_k_DEBUG_Reallocated_water[] = "[DEBUG] Reallocated water: ";
 static const char __pyx_k_calfews_src_district_cy[] = "calfews_src.district_cy";
 static const char __pyx_k_recharge_decline_factor[] = "recharge_decline_factor";
 static const char __pyx_k_acreage_by_pmp_crop_type[] = "acreage_by_pmp_crop_type";
@@ -2443,10 +2441,8 @@ static PyObject *__pyx_kp_u_Annual_allocation;
 static PyObject *__pyx_n_u_BN;
 static PyObject *__pyx_n_u_C;
 static PyObject *__pyx_kp_u_Carryover;
-static PyObject *__pyx_kp_u_Carryover_2;
 static PyObject *__pyx_kp_u_Contract;
 static PyObject *__pyx_n_u_D;
-static PyObject *__pyx_kp_u_DEBUG_Reallocated_water;
 static PyObject *__pyx_kp_u_Deliveries;
 static PyObject *__pyx_n_s_District;
 static PyObject *__pyx_kp_u_District_Fraction;
@@ -11100,7 +11096,7 @@ static __pyx_ctuple_double__and_double __pyx_f_11calfews_src_11district_cy_8Dist
  * 
  *     reallocated_water = max(initial_projected - max_carryover, 0.0)             # <<<<<<<<<<<<<<
  *     carryover = min(max_carryover, initial_projected)
- *     print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
+ *     #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
  */
   __pyx_t_4 = 0.0;
   __pyx_t_8 = (__pyx_v_initial_projected - __pyx_v_max_carryover);
@@ -11115,7 +11111,7 @@ static __pyx_ctuple_double__and_double __pyx_f_11calfews_src_11district_cy_8Dist
  * 
  *     reallocated_water = max(initial_projected - max_carryover, 0.0)
  *     carryover = min(max_carryover, initial_projected)             # <<<<<<<<<<<<<<
- *     print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
+ *     #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
  *     self.carryover[key] = carryover
  */
   __pyx_t_9 = __pyx_v_initial_projected;
@@ -11127,56 +11123,9 @@ static __pyx_ctuple_double__and_double __pyx_f_11calfews_src_11district_cy_8Dist
   }
   __pyx_v_carryover = __pyx_t_8;
 
-  /* "calfews_src/district_cy.pyx":462
- *     reallocated_water = max(initial_projected - max_carryover, 0.0)
- *     carryover = min(max_carryover, initial_projected)
- *     print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")             # <<<<<<<<<<<<<<
- *     self.carryover[key] = carryover
- *     self.paper_balance[key] = 0.0
- */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = 0;
-  __pyx_t_6 = 127;
-  __Pyx_INCREF(__pyx_kp_u_DEBUG_Reallocated_water);
-  __pyx_t_5 += 27;
-  __Pyx_GIVEREF(__pyx_kp_u_DEBUG_Reallocated_water);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_DEBUG_Reallocated_water);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_reallocated_water); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_7, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_6;
-  __pyx_t_5 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
-  __pyx_t_3 = 0;
-  __Pyx_INCREF(__pyx_kp_u_Carryover_2);
-  __pyx_t_5 += 13;
-  __Pyx_GIVEREF(__pyx_kp_u_Carryover_2);
-  PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_Carryover_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_carryover); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) : __pyx_t_6;
-  __pyx_t_5 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_t_7);
-  __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_2, 4, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 462, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
   /* "calfews_src/district_cy.pyx":463
  *     carryover = min(max_carryover, initial_projected)
- *     print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
+ *     #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
  *     self.carryover[key] = carryover             # <<<<<<<<<<<<<<
  *     self.paper_balance[key] = 0.0
  *     self.turnback_pool[key] = 0.0
@@ -11191,7 +11140,7 @@ static __pyx_ctuple_double__and_double __pyx_f_11calfews_src_11district_cy_8Dist
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "calfews_src/district_cy.pyx":464
- *     print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
+ *     #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
  *     self.carryover[key] = carryover
  *     self.paper_balance[key] = 0.0             # <<<<<<<<<<<<<<
  *     self.turnback_pool[key] = 0.0
@@ -41217,10 +41166,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_BN, __pyx_k_BN, sizeof(__pyx_k_BN), 0, 1, 0, 1},
   {&__pyx_n_u_C, __pyx_k_C, sizeof(__pyx_k_C), 0, 1, 0, 1},
   {&__pyx_kp_u_Carryover, __pyx_k_Carryover, sizeof(__pyx_k_Carryover), 0, 1, 0, 0},
-  {&__pyx_kp_u_Carryover_2, __pyx_k_Carryover_2, sizeof(__pyx_k_Carryover_2), 0, 1, 0, 0},
   {&__pyx_kp_u_Contract, __pyx_k_Contract, sizeof(__pyx_k_Contract), 0, 1, 0, 0},
   {&__pyx_n_u_D, __pyx_k_D, sizeof(__pyx_k_D), 0, 1, 0, 1},
-  {&__pyx_kp_u_DEBUG_Reallocated_water, __pyx_k_DEBUG_Reallocated_water, sizeof(__pyx_k_DEBUG_Reallocated_water), 0, 1, 0, 0},
   {&__pyx_kp_u_Deliveries, __pyx_k_Deliveries, sizeof(__pyx_k_Deliveries), 0, 1, 0, 0},
   {&__pyx_n_s_District, __pyx_k_District, sizeof(__pyx_k_District), 0, 0, 1, 1},
   {&__pyx_kp_u_District_Fraction, __pyx_k_District_Fraction, sizeof(__pyx_k_District_Fraction), 0, 1, 0, 0},
