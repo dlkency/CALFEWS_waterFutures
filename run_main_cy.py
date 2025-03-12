@@ -6,7 +6,7 @@ import pandas as pd
 from configobj import ConfigObj
 from distutils.util import strtobool
 from datetime import datetime
-import main_cy  #bring in the main_cy class
+import main_cy  # bring in the main_cy class
 
 start_time = datetime.now()
 
@@ -56,11 +56,12 @@ if redo_init == 1:
   
   ### setup new model
   main_cy_obj = main_cy.main_cy(results_folder)
+  print(main_cy_obj)
   a = main_cy_obj.initialize_py(initial_condition)  # add the intital_condition 
 
   if a == 0:
     ### save initialized model
-    # pd.to_pickle(main_cy_obj, save_init)
+    pd.to_pickle(main_cy_obj, save_init)
     print('Initialization complete, ', datetime.now() - start_time)
     sys.stdout.flush()
   else:
