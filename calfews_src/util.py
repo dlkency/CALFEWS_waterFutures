@@ -585,3 +585,174 @@ def MGHMM_generate_trace(nYears, uncertainty_dict, drop_date=True):
 
 
 
+def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, drop_date=True):
+
+    rng = np.random.default_rng(uncertainty_dict['synth_gen_seed'])
+
+    nSites = 15
+    mghmm_folder = 'calfews_src/data/MGHMM_synthetic/calfews_mhmm_5112022/'
+    
+    AnnualQ = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
+    logAnnualQ = np.log(AnnualQ)
+    hmm_model = hmm.GMMHMM(n_components=2, n_iter=1000, covariance_type='full').fit(logAnnualQ)
+
+    mus = np.array(hmm_model.means_)
+    weights = np.array(hmm_model.weights_)
+    P = np.array(hmm_model.transmat_)
+
+    hmm_model.covars_ = regularize_covariance(hmm_model.covars_)
+
+    hidden_states = hmm_model.predict(logAnnualQ)
+    
+    if mus[0][0][0] > mus[1][0][0]:
+        mus = np.flipud(mus)
+        P = np.fliplr(np.flipud(P))
+        covariance_matrix_dry = hmm_model.covars_[[1]].reshape(nSites, nSites)
+        covariance_matrix_wet = hmm_model.covars_[[0]].reshape(nSites, nSites)
+        hidden_states = 1 - hidden_states
+    else:
+        covariance_matrix_dry = hmm_model.covars_[[0]].reshape(nSites, nSites)
+        covariance_matrix_wet = hmm_model.covars_[[1]].reshape(nSites, nSites)
+
+    dry_state_means = mus[0, :]
+    wet_state_means = mus[1, :]
+    transition_matrix = P
+
+    dry_state_means_sampled = dry_state_means * uncertainty_dict['dry_state_mean_multiplier']
+    wet_state_means_sampled = wet_state_means * uncertainty_dict['wet_state_mean_multiplier']
+
+    # Apply covariance multipliers
+    covariance_matrix_dry_sampled = covariance_matrix_dry * uncertainty_dict['covariance_matrix_dry_multiplier']
+    covariance_matrix_dry_sampled += 1e-6 * np.eye(covariance_matrix_dry_sampled.shape[0])
+    for j in range(nSites):
+        covariance_matrix_dry_sampled[j, j] = covariance_matrix_dry_sampled[j, j] * uncertainty_dict['covariance_matrix_dry_multiplier']
+
+    covariance_matrix_wet_sampled = covariance_matrix_wet * uncertainty_dict['covariance_matrix_wet_multiplier']
+    covariance_matrix_wet_sampled += 1e-6 * np.eye(covariance_matrix_wet_sampled.shape[0])
+    for j in range(nSites):
+        covariance_matrix_wet_sampled[j, j] = covariance_matrix_wet_sampled[j, j] * uncertainty_dict['covariance_matrix_wet_multiplier']
+
+    # Apply transition matrix multipliers
+    transition_matrix_sampled = transition_matrix
+    transition_matrix_sampled[0, 0] = max(min(transition_matrix[0, 0] + uncertainty_dict['transition_drydry_addition'], 1), 0)
+    transition_matrix_sampled[1, 1] = max(min(transition_matrix[1, 1] + uncertainty_dict['transition_wetwet_addition'], 1), 0)
+    transition_matrix_sampled[0, 1] = 1 - transition_matrix_sampled[0, 0]
+    transition_matrix_sampled[1, 0] = 1 - transition_matrix_sampled[1, 1]
+
+    # Calculate stationary distribution to determine unconditional probabilities
+    eigenvals, eigenvecs = np.linalg.eig(np.transpose(transition_matrix_sampled))
+    one_eigval = np.argmin(np.abs(eigenvals - 1))
+    pi = eigenvecs[:, one_eigval] / np.sum(eigenvecs[:, one_eigval])
+    unconditional_dry = pi[0]
+
+    logAnnualQ_s = np.zeros([nYears, nSites])
+    states = np.empty([np.shape(logAnnualQ_s)[0]])
+
+    # Find the closest year for each synthetic sample based on the desired start year
+    historical_data = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
+    historical_data['Year'] = 1906 + historical_data.index
+    historical_years = historical_data['Year']
+    historical_streamflows = historical_data.drop('Year', axis=1)
+
+    log_historical_streamflows = np.log(historical_streamflows)
+    historical_states = hmm_model.predict(log_historical_streamflows)
+
+    # Determine the state for the desired starting year (e.g., 1996)
+    start_state = historical_states[historical_years == start_year][0]
+    # print(start_state)
+    # Set the first state based on the desired start year (start_state)
+    states[0] = start_state
+
+    if states[0] == 0:  # Dry state
+        logAnnualQ_s[0, :] = rng.multivariate_normal(np.reshape(dry_state_means_sampled, -1),
+                                                      covariance_matrix_dry_sampled)
+    else:  # Wet state
+        logAnnualQ_s[0, :] = rng.multivariate_normal(np.reshape(wet_state_means_sampled, -1),
+                                                      covariance_matrix_wet_sampled)
+
+    # Generate remaining state trajectory and log space flows based on transition probabilities
+    for j in range(1, np.shape(logAnnualQ_s)[0]):
+        # Apply transition probabilities: Dry -> Dry or Wet -> Wet
+        if rng.uniform() <= transition_matrix_sampled[int(states[j - 1]), int(states[j - 1])]:
+            states[j] = states[j - 1]  # Stay in the same state
+        else:
+            states[j] = 1 - states[j - 1]  # Switch states (Dry to Wet or Wet to Dry)
+
+        # Generate streamflow for the current state
+        if states[j] == 0:  # Dry state
+            logAnnualQ_s[j, :] = rng.multivariate_normal(np.reshape(dry_state_means_sampled, -1),
+                                                          covariance_matrix_dry_sampled)
+        else:  # Wet state
+            logAnnualQ_s[j, :] = rng.multivariate_normal(np.reshape(wet_state_means_sampled, -1),
+                                                          covariance_matrix_wet_sampled)
+
+    AnnualQ_s = np.exp(logAnnualQ_s)  # Convert from log space to original scale
+    binary_states = states.tolist()  # List of 0s (dry) and 1s (wet)
+
+    ############################################# Daily Disaggregation ######################
+
+  ### read in pre - normalized data
+    calfews_data = pd.read_csv(mghmm_folder + "cord_sim_realtime_normalized.csv")
+
+    yearly_sum = calfews_data.groupby(['Year']).sum()
+    yearly_sum = yearly_sum.reset_index()
+
+    # Import historic annual flows
+    AnnualQ_h = pd.read_csv(mghmm_folder + "AnnualQ_h.csv", header=None)
+    AnnualQ_h=AnnualQ_h*43560  # convert from cfs to acre-feet
+
+    # Identify number of years in synthetic & historical sample
+    N_s = len(AnnualQ_s)
+    N_h = len(AnnualQ_h)
+    
+    # Find closest year for each synthetic sample
+    index = np.zeros(N_s)
+
+    for j in range(0, N_s):
+      distance = np.zeros(N_h)
+      for i in range(0, N_h):
+        distance[i] = (AnnualQ_s[j, 0] - AnnualQ_h.iloc[i, 0]) ** 2
+      index[j] = np.argmin(distance)
+
+    # Assign year to the index
+    closest_year = yearly_sum.Year[index]
+    closest_year = closest_year.reset_index()
+    closest_year = closest_year.iloc[:, 1]
+
+    # Disaggregate to a daily value
+    DailyQ_s = calfews_data
+    DailyQ_s = DailyQ_s[DailyQ_s.Year < DailyQ_s.Year[0] + N_s]
+
+    for i in range(0, N_s):
+      y = np.unique(DailyQ_s.Year)[i]
+      index_array = np.where(DailyQ_s.Year == np.unique(DailyQ_s.Year)[i])[0]
+      newdata = DailyQ_s[DailyQ_s.index.isin(index_array)]
+      newdatasize = np.shape(newdata)[0]
+      olddata_array = np.where(calfews_data.Year == closest_year[i])[0]
+      olddata = calfews_data[calfews_data.index.isin(olddata_array)]
+      olddata = olddata.reset_index()
+      olddata = olddata.iloc[:, 1:20]
+      for z in range(4, 19):
+        olddata.iloc[:, z] = AnnualQ_s[i, z - 4] * olddata.iloc[:, z].values
+      ## fill in data, accounting for leap years. assume leap year duplicates feb 29
+      if newdatasize == 365:
+        if np.shape(olddata)[0] == 365:
+          DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
+        elif np.shape(olddata)[0] == 366:
+          # if generated data has 365 days, and disaggregating 366 - day series, skip feb 29 (60th day of leap year)
+          DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
+          DailyQ_s.iloc[index_array[59:365], 4:19] = olddata.iloc[60:366, 4:19].values
+
+      elif newdatasize == 366:
+        if np.shape(olddata)[0] == 366:
+          DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
+        elif np.shape(olddata)[0] == 365:
+          # if generated data has 366 days, and disaggregating 365 - day series, repeat feb 28 (59rd day of leap year)
+          DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
+          DailyQ_s.iloc[index_array[59], 4:19] = olddata.iloc[58, 4:19].values
+          DailyQ_s.iloc[index_array[60:], 4:19] = olddata.iloc[59:365, 4:19].values
+
+    if drop_date:
+      DailyQ_s.drop(['Year','Month','Day','realization'], axis=1, inplace=True)
+  
+    return AnnualQ_s, DailyQ_s, binary_states, closest_year

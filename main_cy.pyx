@@ -65,6 +65,7 @@ cdef class main_cy():
       self.flow_input_type = flow_input_type
       self.flow_input_source = flow_input_source
     self.results_folder = results_folder
+  
 
 
     

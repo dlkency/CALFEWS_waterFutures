@@ -14,6 +14,7 @@ results_folder = sys.argv[1]  ### folder directory to store results, relative to
 redo_init = int(sys.argv[2])   ### this should be 0 if we want to use saved initialized model, else 1
 run_sim = int(sys.argv[3])   ### this should be 1 if we want to run sim, else 0 to just do init
 initial_condition = sys.argv[4] ###this it the argument to pass to the start date of the reservoirs
+print(initial_condition, type(initial_condition))
 
 config = ConfigObj('runtime_params.ini')
 cluster_mode = bool(strtobool(config['cluster_mode']))
@@ -56,12 +57,12 @@ if redo_init == 1:
   
   ### setup new model
   main_cy_obj = main_cy.main_cy(results_folder)
-  print(main_cy_obj)
+  print(main_cy_obj.results_folder)
   a = main_cy_obj.initialize_py(initial_condition)  # add the intital_condition 
 
   if a == 0:
     ### save initialized model
-    pd.to_pickle(main_cy_obj, save_init)
+    # pd.to_pickle(main_cy_obj, save_init)
     print('Initialization complete, ', datetime.now() - start_time)
     sys.stdout.flush()
   else:
