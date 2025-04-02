@@ -592,7 +592,9 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
     nSites = 15
     mghmm_folder = 'calfews_src/data/MGHMM_synthetic/calfews_mhmm_5112022/'
     
-    AnnualQ = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
+    # AnnualQ = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
+    AnnualQ = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations_wateryear.csv")
+    
     logAnnualQ = np.log(AnnualQ)
     hmm_model = hmm.GMMHMM(n_components=2, n_iter=1000, covariance_type='full').fit(logAnnualQ)
 
@@ -649,17 +651,17 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
     states = np.empty([np.shape(logAnnualQ_s)[0]])
 
     # Find the closest year for each synthetic sample based on the desired start year
-    historical_data = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
-    historical_data['Year'] = 1906 + historical_data.index
-    historical_years = historical_data['Year']
-    historical_streamflows = historical_data.drop('Year', axis=1)
+    # historical_data = pd.read_csv(mghmm_folder + "historical_annual_streamflow_all_locations.csv")
+    AnnualQ['Year'] = 1906 + AnnualQ.index
+    historical_years = AnnualQ['Year']
+    historical_streamflows = AnnualQ.drop('Year', axis=1)
 
-    log_historical_streamflows = np.log(historical_streamflows)
-    historical_states = hmm_model.predict(log_historical_streamflows)
+    # log_historical_streamflows = np.log(historical_streamflows)
+    # historical_states = hmm_model.predict(log_historical_streamflows)
 
     # Determine the state for the desired starting year (e.g., 1996)
-    start_state = historical_states[historical_years == start_year][0]
-    # print(start_state)
+    start_state = hidden_states[historical_years == start_year][0]
+    print(start_state)
     # Set the first state based on the desired start year (start_state)
     states[0] = start_state
 
@@ -692,13 +694,13 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
     ############################################# Daily Disaggregation ######################
 
   ### read in pre - normalized data
-    calfews_data = pd.read_csv(mghmm_folder + "cord_sim_realtime_normalized.csv")
+    calfews_data = pd.read_csv(mghmm_folder + "cord_sim_realtime_normalized_wateryear.csv")
 
     yearly_sum = calfews_data.groupby(['Year']).sum()
     yearly_sum = yearly_sum.reset_index()
 
     # Import historic annual flows
-    AnnualQ_h = pd.read_csv(mghmm_folder + "AnnualQ_h.csv", header=None)
+    AnnualQ_h = pd.read_csv(mghmm_folder + "AnnualQ_h_wateryear.csv", header=None)
     AnnualQ_h=AnnualQ_h*43560  # convert from cfs to acre-feet
 
     # Identify number of years in synthetic & historical sample

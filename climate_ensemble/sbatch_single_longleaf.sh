@@ -17,9 +17,7 @@ year=$3
 sed 's/sourcehere/'$label'/' climate_ensemble/runtime_params_climate_tmp.ini > runtime_params.ini
 results_base='/proj/characklab/projects/danli/CALFEWS_results/'
 
-# Create the directory for saving results
 mkdir ${results_base}${results}
 cp runtime_params.ini ${results_base}${results}
 
-# Run the Python script with the formatted year
 time python3 -W ignore run_main_cy.py $label 1 1 "${year}-9-30"
