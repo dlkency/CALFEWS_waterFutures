@@ -695,6 +695,7 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
 
   ### read in pre - normalized data
     calfews_data = pd.read_csv(mghmm_folder + "cord_sim_realtime_normalized_wateryear.csv")
+    # calfews_data = calfews_data[~((calfews_data["Month"] == 2) & (calfews_data["Day"] == 29))]
 
     yearly_sum = calfews_data.groupby(['Year']).sum()
     yearly_sum = yearly_sum.reset_index()
@@ -717,16 +718,47 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
       index[j] = np.argmin(distance)
 
     # Assign year to the index
-    closest_year = yearly_sum.Year[index]
-    closest_year = closest_year.reset_index()
-    closest_year = closest_year.iloc[:, 1]
+    # closest_year = yearly_sum.Year[index]
+    index = index.astype(int)  # Convert float to int
+    years_template = np.unique(calfews_data.Year)
+    closest_year = years_template[index]
+    closest_year = pd.Series(closest_year).reset_index(drop=True)
+    # closest_year = closest_year.reset_index()
+    closest_year = pd.Series(closest_year).reset_index(drop=True) 
+
+    # closest_year = closest_year.iloc[:, 1]
 
     # Disaggregate to a daily value
-    DailyQ_s = calfews_data
-    DailyQ_s = DailyQ_s[DailyQ_s.Year < DailyQ_s.Year[0] + N_s]
+    # DailyQ_s = calfews_data
+    # DailyQ_s = DailyQ_s[DailyQ_s.Year < DailyQ_s.Year[0] + N_s]
 
-    for i in range(0, N_s):
-      y = np.unique(DailyQ_s.Year)[i]
+    leap_indices = [3, 7, 11, 15, 19, 23, 27]
+    DailyQ_s_list = []
+    for i in range(N_s):
+      matched_year = closest_year[i]
+      template = calfews_data[calfews_data.Year == matched_year].copy()
+
+      template = template[~((template["Month"] == 2) & (template["Day"] == 29))].copy()
+
+      # Force leap year: insert duplicate of Feb 28 as Feb 29
+      if i in leap_indices:
+          feb_28 = template[(template["Month"] == 2) & (template["Day"] == 28)].copy()
+          feb_29 = feb_28.copy()
+          feb_29["Day"] = 29
+          feb_29.index = [feb_28.index[-1] + 0.5]  # dummy index to ensure correct order
+          template = pd.concat([template, feb_29])
+          template = template.sort_index().reset_index(drop=True)
+
+      flow_cols = template.columns[4:19]
+      template[flow_cols] = template[flow_cols].values * AnnualQ_s[i, :15]
+
+      DailyQ_s_list.append(template)
+    DailyQ_s = pd.concat(DailyQ_s_list, ignore_index=True)
+
+    years = np.unique(DailyQ_s.Year)
+    for i in range(len(years)):
+      y = years[i]
+      # print(f"Processing year {y} for synthetic data disaggregation.")
       index_array = np.where(DailyQ_s.Year == np.unique(DailyQ_s.Year)[i])[0]
       newdata = DailyQ_s[DailyQ_s.index.isin(index_array)]
       newdatasize = np.shape(newdata)[0]
@@ -737,22 +769,22 @@ def MGHMM_generate_trace_flexible_start(nYears, uncertainty_dict, start_year, dr
       for z in range(4, 19):
         olddata.iloc[:, z] = AnnualQ_s[i, z - 4] * olddata.iloc[:, z].values
       ## fill in data, accounting for leap years. assume leap year duplicates feb 29
-      if newdatasize == 365:
-        if np.shape(olddata)[0] == 365:
-          DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
-        elif np.shape(olddata)[0] == 366:
-          # if generated data has 365 days, and disaggregating 366 - day series, skip feb 29 (60th day of leap year)
-          DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
-          DailyQ_s.iloc[index_array[59:365], 4:19] = olddata.iloc[60:366, 4:19].values
+      # if newdatasize == 365:
+      #   if np.shape(olddata)[0] == 365:
+      #     DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
+      #   elif np.shape(olddata)[0] == 366:
+      #     # if generated data has 365 days, and disaggregating 366 - day series, skip feb 29 (60th day of leap year)
+      #     DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
+      #     DailyQ_s.iloc[index_array[59:365], 4:19] = olddata.iloc[60:366, 4:19].values
 
-      elif newdatasize == 366:
-        if np.shape(olddata)[0] == 366:
-          DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
-        elif np.shape(olddata)[0] == 365:
-          # if generated data has 366 days, and disaggregating 365 - day series, repeat feb 28 (59rd day of leap year)
-          DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
-          DailyQ_s.iloc[index_array[59], 4:19] = olddata.iloc[58, 4:19].values
-          DailyQ_s.iloc[index_array[60:], 4:19] = olddata.iloc[59:365, 4:19].values
+      # elif newdatasize == 366:
+      #   if np.shape(olddata)[0] == 366:
+      #     DailyQ_s.iloc[index_array, 4:19] = olddata.iloc[:, 4:19].values
+      #   elif np.shape(olddata)[0] == 365:
+      #     # if generated data has 366 days, and disaggregating 365 - day series, repeat feb 28 (59rd day of leap year)
+      #     DailyQ_s.iloc[index_array[:59], 4:19] = olddata.iloc[0:59, 4:19].values
+      #     DailyQ_s.iloc[index_array[59], 4:19] = olddata.iloc[58, 4:19].values
+      #     DailyQ_s.iloc[index_array[60:], 4:19] = olddata.iloc[59:365, 4:19].values
 
     if drop_date:
       DailyQ_s.drop(['Year','Month','Day','realization'], axis=1, inplace=True)

@@ -1,4 +1,4 @@
-.csv
+**/*.csv
 .pkl
 *.pkl
 *.hdf5
@@ -31,3 +31,7 @@ out*.txt
 slurm*
 FKC_experiment/slurm*
 *_tmp.sh
+*.csv
+/calfews_src/data/MGHMM_synthetic
+/calfews_src/data/MGHMM_synthetic
+*.csv

@@ -1,3 +1,6 @@
+#######################code to generate MGHMM synthetic data with flexible start year########################
+#######################leap years are not handled############################################################
+
 import numpy as np
 import pandas as pd
 import h5py
@@ -18,38 +21,40 @@ udict = {'dry_state_mean_multiplier': 1, 'wet_state_mean_multiplier': 1,\
          'covariance_matrix_dry_multiplier': 1, 'covariance_matrix_wet_multiplier': 1, \
          'transition_drydry_addition': 0, 'transition_wetwet_addition': 0}
 
-nYears = 4
+nYears = 30
 all_states = []
 closest_yr = []
 
 for start_year in range(1996, 2025):
-
-  for mc in range(numMC):
-    udict['synth_gen_seed'] = mc
-    annual, df, binary_states, closest_year  = MGHMM_generate_trace_flexible_start(nYears, udict, start_year = start_year, drop_date=False)
-    df.to_csv(f"{MGHMMdir}{filestart}_{start_year}_{mc}{fileend}", index=False)
-    np.savetxt(f"{MGHMMdir}{annualfilestart}_{start_year}_{mc}{fileend}", annual, delimiter=',')
-      
-    all_states.append({
-              'MC_Sample': mc,
-              'Year1_State': binary_states[0],
-              'Year2_State': binary_states[1] if nYears >=2 else np.nan,
-              'Year3_State': binary_states[2] if nYears >=3 else np.nan,
-              'Year4_State': binary_states[3] if nYears >=4 else np.nan
-              # Add more years if nYears >3
-          })
-    closest_yr.append({
-              'MC_Sample': mc,
-              'Year1_State': closest_year[0],
-              'Year2_State': closest_year[1] if nYears >=2 else np.nan,
-              'Year3_State': closest_year[2] if nYears >=3 else np.nan,
-              'Year4_State': closest_year[3] if nYears >=4 else np.nan
-              # Add more years if nYears >3
-          })
+    for mc in range(numMC):
+        udict['synth_gen_seed'] = mc
+        annual, df, binary_states, closest_year = MGHMM_generate_trace_flexible_start(
+            nYears, udict, start_year=start_year, drop_date=False
+        )
+        df.to_csv(f"{MGHMMdir}{filestart}_{start_year}_{mc}{fileend}", index=False)
+        np.savetxt(f"{MGHMMdir}{annualfilestart}_{start_year}_{mc}{fileend}", annual, delimiter=',')
+        
+        # Create state dictionary dynamically for the number of years
+        state_dict = {'MC_Sample': mc}
+        closest_year_dict = {'MC_Sample': mc}
+        
+        for year in range(nYears):
+            state_key = f'Year{year+1}_State'
+            closest_key = f'Year{year+1}_Closest'
+            if year < len(binary_states):
+                state_dict[state_key] = binary_states[year]
+                closest_year_dict[closest_key] = closest_year[year]
+            else:
+                state_dict[state_key] = np.nan
+                closest_year_dict[closest_key] = np.nan
+        
+        all_states.append(state_dict)
+        closest_yr.append(closest_year_dict)
     
-  states_df = pd.DataFrame(all_states)
-  states_filename = f"{MGHMMdir}All_States_summary_{start_year}.csv"
-  states_df.to_csv(states_filename, index=False)
-  closest_year_df = pd.DataFrame(closest_yr)
-  states_filename = f"{MGHMMdir}closest_year_df_summary_{start_year}.csv"
-  closest_year_df.to_csv(states_filename, index=False)
+    states_df = pd.DataFrame(all_states)
+    states_filename = f"{MGHMMdir}All_States_summary_{start_year}.csv"
+    states_df.to_csv(states_filename, index=False)
+    
+    closest_year_df = pd.DataFrame(closest_yr)
+    closest_year_filename = f"{MGHMMdir}closest_year_df_summary_{start_year}.csv"
+    closest_year_df.to_csv(closest_year_filename, index=False)
