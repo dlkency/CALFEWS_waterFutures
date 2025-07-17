@@ -1,7 +1,7 @@
 # Water Index Futures
 This repo contains code and data for the following paper:
 Dan Li, Gupta, R, Zeff. H.B., & Characklis, G.W.
-Managing Drought Related Financial Risks with Water Futures. (In preparation)
+Managing Drought Related Financial Risks with Water Futures. (Under Review)  Water Resources Research.   [https://www.authorea.com/doi/full/10.22541/au.175087591.14639320]
 
 **Abstract**
 >The recently launched California water price index (Nasdaq: NQH2O) and the corresponding water futures (CME: H2O) offer water users, such as industrial farms, irrigation districts, and municipalities, an opportunity to hedge against unfavorable price movements in California's water market, particularly during extended drought periods. In this study, we explore the potential of hydrologic forecasting to predict water index prices using ensemble forecasts of daily time-series of water delivery, storage levels, and irrigation district demand in the Central Valley of California. Forecasting is conducted with a random forest model, trained on hydrologic data from 2013 to 2024, which achieves an R² value of 0.98. These predictions are then applied to a 9-month futures contract to manage water costs for an industrial farm in California. With 50% of water demand covered by futures contracts, the maximum cost is reduced by 12.9%, and the variance across all scenarios is reduced by 14.5%. The seasonal hydrologic forecasting model of water prices, therefore, provides a hedging tool to reduce water purchase cost volatility with relatively low fees, addressing the critical challenges posed by constrained water resources and competing demands.
