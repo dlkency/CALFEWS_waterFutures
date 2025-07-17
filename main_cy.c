@@ -4833,7 +4833,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
   PyObject *__pyx_v_k = NULL;
   PyObject *__pyx_v_v = NULL;
   struct __pyx_obj_11calfews_src_11inputter_cy_Inputter *__pyx_v_new_inputs = NULL;
-  int __pyx_v_use_validation_init;
+  CYTHON_UNUSED int __pyx_v_use_validation_init;
   int __pyx_r;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -5904,7 +5904,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *         #pass
  *     gc.collect()             # <<<<<<<<<<<<<<
  *     use_validation_init = True
- *     if use_validation_init:
+ *     if self.model_mode == "simulation":
  */
   __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_gc); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -5932,7 +5932,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
  *         #pass
  *     gc.collect()
  *     use_validation_init = True             # <<<<<<<<<<<<<<
- *     if use_validation_init:
+ *     if self.model_mode == "simulation":
  *       self.modelso.initialize_district_contract_carryovers()
  */
   __pyx_v_use_validation_init = 1;
@@ -5940,16 +5940,17 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
   /* "main_cy.pyx":169
  *     gc.collect()
  *     use_validation_init = True
- *     if use_validation_init:             # <<<<<<<<<<<<<<
+ *     if self.model_mode == "simulation":             # <<<<<<<<<<<<<<
  *       self.modelso.initialize_district_contract_carryovers()
  * 
  */
-  __pyx_t_11 = (__pyx_v_use_validation_init != 0);
-  if (__pyx_t_11) {
+  __pyx_t_11 = (__Pyx_PyUnicode_Equals(__pyx_v_self->model_mode, __pyx_n_u_simulation, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_t_10 = (__pyx_t_11 != 0);
+  if (__pyx_t_10) {
 
     /* "main_cy.pyx":170
  *     use_validation_init = True
- *     if use_validation_init:
+ *     if self.model_mode == "simulation":
  *       self.modelso.initialize_district_contract_carryovers()             # <<<<<<<<<<<<<<
  * 
  *     return 0
@@ -5959,7 +5960,7 @@ static int __pyx_f_7main_cy_7main_cy_initialize(struct __pyx_obj_7main_cy_main_c
     /* "main_cy.pyx":169
  *     gc.collect()
  *     use_validation_init = True
- *     if use_validation_init:             # <<<<<<<<<<<<<<
+ *     if self.model_mode == "simulation":             # <<<<<<<<<<<<<<
  *       self.modelso.initialize_district_contract_carryovers()
  * 
  */

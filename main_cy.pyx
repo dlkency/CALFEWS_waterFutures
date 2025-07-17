@@ -166,7 +166,7 @@ cdef class main_cy():
         #pass
     gc.collect()
     use_validation_init = True
-    if use_validation_init:    
+    if self.model_mode == "simulation":
       self.modelso.initialize_district_contract_carryovers()
 
     return 0
