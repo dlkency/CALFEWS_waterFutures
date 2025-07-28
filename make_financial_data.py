@@ -135,7 +135,7 @@ def calculate_district_revenues(df_data, district_display_key, district_pmp_keys
 def analyze_correlation_between_total_revenue_and_pumping():
 
     # start_time = time.time()
-    results_folder = "results/startyear_4_1"
+    results_folder = "../CALFEWS_results"
     district_pmp_keys = set_district_keys()
 
     districts = [
@@ -163,7 +163,6 @@ def analyze_correlation_between_total_revenue_and_pumping():
             for district in districts:
                 try:
                     district_revenue, _, _, _ = calculate_district_revenues(datDaily, district, district_pmp_keys)
-                    print(f"Processing district: {district}, Year: {year}{simulation}, district_revenue: {district_revenue}")
                     total_revenue_all = total_revenue_all.add(district_revenue, fill_value=0)
                 except Exception as e:
                     print(f"Error in district {district} for {year}_{simulation}: {e}")

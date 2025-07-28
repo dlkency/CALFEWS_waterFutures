@@ -95,7 +95,7 @@ cdef class main_cy():
       self.flow_input_source = 'CDEC'
 
     ### copy runtime file for future use
-    shutil.copy(self.runtime_file, self.results_folder + '/' + self.runtime_file)
+    #shutil.copy(self.runtime_file, self.results_folder + '/' + self.runtime_file)
 
     # set random seed
     if (self.seed > 0):
