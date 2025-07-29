@@ -14,7 +14,7 @@ results_folder = sys.argv[1]  ### folder directory to store results, relative to
 redo_init = int(sys.argv[2])   ### this should be 0 if we want to use saved initialized model, else 1
 run_sim = int(sys.argv[3])   ### this should be 1 if we want to run sim, else 0 to just do init
 initial_condition = sys.argv[4] ###this it the argument to pass to the start date of the reservoirs
-init_location = sys.argv[5]
+init_location = sys.argv[5]   ### This is where the temporary initialization file is saved
 print(initial_condition, type(initial_condition))
 
 config = ConfigObj(f'{init_location}/runtime_params.ini')
