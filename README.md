@@ -12,10 +12,17 @@ Zeff, H.B., Hamilton, A.L., Malek, K., Herman, J.D., Cohen, J.S., Medellin-Azuar
 Licensed under the MIT License, 2017.
 
 ## Installation and setup
-1. First, switch to the "main" branch of CALFEWS [https://github.com/hbz5000/CALFEWS] and follow instructions to clone, compile, and run the model CALFEWS_waterFutures in the same approach.
-2. Ensure you cythonize and recompile the code whenever changes are made to the .pyx files by using the following command:  ``python setup_cy.py build_ext --inplace`` .
-3. Navigate to ``CALFEWS_intro_tutorial.ipynb`` to run the validation/simulation. Before proceeding, ensure that you configure the runtime_params.ini file appropriately. For running synthetic simulations, set model_run = simulation and flow_input_type = synthetic. Note that completing 100 synthetic runs takes approximately 2-3 hours. It is advisable to start with a small batch trial to become familiar with the process. 
-4. Once the synthetic run is complete, the results will be stored in the "results" folder. Each output is saved in a subfolder named 1 to 100. After this, execute the  ``ensemble_pred.ipynb `` notebook to perform water index forecasting.
+1. Clone this repository to your local machine.
+1. If you use Anaconda:
+    1. Create a new environment using the yml file: ``conda env create -f environment.yml``
+    1. Activate environment: ``conda activate .venv_conda_calfews``
+1. If you don't use Anaconda:
+    1. Manually install the packages listed in ``environment.yml`` into a new virtual environment named ``.venv_conda_calfews``, and activate the environment.
+1. From the base CALFEWS directory, run model with ``python -W ignore run_main_cy.py <results_folder>``, where ``<results_folder>`` is the location you would like to store the results, relative to base directory. (Note: the command for Python 3 may be python3, not python, depending on your machine).
+1. If this doesn't work (or you want to make any changes to source files), you will need to recreate the C files & binaries from Cython. 
+    1. If you are running on Linux or MacOS, you should already have gcc installed. If you are running on Windows, you will need to install Visual Studio 2019 Community Edition. When it asks which programs to install, choose "Desktop development with C++".
+    1. Cythonize and recompile with the command: ``python setup_cy.py build_ext --inplace``.
+3. Navigate to ``CALFEWS_intro_tutorial.ipynb`` to run the validation/simulation. Before proceeding, ensure that you configure the runtime_params.ini file appropriately. For running synthetic simulations, set model_run = simulation and flow_input_type = synthetic.  
 
 ## Climate Emsemble
 1. Generate the ensemble on an HPC cluster. Using the parallel job structure defined in climate_ensemble/submit_100jobs_ensemble.sh, the full ensemble completes in 20–30 minutes. Running the equivalent workload locally would take approximately 60 hours.
