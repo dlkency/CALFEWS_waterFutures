@@ -35,3 +35,6 @@ FKC_experiment/slurm*
 /calfews_src/data/MGHMM_synthetic
 /calfews_src/data/MGHMM_synthetic
 *.csv
+CALFEWS_intro_tutorial_edit.ipynb
+CALFEWS_DISES_Graphs.ipynb
+carryover_graphs.ipynb

@@ -1,0 +1,17 @@
+{
+  "total": 0,
+  "maxForecastValue": 0.0,
+  "carryover": 0.0,
+  "type": "contract",
+  "name": "preferential",
+  "allocation_priority": 1,
+  "storage_priority": 1,
+  "contractors": ["ANA", "BVH", "BUR", "COM", "FUL", "GLN", "LNB", "LAX", "PAS", "SFN", "SMO", "SNA", "SNM", "TOR", "CLG", "CBN", "EAS", "FOT", "INE", "LAV", "ORA", "SDC", "3VY", "WBN", "RSC", "USG"],
+  "reduction":{
+    "W": 1.0,
+    "AN": 1.0,
+    "BN": 1.0,
+    "D": 1.0,
+    "C": 1.0
+  }
+}

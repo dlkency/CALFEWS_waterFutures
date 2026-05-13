@@ -1,0 +1,16 @@
+{
+  "participant_list": ["AVK", "PMD"],
+  "canal_rights": ["caa"],
+  "initial_recharge": 100.0,
+  "recovery": 0.005411,
+  "tot_storage": 0.05,
+  "recharge_decline": [1.0, 0.94, 0.88, 0.88, 0.88, 0.88, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99],
+  "ownership": {
+    "AVK": 0.95,
+    "PMD": 0.05
+  },
+  "bank_cap": {
+    "AVK": 99999.9,
+    "PMD": 99999.9
+  }
+}

@@ -168,7 +168,7 @@ def model_attribute_nonzero(att, name, clean_output):
 def model_attribute_loop_generator(clean_output, modelno, modelso):
 
   ### output timeseries for reservoirs
-  for reservoir_obj in modelno.reservoir_list + modelso.reservoir_list:
+  for reservoir_obj in modelno.reservoir_list + modelso.reservoir_list + [modelso.dummy, modelso.dummy2, modelso.ecICS]:
     for key in ['S', 'R', 'R_to_delta', 'available_storage', 'outflow_release', 'days_til_full','contract_flooded',
                 'reclaimed_carryover','flood_spill','flood_deliveries','Q','SNPK','downstream','fnf']:
       try:
@@ -214,7 +214,7 @@ def model_attribute_loop_generator(clean_output, modelno, modelso):
 
 
   ### output timeseries for districts & privates
-  for district_obj in modelso.district_list + modelso.urban_list + modelso.private_list + modelso.city_list:
+  for district_obj in modelso.district_list + modelso.urban_list + modelso.private_list + modelso.city_list + modelso.metro.mwd_member_list:
     for key, timeseries in district_obj.daily_supplies_full.items():
       try:
         att, name = model_attribute_nonzero(timeseries, np.string_(district_obj.name + '_' + key), clean_output)

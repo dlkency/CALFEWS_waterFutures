@@ -22,7 +22,10 @@
     "exchange": 0.0,
     "hidden": 0.0,
     "buchannon": 0.0,
-    "eastside": 0.0
+    "eastside": 0.0,
+    "coloradocompact": 0.0,
+    "owensvalley": 0.0,
+    "preferential": 0.0
   },
   "rights": {
     "tuolumne": {
@@ -96,7 +99,7 @@
     "C": [0]
   },
 
-  "MDD": 21.0,
+  "MDD": 36.0,
   "urban_profile":[0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333, 0.08333]
 
 }

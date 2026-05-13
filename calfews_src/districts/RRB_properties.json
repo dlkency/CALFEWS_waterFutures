@@ -2,16 +2,15 @@
   "contract_list": ["tableA", "kern"],
   "turnout_list": ["xvc", "knr"],
   "in_leiu_banking": true,
-  "participant_list": ["RRB","ARV","DLE","CTL","CCH", "BVA", "SOC", "KRT"],
+  "participant_list": ["RRB","ARV","DLE","MET","CCHV", "BVA", "KRT"],
   "leiu_ownership": {
     "RRB": 0.5,
     "ARV": 0.0,
     "DLE": 0.0,
     "KRT": 0.0,
-    "CTL": 0.25,
-    "CCH": 0.25,
+    "MET": 0.25,
+    "CCHV": 0.25,
     "BVA": 0.0,
-    "KRT": 0.0,
     "SOC": 0.0
   },
   "inleiucap": {
@@ -19,11 +18,10 @@
     "ARV": 99999.9,
     "DLE": 99999.9,
     "KRT": 99999.9,
-    "CTL": 99999.9,
-    "CCH": 99999.9,
-    "BVA": 99999.9,
-    "KRT": 99999.9,
-    "SOC": 99999.9
+    "MET": 99999.9,
+    "CCHV": 99999.9,
+    "BVA": 99999.9
+    
   },
   "leiu_recovery": 0.1233,
   "in_district_direct_recharge": 400.0,
@@ -45,7 +43,10 @@
     "exchange": 0.0,
     "hidden": 0.0,
     "buchannon": 0.0,
-    "eastside": 0.0
+    "eastside": 0.0,
+    "coloradocompact": 0.0,
+    "owensvalley": 0.0,
+    "preferential": 0.0
   },
   "rights": {
     "tuolumne": {

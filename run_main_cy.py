@@ -17,10 +17,15 @@ initial_condition = sys.argv[4] ###this it the argument to pass to the start dat
 init_location = sys.argv[5]   ### This is where the temporary initialization file is saved
 print(initial_condition, type(initial_condition))
 
-config = ConfigObj(f'{init_location}/runtime_params.ini')
-print(config, type(config), 'Exist? ', bool(config))
-cluster_mode = bool(strtobool(config['cluster_mode']))
-scratch_dir = config['scratch_dir']
+if init_location != "local": 
+  config = ConfigObj(f'{init_location}/runtime_params.ini')
+  print(config, type(config), 'Exist? ', bool(config))
+  cluster_mode = bool(strtobool(config['cluster_mode']))
+  scratch_dir = config['scratch_dir']
+else:
+  config = ConfigObj('runtime_params.ini')
+  cluster_mode = bool(strtobool(config['cluster_mode']))
+  scratch_dir = config['scratch_dir']
 
 if cluster_mode:
   results_folder = scratch_dir + results_folder + '/'
@@ -58,9 +63,12 @@ if redo_init == 1:
     pass
   
   ### setup new model
-  main_cy_obj = main_cy.main_cy(results_folder, runtime_file=f'{init_location}/runtime_params.ini')
+  if init_location == "local":
+    main_cy_obj = main_cy.main_cy(results_folder)
+  else:
+    main_cy_obj = main_cy.main_cy(results_folder, runtime_file=f'{init_location}/runtime_params.ini')
   print(main_cy_obj.results_folder)
-  a = main_cy_obj.initialize_py(initial_condition)  # add the intital_condition 
+  a = main_cy_obj.initialize_py(initial_condition)
 
   if a == 0:
     ### save initialized model

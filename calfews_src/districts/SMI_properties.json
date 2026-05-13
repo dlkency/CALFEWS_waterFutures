@@ -31,7 +31,10 @@
     "exchange": 0.0,
     "hidden": 0.0,
     "buchannon": 0.0,
-    "eastside": 0.0
+    "eastside": 0.0,
+    "coloradocompact": 0.0,
+    "owensvalley": 0.0,
+    "preferential": 0.0
   },
   "rights": {
     "tuolumne": {

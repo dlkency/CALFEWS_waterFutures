@@ -60,7 +60,7 @@ cdef class District():
     self.irrdemand = Crop(self.zone)
 	  #initialize dictionary to hold different delivery types
     self.deliveries = {}
-    self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern','kings']
+    self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern','kings', 'coloradocompact', 'owensvalley', 'preferential'] #added new contracts here, not in the source_codes spot since there should be no Ag demand
     self.non_contract_delivery_list = ['recover_banked','inleiu_irrigation','inleiu_recharge','leiupumping','exchanged_GW','exchanged_SW','undelivered_trades']
 
     for x in self.contract_list_all:
@@ -231,7 +231,6 @@ cdef class District():
         else:
           for i,v in enumerate(self.crop_list):
             self.monthlydemand[wyt][monthloop] += max(self.irrdemand.etM[v][cwyt][monthloop],0.0)*(self.acreage[cwyt][i]-self.private_acreage[v])/(12.0*days_in_month[non_leap_year][monthloop])
-          	  	
 			
   cdef void calc_demand(self, int wateryear, int year_index, int da, int m, list days_in_month, int m1, str wyt):
     #from the monthlydemand dictionary (calculated at the beginning of each wateryear based on ag acreage and urban demands), calculate the daily demand and the remaining annual demand
@@ -385,7 +384,7 @@ cdef class District():
 	    #same as above, but projected_allocation*self.project_contract[key] - individual share of expected total contract allocation, this includes contract water that has already been delivered to all contractors
       annual_allocation = projected_allocation*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       storage_balance =   current_water*self.project_contract[key]*frac_to_district + max(self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key] - self.deliveries[key][wateryear], 0.0)
-
+      
     elif balance_type == 'right':
       #same as above, but for contracts that are expressed as 'rights' instead of allocations
       district_storage = (water_available-tot_carryover)*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
@@ -413,30 +412,22 @@ cdef class District():
       frac_to_district = 1.0
     
     if balance_type == 'contract':
-      annual_allocation = existing_balance*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
+      if self.name == 'metropolitan' and key == 'tableA' and wateryear < 4:
+        self.project_contract[key] = .4613
+        annual_allocation = existing_balance*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
+      else:
+        annual_allocation = existing_balance*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       max_carryover = self.contract_carryover_list[key]
     elif balance_type == 'right':
       annual_allocation = existing_balance*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       max_carryover = self.contract_carryover_list[key]
-    if self.name == 'losthills' and key == 'tableA':
-      print(f"District Name: {self.name}")
-      print(f"Annual allocation: {annual_allocation}, Max carryover: {max_carryover}")
-      print(f"Max carryover: {max_carryover}")
-      print(f"Existing balance: {existing_balance}")
-      print(f"Contract: {self.project_contract[key]}")
-      print(f"District Fraction: {frac_to_district}")
-      print(f"Deliveries: {self.deliveries[key][wateryear]}")
-      print(f"Carryover: {self.carryover[key]}")
-      print(f"paper balance: {self.paper_balance[key]}")
-      print(f"turnback balance: {self.turnback_pool[key]}")
 
     reallocated_water = max(annual_allocation - max_carryover, 0.0)
     carryover = min(max_carryover, annual_allocation)
+
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
-    if self.name == 'losthills' and key == 'tableA':
-      print(f"Carryover: {self.carryover[key]}")
 	
     return reallocated_water, carryover
 
@@ -454,12 +445,11 @@ cdef class District():
     
     max_carryover = self.contract_carryover_list[key]
 
-    print(f" Wateryear: {wateryear}, balance_type: {balance_type}, key: {key}")
-    print(f"Initial projected: {initial_projected}, Max carryover: {max_carryover}, Fraction to district: {frac_to_district}")
+    #print(f" Wateryear: {wateryear}, balance_type: {balance_type}, key: {key}")
+    #print(f"Initial projected: {initial_projected}, Max carryover: {max_carryover}, Fraction to district: {frac_to_district}")
 
     reallocated_water = max(initial_projected - max_carryover, 0.0)
     carryover = min(max_carryover, initial_projected)
-    #print(f"[DEBUG] Reallocated water: {reallocated_water}, Carryover: {carryover}")
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
@@ -1284,7 +1274,7 @@ cdef class District():
         self.daily_supplies_full[key][t] = value
 
 
-  cdef void accounting_full(self, int t, int wateryear):
+  cpdef void accounting_full(self, int t, int wateryear):
     cdef str x
 
     # keep track of all contract amounts

@@ -53,7 +53,7 @@ cdef class Private():
       self.irrdemand[x] = Crop(self.zone[x])
 	  #initialize dictionary to hold different delivery types
     self.deliveries = {}
-    self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings']
+    self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings', 'coloradocompact', 'owensvalley'] #added new contracts
     self.non_contract_delivery_list = ['inleiu','leiupumping','exchanged_GW','exchanged_SW', 'recover_banked']
 
     for district in self.district_list:

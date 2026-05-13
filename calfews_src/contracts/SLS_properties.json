@@ -1,7 +1,7 @@
 {
   "total": 4056.205,
   "maxForecastValue": 2400.0,
-  "carryover": 1020.0,
+  "carryover": 1060.0,
   "type": "contract",
   "name": "tableA",
   "allocation_priority": 1,

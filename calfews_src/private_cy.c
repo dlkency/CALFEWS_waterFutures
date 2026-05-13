@@ -2237,6 +2237,7 @@ static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_leiupumping[] = "leiupumping";
 static const char __pyx_k_member_name[] = "member_name";
+static const char __pyx_k_owensvalley[] = "owensvalley";
 static const char __pyx_k_exchanged_GW[] = "exchanged_GW";
 static const char __pyx_k_exchanged_SW[] = "exchanged_SW";
 static const char __pyx_k_inleiubanked[] = "inleiubanked";
@@ -2260,6 +2261,7 @@ static const char __pyx_k_leiu_ownership[] = "leiu_ownership";
 static const char __pyx_k_recover_banked[] = "recover_banked";
 static const char __pyx_k_type_fractions[] = "type_fractions";
 static const char __pyx_k_bank_deliveries[] = "bank_deliveries";
+static const char __pyx_k_coloradocompact[] = "coloradocompact";
 static const char __pyx_k_daily_fractions[] = "daily_fractions";
 static const char __pyx_k_in_leiu_banking[] = "in_leiu_banking";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
@@ -2304,6 +2306,7 @@ static PyObject *__pyx_n_s_cfs_tafd;
 static PyObject *__pyx_n_s_cl;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_collections;
+static PyObject *__pyx_n_u_coloradocompact;
 static PyObject *__pyx_n_u_contract;
 static PyObject *__pyx_n_s_contract_list;
 static PyObject *__pyx_n_u_contractor;
@@ -2373,6 +2376,7 @@ static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_number_years;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_open;
+static PyObject *__pyx_n_u_owensvalley;
 static PyObject *__pyx_n_s_pandas;
 static PyObject *__pyx_n_u_paper;
 static PyObject *__pyx_n_s_participant_list;
@@ -3399,7 +3403,7 @@ static int __pyx_pf_11calfews_src_10private_cy_7Private_6__init__(struct __pyx_o
  *       self.irrdemand[x] = Crop(self.zone[x])
  * 	  #initialize dictionary to hold different delivery types
  *     self.deliveries = {}             # <<<<<<<<<<<<<<
- *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings']
+ *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings', 'coloradocompact', 'owensvalley'] #added new contracts
  *     self.non_contract_delivery_list = ['inleiu','leiupumping','exchanged_GW','exchanged_SW', 'recover_banked']
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
@@ -3413,11 +3417,11 @@ static int __pyx_pf_11calfews_src_10private_cy_7Private_6__init__(struct __pyx_o
   /* "calfews_src/private_cy.pyx":56
  * 	  #initialize dictionary to hold different delivery types
  *     self.deliveries = {}
- *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings']             # <<<<<<<<<<<<<<
+ *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings', 'coloradocompact', 'owensvalley'] #added new contracts             # <<<<<<<<<<<<<<
  *     self.non_contract_delivery_list = ['inleiu','leiupumping','exchanged_GW','exchanged_SW', 'recover_banked']
  * 
  */
-  __pyx_t_1 = PyList_New(10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_u_tableA);
   __Pyx_GIVEREF(__pyx_n_u_tableA);
@@ -3449,6 +3453,12 @@ static int __pyx_pf_11calfews_src_10private_cy_7Private_6__init__(struct __pyx_o
   __Pyx_INCREF(__pyx_n_u_kings);
   __Pyx_GIVEREF(__pyx_n_u_kings);
   PyList_SET_ITEM(__pyx_t_1, 9, __pyx_n_u_kings);
+  __Pyx_INCREF(__pyx_n_u_coloradocompact);
+  __Pyx_GIVEREF(__pyx_n_u_coloradocompact);
+  PyList_SET_ITEM(__pyx_t_1, 10, __pyx_n_u_coloradocompact);
+  __Pyx_INCREF(__pyx_n_u_owensvalley);
+  __Pyx_GIVEREF(__pyx_n_u_owensvalley);
+  PyList_SET_ITEM(__pyx_t_1, 11, __pyx_n_u_owensvalley);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->contract_list_all);
   __Pyx_DECREF(__pyx_v_self->contract_list_all);
@@ -3457,7 +3467,7 @@ static int __pyx_pf_11calfews_src_10private_cy_7Private_6__init__(struct __pyx_o
 
   /* "calfews_src/private_cy.pyx":57
  *     self.deliveries = {}
- *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings']
+ *     self.contract_list_all = ['tableA', 'cvpdelta', 'exchange', 'cvc', 'friant1', 'friant2','kaweah', 'tule', 'kern', 'kings', 'coloradocompact', 'owensvalley'] #added new contracts
  *     self.non_contract_delivery_list = ['inleiu','leiupumping','exchanged_GW','exchanged_SW', 'recover_banked']             # <<<<<<<<<<<<<<
  * 
  *     for district in self.district_list:
@@ -45347,6 +45357,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cl, __pyx_k_cl, sizeof(__pyx_k_cl), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_collections, __pyx_k_collections, sizeof(__pyx_k_collections), 0, 0, 1, 1},
+  {&__pyx_n_u_coloradocompact, __pyx_k_coloradocompact, sizeof(__pyx_k_coloradocompact), 0, 1, 0, 1},
   {&__pyx_n_u_contract, __pyx_k_contract, sizeof(__pyx_k_contract), 0, 1, 0, 1},
   {&__pyx_n_s_contract_list, __pyx_k_contract_list, sizeof(__pyx_k_contract_list), 0, 0, 1, 1},
   {&__pyx_n_u_contractor, __pyx_k_contractor, sizeof(__pyx_k_contractor), 0, 1, 0, 1},
@@ -45416,6 +45427,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_number_years, __pyx_k_number_years, sizeof(__pyx_k_number_years), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_open, __pyx_k_open, sizeof(__pyx_k_open), 0, 0, 1, 1},
+  {&__pyx_n_u_owensvalley, __pyx_k_owensvalley, sizeof(__pyx_k_owensvalley), 0, 1, 0, 1},
   {&__pyx_n_s_pandas, __pyx_k_pandas, sizeof(__pyx_k_pandas), 0, 0, 1, 1},
   {&__pyx_n_u_paper, __pyx_k_paper, sizeof(__pyx_k_paper), 0, 1, 0, 1},
   {&__pyx_n_s_participant_list, __pyx_k_participant_list, sizeof(__pyx_k_participant_list), 0, 0, 1, 1},

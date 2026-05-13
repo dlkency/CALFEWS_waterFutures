@@ -29,6 +29,7 @@ cdef class Model():
                 waterbank_list, canal_list, observed_trp, cvp_allocation, trp_pumping, observed_hro, private_list, annual_CVP, \
                 ytd_pump_hro, ytd_pump_trp, observed_hro_pred, urban_list, leiu_list
 
+    public object metro, metro_instance
 
     public dict delta_gains_regression, canal_reservoir, canal_contract, canal_priority, reservoir_contract, contract_turnouts, \
                 contract_reservoir, reservoir_canal, canal_district, pumping_turnback, max_tax_free, district_keys, \
@@ -36,28 +37,29 @@ cdef class Model():
 
 
     public Reservoir shasta, oroville, folsom, yuba, newmelones, donpedro, exchequer, millerton, sanluisstate, sanluisfederal, \
-                sanluis, isabella, success, kaweah, pineflat, trinity
+                     sanluis, isabella, success, kaweah, pineflat, trinity, diamondvalley, mathews, skinner, castaiclake, \
+                     pyramid, silverwood, perris, dummy, dummy2, ecICS
 
     public Delta delta 
 
     public Canal fkc, madera, xvc, calaqueduct, kwbcanal, aecanal, kerncanal, calloway, lerdo, beardsley, kernriverchannel, \
-                kaweahriverchannel, tuleriverchannel, kingsriverchannel
+                 kaweahriverchannel, tuleriverchannel, kingsriverchannel, coloradoaqueduct, losangelesaqueduct, swpdistribution 
 
     public District berrenda, belridge, buenavista, cawelo, henrymiller, ID4, kerndelta, losthills, rosedale, semitropic, \
-                tehachapi, tejon, westkern, wheeler, kcwa, bakersfield, northkern, arvin, delano, pixley, exeter, kerntulare, \
-                lindmore, lindsay, lowertule, porterville, saucelito, shaffer, sosanjoaquin, teapot, terra, tulare, fresno, \
-                fresnoid, socal, southbay, centralcoast, dudleyridge, tularelake, westlands, chowchilla, maderairr, othertule,\
-                otherkaweah, otherfriant, othercvp, otherexchange, othercrossvalley, otherswp, consolidated, alta, krwa, \
-                kaweahdelta, sanluiswater, panoche, delpuerto, anaheim, beverlyhills, burbank, compton, fullerton, glendale, \
-                longbeach, losangeles, pasadena, sanfernando, sanmarino, santaana, santamonica, torrance, calleguas, \
-                centralbasin, eastern, foothill, inlandempire, lasvirgenes, orangecounty, sandiegocounty, threevalleys, \
-                westbasin, riversidecounty, uppersangabriel
+                    tehachapi, tejon, westkern, wheeler, kcwa, bakersfield, northkern, arvin, delano, pixley, exeter, kerntulare, \
+                    lindmore, lindsay, lowertule, porterville, saucelito, shaffer, sosanjoaquin, teapot, terra, tulare, fresno, \
+                    fresnoid, socal, southbay, centralcoast, dudleyridge, tularelake, westlands, chowchilla, maderairr, othertule,\
+                    otherkaweah, otherfriant, othercvp, otherexchange, othercrossvalley, otherswp, consolidated, alta, krwa, \
+                    kaweahdelta, sanluiswater, panoche, delpuerto, anaheim, beverlyhills, burbank, compton, fullerton, glendale, \
+                    longbeach, losangeles, pasadena, sanfernando, sanmarino, santaana, santamonica, torrance, calleguas, \
+                    centralbasin, eastern, foothill, inlandempire, lasvirgenes, orangecounty, sandiegocounty, threevalleys, \
+                    westbasin, riversidecounty, uppersangabriel, antelopekern, crestline, desert, mojavewater, palmdale, sangabriel, santaclarita, ventura, coachellavalley, sanbernadino, sangorgonio, metropolitan
 
-    public Private wonderful, metropolitan, castaic, coachella
+    public Private wonderful, castaic, coachella
 
-    public Waterbank stockdale, kernriverbed, poso, pioneer, kwb, berrendawb, b2800, wkwb, irvineranch, northkernwb, aewb, northfriantwb, centralfriantwb
+    public Waterbank stockdale, kernriverbed, poso, pioneer, kwb, berrendawb, b2800, wkwb, irvineranch, northkernwb, aewb, northfriantwb, centralfriantwb, westside, eastside, amargosa, highdesert
 
-    public Contract friant1, friant2, swpdelta, cvpdelta, cvpexchange, crossvalley, kernriver, tuleriver, kaweahriver, kingsriver
+    public Contract friant1, friant2, swpdelta, cvpdelta, cvpexchange, crossvalley, kernriver, tuleriver, kaweahriver, kingsriver, coloradocompact, owensvalley, preferential
     
   cdef dict search_canal_demand(self, int dowy, Canal canal, str prev_canal, str contract_canal, str flow_dir, str flow_type, int wateryear, str search_type, dict existing_deliveries, list canals_passed_through)   
 

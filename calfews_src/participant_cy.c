@@ -1549,7 +1549,7 @@ struct __pyx_vtabstruct_11calfews_src_11district_cy_District {
   double (*record_direct_delivery)(struct __pyx_obj_11calfews_src_11district_cy_District *, double, int);
   __pyx_ctuple_double__and_double__and_double (*set_deliveries)(struct __pyx_obj_11calfews_src_11district_cy_District *, PyObject *, PyObject *, PyObject *, PyObject *, int, PyObject *, int);
   void (*adjust_bank_accounts)(struct __pyx_obj_11calfews_src_11district_cy_District *, PyObject *, double, double, int);
-  void (*accounting_full)(struct __pyx_obj_11calfews_src_11district_cy_District *, int, int);
+  void (*accounting_full)(struct __pyx_obj_11calfews_src_11district_cy_District *, int, int, int __pyx_skip_dispatch);
   void (*set_daily_supplies_full)(struct __pyx_obj_11calfews_src_11district_cy_District *, PyObject *, double, int);
   void (*accounting_leiubank)(struct __pyx_obj_11calfews_src_11district_cy_District *, int);
   void (*calc_demand)(struct __pyx_obj_11calfews_src_11district_cy_District *, int, int, int, int, PyObject *, int, PyObject *);

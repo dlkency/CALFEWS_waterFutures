@@ -38,11 +38,11 @@ cdef class Reservoir():
 
   cdef void find_available_storage(self, int t, int m, int da, int dowy)
 
-  cdef void create_flow_shapes(self, Model model) except *
+  cpdef void create_flow_shapes(self, Model model) except *
 
-  cdef void find_release_func(self, Model model) except *
+  cpdef void find_release_func(self, Model model) except *
 
-  cdef void calc_expected_min_release(self, Model model, dict delta_req, depletions, int sjrr_toggle)
+  cpdef void calc_expected_min_release(self, Model model, dict delta_req, depletions, int sjrr_toggle)
 
   cdef double sj_riv_res_flows(self, int t, int dowy, int toggle_short_series=*)
 

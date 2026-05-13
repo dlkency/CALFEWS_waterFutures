@@ -1,5 +1,5 @@
 {
-  "participant_list": ["SOC", "RRB"],
+  "participant_list": ["MET", "RRB"],
   "participant_type": ["direct","direct"],
   "canal_rights": ["xvc"],
   "initial_recharge": 0.0,
@@ -7,11 +7,11 @@
   "tot_storage": 0.0,
   "recharge_decline": [1.0, 0.94, 0.88, 0.88, 0.88, 0.88, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99],
   "ownership": {
-    "SOC": 1.0,
+    "MET": 1.0,
     "RRB": 0.0
   },
   "bank_cap": {
-    "SOC": 99999.9,
+    "MET": 99999.9,
     "RRB": 99999.9
   }
 }

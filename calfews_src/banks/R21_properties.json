@@ -1,6 +1,6 @@
 {
-  "participant_list": ["RRB","ARV","DLE","CTL","CCH", "BVA", "SOC", "KRT"],
-  "participant_type": ["direct","direct","paper","paper","direct","direct","direct"],
+  "participant_list": ["RRB","ARV","DLE","MET","CCHV", "BVA", "KRT"],
+  "participant_type": ["direct","direct","paper","paper","direct","direct"],
   "canal_rights": ["gsl"],
   "initial_recharge": 400.0,
   "recovery": 0.1233,
@@ -11,11 +11,9 @@
     "ARV": 0.0,
     "DLE": 0.0,
     "KRT": 0.0,
-    "CTL": 0.25,
-    "CCH": 0.25,
-    "BVA": 0.0,
-    "KRT": 0.0,
-    "SOC": 0.0
+    "MET": 0.25,
+    "CCHV": 0.25,
+    "BVA": 0.0
   },
   "bank_cap": {
     "RRB": 99999.9,
@@ -24,8 +22,6 @@
     "KRT": 99999.9,
     "CTL": 99999.9,
     "CCH": 99999.9,
-    "BVA": 99999.9,
-    "KRT": 99999.9,
-    "SOC": 99999.9
+    "BVA": 99999.9
   }
 }

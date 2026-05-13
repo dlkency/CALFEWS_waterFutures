@@ -14,7 +14,7 @@
   "inleiuhaircut" : 0.9,
   "recharge_decline": [1.0, 0.94, 0.88, 0.88, 0.88, 0.88, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99],
   "project_contract": {
-    "tableA": 0.62721893491,
+    "tableA": 0.0,
     "cvpdelta": 0.0,
     "friant1": 0.0,
     "friant2": 0.0,
@@ -22,7 +22,10 @@
     "exchange": 0.0,
     "hidden": 0.0,
     "buchannon": 0.0,
-    "eastside": 0.0
+    "eastside": 0.0,
+    "coloradocompact": 0.0,
+    "owensvalley": 0.0,
+    "preferential": 0.0
   },
   "rights": {
     "tuolumne": {

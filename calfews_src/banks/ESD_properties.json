@@ -1,0 +1,14 @@
+{
+  "participant_list": ["AVK"],
+  "canal_rights": ["caa"],
+  "initial_recharge": 600.0,
+  "recovery": 0.005479,
+  "tot_storage": 0.05,
+  "recharge_decline": [1.0, 0.94, 0.88, 0.88, 0.88, 0.88, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99],
+  "ownership": {
+    "AVK": 1.0
+  },
+  "bank_cap": {
+    "AVK": 5.7
+  }
+}

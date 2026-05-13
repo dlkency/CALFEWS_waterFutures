@@ -28,6 +28,7 @@ import h5py
 from distutils.util import strtobool
 from cpython.exc cimport PyErr_CheckSignals
 from calfews_src.model_cy cimport Model
+import calfews_src.metropolitan_system as mwdsys
 from calfews_src.inputter_cy cimport Inputter
 from calfews_src.scenario import Scenario
 from calfews_src.util import *
@@ -65,10 +66,9 @@ cdef class main_cy():
       self.flow_input_type = flow_input_type
       self.flow_input_source = flow_input_source
     self.results_folder = results_folder
+
+    self.metro_instance = mwdsys.Metropolitan()
   
-
-
-    
 
 
 ################################################################################################################################
@@ -147,14 +147,14 @@ cdef class main_cy():
     ### setup northern & southern models & run initialization
     PyErr_CheckSignals()
     if True:
-      self.modelno = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'modelno')
+      self.modelno = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'modelno', self.metro_instance)
     PyErr_CheckSignals()
     if True:
-      self.modelso = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'modelso')
+      self.modelso = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'modelso', self.metro_instance)
     if True:
-      self.trinity = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'trinity')
+      self.trinity = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'trinity', self.metro_instance)
     if True:
-      self.metropolitan = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'metropolitan')
+      self.metropolitan = Model(input_data_file, expected_release_datafile, self.model_mode, demand_type, 'metropolitan', self.metro_instance)
 
 
     PyErr_CheckSignals()
@@ -163,10 +163,12 @@ cdef class main_cy():
       self.modelso.omr_rule_start, self.modelso.max_tax_free = self.modelno.northern_initialization_routine(initial_condition, scenario)    #add initial_condition 
     PyErr_CheckSignals()
     if True:
+      self.metropolitan.initialization_routine(initial_condition)
       self.modelso.forecastSRI = self.modelno.delta.forecastSRI
       self.modelso.southern_initialization_routine(initial_condition, scenario)   #add initial_condition 
       self.trinity.initialization_routine(initial_condition)
-      self.metropolitan.initialization_routine(initial_condition)
+      #object creation part of the metropolitan initialization routine moved up so that objects already exist when southern initialization routine is run
+      
       #try:
         #remove input data file (only if created for simulation), since data will be stored more efficiently in hdf5
         #os.remove(self.results_folder + '/' + new_inputs.export_series[self.flow_input_type][self.flow_input_source]  + "_0.csv")

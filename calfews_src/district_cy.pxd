@@ -83,7 +83,7 @@ cdef class District():
 
   cdef void adjust_bank_accounts(self, str member_name, double direct_deliveries, double recharge_deliveries, int wateryear)
 
-  cdef void accounting_full(self, int t, int wateryear)
+  cpdef void accounting_full(self, int t, int wateryear)
 
   cdef void set_daily_supplies_full(self, str key, double value, int t)
 

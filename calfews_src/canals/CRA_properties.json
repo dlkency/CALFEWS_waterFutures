@@ -1,0 +1,18 @@
+{
+  "capacity": {
+    "normal": [1600.0, 1600.0, 1600.0, 0.0],
+    "reverse": [0.0, 0.0, 0.0],
+    "closed": [0.0, 0.0, 0.0]
+	},
+  "turnout": {
+    "normal": [0.0, 0.0,1600.0, 1600.0],
+    "reverse": [0.0, 0.0, 0.0], 
+    "closed": [0.0, 0.0, 0.0]
+  },
+  "recovery_feeder": false,
+  "flow_directions": {
+    "recharge": {},
+    "recovery": {}
+  },
+  "name": "cra"
+}

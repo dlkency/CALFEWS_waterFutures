@@ -1,0 +1,17 @@
+{
+  "total": 1400,
+  "maxForecastValue": 0.0,
+  "carryover": 0.0,
+  "type": "contract",
+  "name": "coloradocompact",
+  "allocation_priority": 1,
+  "storage_priority": 1,
+  "contractors": ["MET"],
+  "reduction":{
+    "W": 1.0,
+    "AN": 1.0,
+    "BN": 1.0,
+    "D": 1.0,
+    "C": 1.0
+  }
+}
