@@ -30,6 +30,7 @@ cdef class Delta():
     self.key = key
     self.forecastSCWYT = "AN"
     self.forecastSJWYT = "AN"
+    self.forecastSTWYT = "W"
     self.last_year_vamp = 5.0
     self.epsilon = 1e-13
 
@@ -66,6 +67,7 @@ cdef class Delta():
 	##River Indicies
     self.eri = [0.0 for _ in range(self.T)]	
     self.forecastSRI = [0.0 for _ in range(self.T)]
+    self.forecastSTI = [0.0 for _ in range(self.T)] 
     self.forecastSJI = [0.0 for _ in range(self.T)]
     self.sac_fnf = [0.0 for _ in range(model.number_years)]
 	##Old/Middle River Calculations
@@ -475,6 +477,8 @@ cdef class Delta():
     	
     #project_ratio = self.pump_max['swp']['intake_limit'][0]/(self.pump_max['cvp']['intake_limit'][0] + self.pump_max['swp']['intake_limit'][0])
     project_ratio = 0.5
+
+    ######################## MAX COMBINED PUMPING, COULD BE THE REASON
     if cvp_m + swp_m > maxTotPump:
       if cvp_m < maxTotPump*(1.0 - project_ratio):
         swp_m = maxTotPump - cvp_m
@@ -646,6 +650,7 @@ cdef class Delta():
     cvp_intake_max = np.interp(d, self.pump_max['cvp']['d'],self.pump_max['cvp']['intake_limit']) * cfs_tafd
     cvp_intake_max = max(cvp_intake_max, np.interp(d, self.pump_max['cvp']['d'], self.pump_max['cvp']['vernalis_trigger'])*self.vernalis_gains/2.0, 0.0)
 
+    ##################INTAKE LIMITS
     san_joaquin_adj = np.interp(dowy, self.san_joaquin_add['d'], self.san_joaquin_add['mult']) * max(self.vernalis_gains, 0.0)
     if np.interp(t,self.d_1641_export['D1641_dates'],self.d_1641_export['D1641_on_off']) == 1:
       san_joaquin_ie_amt = np.interp(self.vernalis_gains*tafd_cfs, self.d_1641_export['flow_target'],self.d_1641_export['export_limit']) * cfs_tafd
@@ -665,6 +670,7 @@ cdef class Delta():
       swp_max = min(swp_intake_max + san_joaquin_adj, np.interp(d, self.pump_max['swp']['d'], self.pump_max['swp']['pmax']) * cfs_tafd)
       cvp_max = min(cvp_intake_max, np.interp(d, self.pump_max['cvp']['d'], self.pump_max['cvp']['pmax']) * cfs_tafd)
 	
+  ############### PUMP CEILINGS
     return cvp_max, swp_max
    	  
 
@@ -879,42 +885,65 @@ cdef class Delta():
     export_ratio = self.export_ratio[wyt][m-1]
 	  #Same max pumping rules as in calc_weekly_storage release
     cvp_max, swp_max = self.find_max_pumping(d, dowy, t, wyt)
-      
+    
+    ###################First compute minimum outflow for delta (minimum outflow (delta properties) & salinity/x2 rule), anything else is surplus
+    ################# Tax free governed by export ratio & daily intake limits (delta properties)  
     tax_free_exports = ((1/(1-self.export_ratio[wyt][m-1])) - 1)*(min_rule - self.depletions[t])
     tax_free_exports = min(tax_free_exports, (np.interp(d, self.pump_max['swp']['d'], self.pump_max['swp']['intake_limit']) + np.interp(d, self.pump_max['cvp']['d'], self.pump_max['cvp']['intake_limit']))*cfs_tafd)
 
+    ###################### maybe daily intake limits are hit??, so more cvp flows dont change anything
+
     cvp_surplus_inflow = cvp_flows + cvp_frac * surplus
     swp_surplus_inflow = swp_flows + swp_frac * surplus
+
+    print('CVP SURPLUS INFLOW')
+    print(cvp_surplus_inflow)
+
+    print('TAX FREE EXPORTS')
+    print(tax_free_exports)
+
+    print('CVP FRAC TIMES TAX FREE EXP')
+    print(cvp_frac*tax_free_exports)
+
+    ##################allocate tax free exports between swp and cvp, if it reaches its capped intake additional cvp flows wont be exports
     if cvp_surplus_inflow < cvp_frac*tax_free_exports:
       self.TRP_pump[t] = max(cvp_surplus_inflow, 0.0)
       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
+      print('Passed in cvp surplus less than cvp frac')
       if swp_surplus_inflow > remaining_tax_free:
         self.HRO_pump[t] = remaining_tax_free
+        print('HRO PUMP = REMAINING TAX FREE')
       else:
         self.HRO_pump[t] = swp_surplus_inflow
+        print('HRO PUMP = SWP SURPLUS INFLOW')
     elif swp_surplus_inflow < swp_frac*tax_free_exports:
       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
+      print('Passed in swp surplus less than cvp frac')
       if cvp_surplus_inflow > remaining_tax_free:
         self.TRP_pump[t] = remaining_tax_free
+        print('TRP PUMP = REMAINING TAX FREE')
       else:
         self.TRP_pump[t] = cvp_surplus_inflow
+        print('TRP PUMP = CVP SURPLUS INFLOW')
     else:
       self.HRO_pump[t] = swp_surplus_inflow
       self.TRP_pump[t] = cvp_surplus_inflow
+      print('Passed in cvp surplus more than cvp frac')
     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]
     cvp_remaining = cvp_flows  + cvp_frac * surplus - self.TRP_pump[t]
 	
     self.TRP_pump[t] += max(cvp_remaining * export_ratio, 0.0)
     self.HRO_pump[t] += max(swp_remaining * export_ratio, 0.0)
     
+    #######################Pump ceilings, even if cvp stored flow increases
     swp_max = max(min(swp_pump, swp_max), 0.0)
     cvp_max = max(min(cvp_pump, cvp_max), 0.0)
 	  
     if self.TRP_pump[t] > cvp_max:
       self.TRP_pump[t] = cvp_max
       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
-  
+      print('SELF TRP PUMP MORE THAN CVP MAX')
     if self.HRO_pump[t] > swp_max:
       self.HRO_pump[t] = swp_max
       self.TRP_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.HRO_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.HRO_pump[t],cvp_max),0.0)
@@ -922,14 +951,19 @@ cdef class Delta():
     if self.TRP_pump[t] < self.epsilon:
       self.HRO_pump[t] = max(self.HRO_pump[t] + self.TRP_pump[t],0.0)
       self.TRP_pump[t] = 0.0
+      print('TRP PUMP LESS THAN EPSILON')
     elif self.HRO_pump[t] < self.epsilon:
       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)
       self.HRO_pump[t] = 0.0
 
 	##Same as in calc_weekly_storage_release
+
+  ###################OMR could reduce pumps regardless of the above
     cvp_max, swp_max = self.meet_OMR_requirement(t, m, y, dowy, cvp_max, swp_max)
     self.TRP_pump[t], self.HRO_pump[t] = self.meet_OMR_requirement(t, m, y, dowy, self.TRP_pump[t], self.HRO_pump[t])
 
+
+########################### more exports today = less outflow, less x2, more salinity ---> less surplus
     self.outflow[t] = cvp_flows + swp_flows + unstored_flows - self.TRP_pump[t] - self.HRO_pump[t] + self.depletions[t]
     if t < (self.T-1):
       if self.outflow[t] > self.epsilon:
@@ -1047,8 +1081,8 @@ cdef class Delta():
     
   def accounting_as_df(self, index):
     df = pd.DataFrame()
-    names = ['TRP_pump','HRO_pump', 'total_outflow','SWP_allocation', 'CVP_allocation', 'X2', 'SCINDEX', 'SJINDEX', 'tax_swp', 'tax_cvp', 'uncontrolled_swp', 'uncontrolled_cvp']
-    things = [self.TRP_pump, self.HRO_pump, self.outflow, self.swp_allocation, self.cvp_allocation, self.x2, self.forecastSRI, self.forecastSJI, self.remaining_tax_free_storage['swp'], self.remaining_tax_free_storage['cvp'], self.uncontrolled_swp, self.uncontrolled_cvp]
+    names = ['TRP_pump','HRO_pump', 'total_outflow','SWP_allocation', 'CVP_allocation', 'X2', 'SCINDEX', 'SJINDEX','TRTINDEX','tax_swp', 'tax_cvp', 'uncontrolled_swp', 'uncontrolled_cvp']
+    things = [self.TRP_pump, self.HRO_pump, self.outflow, self.swp_allocation, self.cvp_allocation, self.x2, self.forecastSRI, self.forecastSTI,self.forecastSJI, self.remaining_tax_free_storage['swp'], self.remaining_tax_free_storage['cvp'], self.uncontrolled_swp, self.uncontrolled_cvp]
     for n,t in zip(names,things):
       df['%s_%s' % (self.key,n)] = pd.Series(t, index=index)
     return df

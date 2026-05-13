@@ -5,7 +5,7 @@
 # Combined Tulare Basin / SF Delta Model
 # Still in development - not ready for publication
 #
-# This model is designed to simulate surface water flows throughout the CA Central Valley, including:
+# This model is designed to simulate surface water flows throughout the CA Central Valley, inchding:
 # (a) Major SWP/CVP Storage in the Sacramento River Basin
 # (b) San Joaquin River controls at New Melones, Don Pedro, and Exchequer Reservoirs
 # (c) Delta environmental controls, as outlined in D1641 Bay Delta Standards & NMFS Biological Opinions for the Bay-Delta System
@@ -33,6 +33,9 @@ from calfews_src.inputter_cy cimport Inputter
 from calfews_src.scenario import Scenario
 from calfews_src.util import *
 from datetime import datetime
+import calfews_src.trinity_system as tntsys
+#from calfews_src.model_cy cimport model
+
 
 cdef class main_cy():
 
@@ -192,7 +195,7 @@ cdef class main_cy():
   cdef int run_sim(self, start_time) except -1:  
     cdef:
       int timeseries_length, t, swp_release, cvp_release, swp_release2, cvp_release2
-      double swp_pump, cvp_pump, swp_forgone, cvp_forgone, swp_AF, cvp_AF, swp_AS, cvp_AS, 
+      double swp_pump, cvp_pump, swp_forgone, cvp_forgone, swp_AF, cvp_AF, swp_AS, cvp_AS, trinity_diversions,
       dict proj_surplus, max_pumping, max_tax_free, flood_release, flood_volume
       str wyt, wytSC
 
@@ -215,6 +218,7 @@ cdef class main_cy():
     swp_pump = 999.0
     cvp_pump = 999.0
     proj_surplus = 0.0
+    trinity_diversions = 0.0
     print('Begin simulation, ', datetime.now() - start_time)
     print(self.results_folder)
     sys.stdout.flush()
@@ -229,10 +233,13 @@ cdef class main_cy():
         sys.stdout.flush()
 
       # the northern model takes variables from the southern model as inputs (initialized above), & outputs are used as input variables in the southern model
-      swp_pumping, cvp_pumping, swp_alloc, cvp_alloc, proj_surplus, max_pumping, swp_forgo, cvp_forgo, swp_AF, cvp_AF, swp_AS, cvp_AS, flood_release, flood_volume = self.modelno.simulate_north(t, swp_release, cvp_release, swp_release2, cvp_release2, swp_pump, cvp_pump)
+      print('BEFORE NORTHERN MODEL')
+      swp_pumping, cvp_pumping, swp_alloc, cvp_alloc, proj_surplus, max_pumping, swp_forgo, cvp_forgo, swp_AF, cvp_AF, swp_AS, cvp_AS, flood_release, flood_volume, shasta_fcr = self.modelno.simulate_north(t, swp_release, cvp_release, swp_release2, cvp_release2, swp_pump, cvp_pump, trinity_diversions)
+      trinity_diversions = self.trinity.simulate_routine_trinity(t,tntsys, shasta_fcr)
+      print('AFTER TRT DIVERSIONS')
 
       swp_release, cvp_release, swp_release2, cvp_release2, swp_pump, cvp_pump = self.modelso.simulate_south(t, swp_pumping, cvp_pumping, swp_alloc, cvp_alloc, proj_surplus, max_pumping, swp_forgo, cvp_forgo, swp_AF, cvp_AF, swp_AS, cvp_AS, self.modelno.delta.forecastSJWYT, self.modelno.delta.forecastSCWYT, self.modelno.delta.max_tax_free, flood_release, flood_volume)
-
+      
       # end simulation if error has been through within inner cython/c code (i.e. keyboard interrupt)
       PyErr_CheckSignals()
 
@@ -272,7 +279,7 @@ cdef class main_cy():
 
   def output_results(self):
     ### data output function from calfews_src/util.py
-    data_output(self.results_folder, self.clean_output, self.modelno, self.modelso, self.objs)
+    data_output(self.results_folder, self.clean_output, self.modelno, self.modelso, self.objs, self.trinity)
         
     if (self.save_full):
       try:
@@ -283,6 +290,11 @@ cdef class main_cy():
         pd.to_pickle(self.modelso, self.results_folder + '/modelso.pkl')
         del self.modelso
         gc.collect()
+        pd.to_pickle(self.trinity, self.results_folder + '/trinity.pkl')
+        del self.trinity
+        gc.collect
+
+
       except Exception as e:
         print(e)
     

@@ -10,9 +10,9 @@ cdef class Reservoir():
                 snowflood_flows, saved_water, total_capacity, flood_flow_min, epsilon
 
     public int is_Canal, is_District, is_Private, is_Waterbank, is_Reservoir, T, T_short, melt_start, exceedence_level, \
-                iter_count, eos_day, has_snow_new
+                iter_count, eos_day, has_snow_new, override_last_t, debug_storage_override, debug_storage_every, debug_storage_until_t
 
-    public bint nodd_meets_envmin, has_downstream_target_flow, has_delta_target
+    public bint nodd_meets_envmin, has_downstream_target_flow, has_delta_target, use_storage_override
 
     public str key, name, forecastWYT, initial_condition  #Should i add initial_condition to here?
 
@@ -21,22 +21,37 @@ cdef class Reservoir():
                 raininf_stds, snowinf_stds, baseinf_stds, rainflood_fnf, snowflood_fnf, short_rainflood_fnf, short_snowflood_fnf, \
                 rainflood_inf, snowflood_inf, baseline_inf, rainflood_forecast, snowflood_forecast, baseline_forecast, \
                 max_direct_recharge, downstream_short, fnf_short, fnf_new, total_available_storage, outflow_release, \
-                reclaimed_carryover, contract_flooded, snow_new
+                reclaimed_carryover, contract_flooded, snow_new, diversions, restoration, daily_values_this_year, yearly_totals, \
+                trt_consumed_daily, trt_consumed_yearly, storage_error
 
     public dict env_min_flow, temp_releases, tocs_rule, sj_restoration_proj, carryover_target, sodd_curtail_pct, exceedence, \
-                cum_min_release, oct_nov_min_release, aug_sept_min_release, monthly_demand, monthly_demand_full, \
+                restoration_flows, cum_min_release, oct_nov_min_release, aug_sept_min_release, monthly_demand, monthly_demand_full, \
                 monthly_demand_must_fill, numdays_fillup, flow_shape_regression, dry_year_carryover, env_min_flow_ya, \
                 temp_releases_ya, monthly, daily_df_data, snowpack, daily_output_data, k_close_wateryear, monthly_new
 
+    public object S_obs
+
   cdef (double, double) current_tocs(self, int dowy, int ix)
 
-  cdef void find_flow_pumping(self, int t, int m, int dowy, int year_index, list days_in_month, list dowy_eom, str wyt, str release)
+  cpdef void find_flow_pumping(self, int t, int m, int dowy, int year_index, list days_in_month, list dowy_eom, str wyt, str release)
 
   cdef step(self, int t)
 
-  cdef void release_environmental(self, int t, int d, int m, int dowy, list first_d_of_month, str basinWYT)
+  cpdef step_trt(self,int t)
 
-  cdef void find_available_storage(self, int t, int m, int da, int dowy)
+  #cpdef compute_diversion(self,t, m, y, fnf_forecast, eos_day, cfs_tafd,shasta_fcr)
+
+  cpdef void apply_storage_override(self, int t)
+
+  cpdef void release_environmental(self, int t, int d, int m, int dowy, list first_d_of_month, str basinWYT)
+
+  cpdef void release_environmental_trt(self, int t, int d, int m, int y,int dowy, list first_d_of_month, str basinWYT)
+
+  cpdef void release_environmental_trt1(self, int t, int d, int m, int dowy, int y, list first_d_of_month, str basinWYT)
+
+  cpdef void release_environmental_trt_PREROD(self, int t, int d, int m, int dowy, int y, list first_d_of_month, str basinWYT)
+
+  cpdef void find_available_storage(self, int t, int m, int da, int dowy)
 
   cpdef void create_flow_shapes(self, Model model) except *
 

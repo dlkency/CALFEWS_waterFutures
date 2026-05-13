@@ -8,6 +8,7 @@ from .contract_cy cimport Contract
 from .participant_cy cimport Participant
 from .trinity_system import TrinityModel
 from .metropolitan_system import MetModel
+from calfews_src.model_cy import tntsys
 
 cdef class Model():
  
@@ -38,7 +39,8 @@ cdef class Model():
 
     public Reservoir shasta, oroville, folsom, yuba, newmelones, donpedro, exchequer, millerton, sanluisstate, sanluisfederal, \
                      sanluis, isabella, success, kaweah, pineflat, trinity, diamondvalley, mathews, skinner, castaiclake, \
-                     pyramid, silverwood, perris, dummy, dummy2, ecICS
+                     pyramid, silverwood, perris, dummy, dummy2, ecICS, whiskeytown
+
 
     public Delta delta 
 
@@ -89,7 +91,7 @@ cdef class Model():
 
   cdef (int, int, int, int, double, double) simulate_south(self, int t, double hro_pump, double trp_pump, double swp_alloc, double cvp_alloc, dict proj_surplus, dict max_pumping, double swp_forgone, double cvp_forgone, double swp_AF, double cvp_AF, double swp_AS, double cvp_AS, str wyt, str wytSC, dict max_tax_free, dict flood_release, dict flood_volume) except *
 
-  cdef tuple simulate_north(self, int t, int swp_release, int cvp_release, int swp_release2, int cvp_release2, double swp_pump, double cvp_pump)
+  cdef tuple simulate_north(self, int t, int swp_release, int cvp_release, int swp_release2, int cvp_release2, double swp_pump, double cvp_pump, double trinity_div)
 
   cdef void agg_contract_demands(self, int year_index, int m)
 
@@ -115,6 +117,10 @@ cdef class Model():
   cdef void initialize_northern_res(self, initial_condition) except *
 
   cdef void initialize_delta_ops(self) except *
+
+  cpdef void init_delta_ops(self) except *
+
+  cpdef float simulate_routine_trinity(self, int t, tntsys, double shasta_fcr)
 
   cdef void southern_initialization_routine(self, str initial_condition, scenario=*) except *
   

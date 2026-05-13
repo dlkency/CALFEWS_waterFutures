@@ -22,6 +22,7 @@ import calfews_src.metropolitan_system as mwdsys
 from collections import Counter
 
 
+
 cdef class Model():
  
   def __init__(self, input_data_file, expected_release_datafile, model_mode, demand_type, model_name, metro_instance, sensitivity_sample_number=-1, sensitivity_sample_names=[], sensitivity_sample=[], sensitivity_factors = None):
@@ -64,6 +65,9 @@ cdef class Model():
     short_leap = leap(short_year_list)
     self.short_days_in_month = days_in_month(short_year_list, short_leap)
 
+    #self.trinity_div = []
+
+
     self.epsilon = 1e-13
     self.metro = metro_instance #make sure the same metropolitan class is being passed between the South and the Metropolitan models
 
@@ -101,6 +105,9 @@ cdef class Model():
     # self.res.cum_min_release; self.res.aug_sept_min_release; self.res.oct_nov_min_release
     self.initialize_delta_ops()
 
+    
+  
+
     ######
     # calculate projection-based flow year indicies using flow & snow inputs
     ##note: these values are pre-processed, but represent no 'foresight' WYT & WYI index use
@@ -109,6 +116,7 @@ cdef class Model():
     # self.delta.forecastSJI (self.T x 1) - forecasts for san joaquin river index
     # self.delta.forecastSRI (self.T x 1) - forecasts for sacramento river index
     self.find_running_WYI()
+  
 
     ######
     # calculate expected 'unstored' pumping at the delta (for predictions into San Luis)
@@ -206,9 +214,17 @@ cdef class Model():
       attribute_dict = tntsys.initialization_routine(self, initial_condition)
       for attr in attribute_dict:
         setattr(self,attr,attribute_dict[attr])
+        print(f"{attr} → {attribute_dict[attr]} | type: {type(attribute_dict[attr])}")
+      self.find_running_WYI_trt()
+      print('FINISHED FIND RUNNING WYI')
+      #self.calc_wytpe_trt(t)
+   
     elif self.model_name == 'metropolitan':
       pass
 
+
+    
+      
 
   cdef void initialize_northern_res(self, initial_condition) except *:
     #########################################################################################
@@ -246,6 +262,7 @@ cdef class Model():
       ###that is expected to come, regressed against the total flow already observed in that period
       ###regressions are done for each reservoir, and values are calculated for each month (i.e., 33% of remaining Apr-Jul flow comes in May)
       for reservoir_obj in reservoir_list:
+
         reservoir_obj.create_flow_shapes(self)
     elif self.model_mode == 'validation':
       for reservoir_obj in reservoir_list:
@@ -312,6 +329,10 @@ cdef class Model():
 	  
     self.delta.create_flow_shapes_omr(self)
 
+  
+  
+  cpdef void init_delta_ops(self) except *:
+   self.initialize_delta_ops()
 
 
   cdef void initialize_southern_res(self, initial_condition) except *:
@@ -1023,23 +1044,25 @@ cdef class Model():
 
 
   def find_running_WYI(self):
-    cdef Reservoir reservoir_obj
+     cdef Reservoir reservoir_obj
 
-    ###Pre-processing function
-	  ##Finds the 8 River, Sacramento, and San Joaquin indicies based on flow projections
-    lastYearSRI = 10.26 # WY 1996
-    lastYearSJI = 4.12 # WY 1996
-    startMonth = self.month[0]
-    startYear = self.starting_year
-    rainflood_sac_obs = 0.0
-    snowflood_sac_obs = 0.0
-    rainflood_sj_obs = 0.0
-    snowflood_sj_obs = 0.0
-    index_exceedence = 2
-    reservoir_list = [self.shasta, self.folsom, self.oroville, self.yuba, self.newmelones, self.donpedro, self.exchequer, self.millerton]
-    sac_list = [self.shasta, self.folsom, self.oroville, self.yuba]
-    sj_list = [self.newmelones, self.donpedro, self.exchequer, self.millerton]
-    for t in range(0,self.T):
+     ###Pre-processing function
+	   ##Finds the 8 River, Sacramento, and San Joaquin indicies based on flow projections
+    
+     print('BACK FROM TRT')
+     lastYearSRI = 10.26 # WY 1996
+     lastYearSJI = 4.12 # WY 1996
+     startMonth = self.month[0]
+     startYear = self.starting_year
+     rainflood_sac_obs = 0.0
+     snowflood_sac_obs = 0.0
+     rainflood_sj_obs = 0.0
+     snowflood_sj_obs = 0.0
+     index_exceedence = 2
+     reservoir_list = [self.shasta, self.folsom, self.oroville, self.yuba, self.newmelones, self.donpedro, self.exchequer, self.millerton]
+     sac_list = [self.shasta, self.folsom, self.oroville, self.yuba]
+     sj_list = [self.newmelones, self.donpedro, self.exchequer, self.millerton]
+     for t in range(0,self.T):
       year_index = self.year[t] - startYear
       m = self.month[t]
       da = self.day_month[t]
@@ -1113,12 +1136,117 @@ cdef class Model():
         snowflood_sac_obs = 0.0
         rainflood_sj_obs = 0.0
         snowflood_sj_obs = 0.0
+
+      #self.find_running_WYI_trt()   
+        
     # df_wyi = pd.DataFrame()
     # df_wyi['SRI'] = pd.Series(self.delta.forecastSRI, index = self.index)
     # df_wyi['SJI'] = pd.Series(self.delta.forecastSJI, index = self.index)
     # df_wyi.to_csv(self.results_folder + '/water_year_index_simulation.csv')
-		
 
+
+  
+  def find_running_WYI_trt(self):
+     cdef Reservoir reservoir_obj
+    
+     print('IN WYI TRT')
+     print(type(self.delta.forecastSTI))
+     print('SELF DELTA FORECAST STI')
+     print(self.delta.forecastSTI)
+    
+     lastYearSTI = 1.5 # WY 1996 
+     rainflood_trt_obs = 0.0
+     snowflood_trt_obs = 0.0
+     trt_list=[self.trinity]
+     print('trt list')
+     print(self.trinity)
+     print('passed')
+     startYear=1996
+     for t in range(0,self.T):
+      year_index = self.year[t] - startYear
+      m = self.month[t]
+      da = self.day_month[t]
+      dowy = self.dowy[t]
+      print('printing m')
+      print(m)
+      print('in for loop')
+      
+      index_exceedence_trt = 5 #Trinity is 50%
+      #print('inside for loop')
+      if m>=10:
+       print('delta check')
+       print(self.delta.forecastSTI[t])
+       #print(self.delta.forecastSTI[t])
+
+       print('before self delta')
+       print(t)
+       self.delta.forecastSTI[t] = lastYearSTI
+       print('in first if')
+       print(self.delta.forecastSTI)
+      else:
+       print('in second if')
+
+       res_rain_forecast = 0.0
+
+       print('trt list')
+
+       #print(tntsys.reservoir_list)
+       #print(type(tntsys.reservoir_list))
+       #print(reservoir_obj)
+
+       for reservoir_obj in trt_list:
+        res_rain_forecast += reservoir_obj.rainflood_fnf[t] + reservoir_obj.rainfnf_stds[dowy]*z_table_transform[index_exceedence_trt]
+        print('here1')
+
+       if m >= 4 and m < 10:
+         trt_rain = rainflood_trt_obs
+         print('here2')
+       else:
+        trt_rain = max(rainflood_trt_obs, res_rain_forecast)
+        print('res rain forecast and rainflood trt obs')
+        print(rainflood_trt_obs)
+        print(res_rain_forecast)
+	    #  ##Individual Snowflood Forecast - either the 90% exceedence level prediction, or the observed WYTD fnf value
+       res_snow_forecast = 0.0
+       for reservoir_obj in trt_list:
+         res_snow_forecast += reservoir_obj.snowflood_fnf[t] + reservoir_obj.snowfnf_stds[dowy]*z_table_transform[index_exceedence_trt]
+         print('here3')
+	    #  ##Trinity TOTAL SNOW
+       if m >= 8 and m < 10:
+           trt_snow = snowflood_trt_obs
+           print('here4')
+       else:
+           trt_snow = max(snowflood_trt_obs, res_snow_forecast)
+           print('res snow forecast and snowflood trt obs')
+           print(snowflood_trt_obs)
+           print(res_snow_forecast)
+           print('here5')
+       
+       self.delta.forecastSTI[t] = trt_rain + trt_snow 
+       print('trt rain and snow')
+       print(trt_rain)
+       print(trt_snow)
+       print('here6')
+      if m>=10 or m<=3:
+         rainflood_trt_obs += self.trinity.fnf[t]
+         
+         print('here7')
+         print(rainflood_trt_obs)
+         print(self.trinity.fnf[t])
+      elif m<8:
+         snowflood_trt_obs += self.trinity.fnf[t]
+         print('here8')
+
+      if m == 9 and da == 30:   
+         lastYearSTI = rainflood_trt_obs + snowflood_trt_obs
+         rainflood_trt_obs = 0.0
+         snowflood_trt_obs = 0.0
+         print('IN last WYI TRT')
+         print('here9')
+      print('STILL IN WYI TRT')    
+      print(type(self.delta.forecastSTI))
+      print(self.delta.forecastSTI[t])
+  
 
   cdef void predict_delta_gains(self) except *:
     cdef:
@@ -2295,7 +2423,8 @@ cdef class Model():
 #############################     Main simulation (North & South)     ###############################################
 #####################################################################################################################
 
-  cdef tuple simulate_north(self, int t, int swp_release, int cvp_release, int swp_release2, int cvp_release2, double swp_pump, double cvp_pump):
+
+  cdef tuple simulate_north(self, int t, int swp_release, int cvp_release, int swp_release2, int cvp_release2, double swp_pump, double cvp_pump, double trinity_diversions):
     ###Daily Operations###
     ##Step forward environmental parameters (snow & flow)
     ##Set Delta operating rules
@@ -2309,6 +2438,8 @@ cdef class Model():
     swp_release = 0 #turn off any pumping over the E/I ratio 'tax'
     cvp_release = 0
 
+
+
     d = self.day_year[t]
     da = self.day_month[t]
     dowy = self.dowy[t]
@@ -2317,9 +2448,19 @@ cdef class Model():
     wateryear = self.water_year[t]
     year_index = y - self.starting_year
 
+
+    print('^^^^model year^^^^^')
+    print(y)
+    print('TRT DIV SIM NORTH')
+    print(trinity_diversions)
+
+    #print(self.trinity.diversions[t])
+
+
     ##WATER YEAR TYPE CLASSIFICATION (for operating rules)
     ##WYT uses flow forecasts - gets set every day, may want to decrease frequency (i.e. every month, season)
     NMI = self.calc_wytypes(t,dowy)#NMI (new melones index) - used as input for vernalis control rules
+    #self.calc_wytpe_trt(t)
 	  
     ##REAL-WORLD RULE ADJUSTMENTS
     ##Updates to reflect SJRR & Yuba Accalfews_srcs occuring during historical time period (1996-2016)
@@ -2356,7 +2497,10 @@ cdef class Model():
     for reservoir_obj in [self.shasta, self.oroville, self.yuba, self.folsom]:
       reservoir_obj.find_available_storage(t, m, da, dowy)  
     #additional releases to meet rio vista minimums shared by Sacramento Reservoirs
-    cvp_stored_release = self.shasta.envmin + self.folsom.envmin
+    
+    cvp_stored_release = self.shasta.envmin + self.folsom.envmin + trinity_diversions
+  
+
     swp_stored_release = self.oroville.envmin + self.yuba.envmin
     #unstored flow at rio vista comes from tributary gains, environmental releases and sacramento river gains
     self.delta.rio_gains = self.delta.gains_sac[t]
@@ -2386,6 +2530,7 @@ cdef class Model():
     for reservoir_obj in [self.shasta, self.folsom, self.oroville, self.yuba]:
       reservoir_obj.find_flow_pumping(t, m, dowy, year_index, self.days_in_month, self.dowy_eom, self.delta.forecastSCWYT, 'env')
       reservoir_obj.days_til_full[t] = min(reservoir_obj.numdays_fillup['env'], reservoir_obj.numdays_fillup['lookahead'])
+    
 	  	  	
 	  ###DETERMINE RELEASES REQUIRED FOR DESIRED PUMPING
     ###Uses gains and environmental releases to determine additional releases required for
@@ -2403,6 +2548,8 @@ cdef class Model():
     flood_release['cvp'] = self.shasta.min_daily_uncontrolled
     flood_volume['swp'] = self.oroville.uncontrolled_available
     flood_volume['cvp'] = self.shasta.uncontrolled_available
+
+
     swp_over_dead_pool = self.oroville.find_emergency_supply(t, m, dowy)
     cvp_over_dead_pool = 0.0
   	##Distribute 'available storage' seasonally to maximize pumping under E/I ratio requirements (i.e., pump when E/I ratio is highest)
@@ -2472,15 +2619,19 @@ cdef class Model():
 	  ##Given delta inflows (from gains and reservoir releases), find pumping
     #cvp_stored_flow = self.shasta.R_to_delta[t] + self.folsom.R_to_delta[t]
     #swp_stored_flow = self.oroville.R_to_delta[t] + self.yuba.R_to_delta[t]
-    cvp_stored_flow = self.shasta.sodd + self.folsom.sodd
+
+    cvp_stored_flow = self.shasta.sodd + self.folsom.sodd + trinity_diversions
+
     swp_stored_flow = self.oroville.sodd + self.yuba.sodd
 
     ##route all water through delta rules to determine pumping
     self.delta.step(t, d, da, m, y, wateryear, dowy, cvp_stored_flow, swp_stored_flow, swp_pump, cvp_pump)
 		    
-    return self.delta.HRO_pump[t], self.delta.TRP_pump[t], self.delta.swp_allocation[t], self.delta.cvp_allocation[t], proj_surplus, max_pumping, swp_forgone, cvp_forgone, swp_flood_storage, cvp_flood_storage, swp_available_storage, cvp_available_storage, flood_release, flood_volume
+    return self.delta.HRO_pump[t], self.delta.TRP_pump[t], self.delta.swp_allocation[t], self.delta.cvp_allocation[t], proj_surplus, max_pumping, swp_forgone, cvp_forgone, swp_flood_storage, cvp_flood_storage, swp_available_storage, cvp_available_storage, flood_release, flood_volume, self.shasta.fcr
 			
-
+  cpdef float simulate_routine_trinity(self,int t, tntsys, double shasta_fcr):
+    trinity_diversions=tntsys.simulate_routine_trinity(self, t,tntsys, shasta_fcr)
+    return trinity_diversions
 
   cdef (int, int, int, int, double, double) simulate_south(self, int t, double hro_pump, double trp_pump, double swp_alloc, double cvp_alloc, dict proj_surplus, dict max_pumping, double swp_forgone, double cvp_forgone, double swp_AF, double cvp_AF, double swp_AS, double cvp_AS, str wyt, str wytSC, dict max_tax_free, dict flood_release, dict flood_volume) except *:
     cdef:
@@ -2699,6 +2850,15 @@ cdef class Model():
   	#for san luis - need to know if we can use the xvc from california aquduct - check for turnout to xvc from kern river and fkc
     ###find flood releases for the SWP at san luis (self.sanluisstate.min_daily_uncontrolled) - also find release toggles (for northern reservoir pumping coordination w/ san luis) and numdays_fillup for SWP district recharge decisions
     expected_pumping = self.estimate_project_pumping(t, proj_surplus, max_pumping, swp_AS, cvp_AS, self.max_tax_free, flood_release, wytSC)
+    print("BEFORE find_pumping_release")
+    print("t =", t, "m =", m, "da =", da) 
+    print("expected_pumping swp gains =", expected_pumping['swp']['gains'])
+    print("expected_pumping swp untaxed =", expected_pumping['swp']['untaxed'])
+    print("expected_pumping swp taxed =", expected_pumping['swp']['taxed'])
+    print("expected_pumping cvp gains =", expected_pumping['cvp']['gains'])
+    print("expected_pumping cvp untaxed =", expected_pumping['cvp']['untaxed'])
+    print("expected_pumping cvp taxed =", expected_pumping['cvp']['taxed'])
+
     swp_release, swp_release2, self.sanluisstate.min_daily_uncontrolled, self.sanluisstate.numdays_fillup['demand'], fill_up_cross_swp = self.find_pumping_release(m, da, year_index, self.sanluisstate.S[t], self.sanluisstate.monthly_demand, self.sanluisstate.monthly_demand_must_fill, expected_pumping['swp'], self.swpdelta.projected_carryover, self.swpdelta.running_carryover, wyt, t, 'swp')
 	  
     ###find flood releases for the CVP at san luis (self.sanluisfederal.min_daily_uncontrolled) - also find release toggles (for northern reservoir pumping coordination w/ san luis) and numdays_fillup for SWP district recharge decisions
@@ -3615,6 +3775,10 @@ cdef class Model():
   def step_san_luis(self, t, m, da):
   #This function allows the state/federal projects to take advantage of any unused space the other may have so that storage
   #volumes can temporarily go above each project's 50% share of the storage cpacity at san luis
+   
+    self.sanluisstate.apply_storage_override(t)
+    self.sanluisfederal.apply_storage_override(t)
+    
     self.sanluisfederal.S[t+1] = self.sanluisfederal.S[t] + self.trp_pumping[t]
     self.sanluisstate.S[t+1] = self.sanluisstate.S[t] + self.hro_pumping[t]
     if m == 10 and da == 1:
@@ -3648,6 +3812,9 @@ cdef class Model():
       self.sanluisfederal.fcr = 0.0
     self.sanluisstate.S[t+1] -= self.sanluisstate.fcr
     self.sanluisfederal.S[t+1] -= self.sanluisfederal.fcr	  
+    
+
+
     return max(min(extra_storage_s, extra_space_f), 0.0), max(min(extra_storage_f, extra_space_s),0.0)
 	
   def find_san_luis_space(self, t, swp_pump_max, cvp_pump_max):
@@ -3728,7 +3895,14 @@ cdef class Model():
           max_pump['swp'] = min(max_pump['swp'], max_pumping['swp'][monthloop]/daysmonth)
           max_pump['cvp'] = min(max_pump['cvp'], max_pumping['cvp'][monthloop]/daysmonth)
 
-
+        print("DEBUG estimate_project_pumping inner")
+        print("t =", t, "key =", key, "monthloop =", monthloop)
+        print("proj_surplus =", proj_surplus[key][monthloop])
+        print("flood_release =", flood_release[key])
+        print("daysmonth =", daysmonth)
+        print("total_tax_free =", total_tax_free)
+        print("max_pump =", max_pump[key])
+        print("calc =", proj_surplus[key][monthloop] + flood_release[key]*daysmonth)
         expected_pumping[key]['taxed'][monthloop] = max_pump[key]*daysmonth
         expected_pumping[key]['untaxed'][monthloop] = min(max(proj_surplus[key][monthloop] + flood_release[key]*daysmonth,total_tax_free), max_pump[key]*daysmonth)
         expected_pumping[key]['gains'][monthloop] = min(proj_surplus[key][monthloop] + flood_release[key]*daysmonth, max_pump[key]*daysmonth)
@@ -3749,8 +3923,22 @@ cdef class Model():
       max_storage = 980.0
 	  ###Initial storage projections - current month
 	  ##calculate expected deliveries during this month from san luis
+    print("DEBUG find_pumping_release")
+    print("t =", t, "m =", m, "da =", da, "year_index =", year_index, "month_evaluate =", month_evaluate, "key =", key, "wyt =", wyt)
+    print("start_storage =", start_storage)
+    print("month_demand =", month_demand[wyt][month_evaluate])
+    print("month_demand_must_fill =", month_demand_must_fill[wyt][month_evaluate])
+    print("days_in_month =", self.days_in_month[year_index][month_evaluate])
+    print("gains =", expected_pumping['gains'][month_evaluate])
+    print("untaxed =", expected_pumping['untaxed'][month_evaluate])
+    print("taxed =", expected_pumping['taxed'][month_evaluate])
+
     expected_demands = (month_demand[wyt][month_evaluate] + month_demand_must_fill[wyt][month_evaluate])/self.days_in_month[year_index][month_evaluate]
     expected_inflow = expected_pumping['gains'][month_evaluate]/self.days_in_month[year_index][month_evaluate]
+
+    print("expected_demands =", expected_demands)
+    print("expected_inflow =", expected_inflow)
+
     expected_untaxed = (expected_pumping['untaxed'][month_evaluate] - expected_pumping['gains'][month_evaluate])*(1.0 - da/self.days_in_month[year_index][month_evaluate])
     expected_taxed = (expected_pumping['taxed'][month_evaluate] - expected_pumping['gains'][month_evaluate])*(1.0 - da/self.days_in_month[year_index][month_evaluate])
 
@@ -3761,9 +3949,17 @@ cdef class Model():
       expected_inflow = 0.75
     #expected monthly change in san luis storage
     net_monthly = (expected_inflow - expected_demands)*max(self.days_in_month[year_index][month_evaluate] - da, 0.0)
+    print("expected_untaxed =", expected_untaxed)
+    print("expected_taxed =", expected_taxed)
+    print("net_monthly =", net_monthly)
+
+
     ##Enter into a loop for projecting storage & pumping forward one month at a time
   	##start with current estimates
     next_month_storage = start_storage#running storage levels
+
+    print("next_month_storage =", next_month_storage)
+
     this_month_days = max(self.days_in_month[year_index][month_evaluate] - da, 0.0)#running days in a month
     article21 = 0.0#initialize article 21 release estimates
     numdays_fillup = 999.9#initialize numdays_fillup variable
@@ -3872,6 +4068,10 @@ cdef class Model():
       net_monthly = (expected_inflow - expected_demands)*self.days_in_month[year_index+cross_counter_y][month_evaluate]
       total_days_remaining += this_month_days
       this_month_days = self.days_in_month[year_index+cross_counter_y][month_evaluate]
+    print("RETURN VALUES:")
+    print("article21 =", article21)
+    print("numdays_fillup =", numdays_fillup)
+    print("numdays_fillup_next_year =", numdays_fillup_next_year)
 
     return max(pumping_toggle, pumping_toggle_override), max(tax_free_toggle, tax_free_toggle_override), article21, numdays_fillup, numdays_fillup_next_year
       
@@ -5743,7 +5943,7 @@ cdef class Model():
       list new_columns 
       dict column_counts 
   
-    trace = "results/short_test/results.hdf5" 
+    trace = "results/test/newtest2/results.hdf5" 
     datDaily = get_results_sensitivity_number_outside_model(trace, '')
     
     new_columns = []
@@ -6453,6 +6653,14 @@ cdef class Model():
         daysmonth = self.days_in_month[year_index][x]
       else:
         daysmonth = self.days_in_month[year_index + 1][x]
+      
+      print("DEBUG proj_gains")
+      print("t =", t, "dowy =", dowy, "m =", m, "year_index =", year_index, "x =", x)
+      print("tot_sac_fnf =", tot_sac_fnf)
+      print("tot_sj_fnf =", tot_sj_fnf)
+      print("slope =", self.delta_gains_regression['slope'][dowy][x])
+      print("intercept =", self.delta_gains_regression['intercept'][dowy][x])
+      
       proj_surplus[x] = max(self.delta_gains_regression['slope'][dowy][x]*min(tot_sac_fnf,4.0) + self.delta_gains_regression['intercept'][dowy][x], 0.0)
       proj_omr[x] = (self.delta.omr_regression['slope'][dowy][x]*tot_sj_fnf + self.delta.omr_regression['intercept'][dowy][x] + 5000.0*cfs_tafd*daysmonth)/0.94
     expected_pumping = {}
@@ -6522,10 +6730,46 @@ cdef class Model():
       self.millerton.forecastWYT = "W"
     return wyt
 
+  def calc_wytpe_trt(self,t):
+
+    print('ERROR HEREEEEE CALC')
+     ##Index for Trinity   
+
+    if self.delta.forecastSTI[t] <= 0.65:
+     #model.trinity.forecastWYT = "C"
+     #tntsys.forecastWYT = "C"
+     self.trinity.forecastWYT = "C"
+     self.delta.forecastSTWYT = "C"
+    elif self.delta.forecastSTI[t] <= 1.025:
+     #model.trinity.forecastWYT = "D"
+     #tntsys.forecastWYT = "D"
+     self.trinity.forecastWYT = "D"
+     self.delta.forecastSTWYT = "D"
+    elif self.delta.forecastSTI[t] <= 1.35:
+     #model.trinity.forecastWYT = "BN"
+     #tntsys.forecastWYT = "BN"
+     self.trinity.forecastWYT = "BN"
+     self.delta.forecastSTWYT = "BN"
+    elif self.delta.forecastSTI[t] <= 2:
+     #model.trinity.forecastWYT = "AN"
+     #tntsys.forecastWYT = "AN"
+     self.trinity.forecastWYT = "AN"
+     self.delta.forecastSTWYT = "AN"
+    else:
+     #model.trinity.forecastWYT = "W"
+     #tntsys.forecastWYT = "W"
+     self.trinity.forecastWYT = "W"
+     self.delta.forecastSTWYT = "W"
+
+    print('TNTSYSSSSS')
+    print(tntsys.trinity.forecastWYT)
+
+  
   def calc_wytypes(self,t,dowy):
     ####NOTE:  Full natural flow data is in MAF, inflow data is in TAF  
     ##Index for Shasta Min Flows
     ############################
+    cdef Reservoir reservoir_obj
     if self.delta.forecastSRI[t] <= 5.4:
       self.shasta.forecastWYT = "C"
       self.delta.forecastSCWYT = "C"
@@ -6635,7 +6879,34 @@ cdef class Model():
       self.newmelones.forecastWYT = "AN"
     else:
       self.newmelones.forecastWYT = "W"
-  
+      
+    '''  
+    if self.delta.forecastSTI[t] <= 0.65:
+     #model.trinity.forecastWYT = "C"
+     #tntsys.trinity.forecastWYT = "C"
+     #self.trinity.forecastWYT = "C"
+     self.delta.forecastSTWYT = "C"
+    elif self.delta.forecastSTI[t] <= 1.025:
+     #model.trinity.forecastWYT = "D"
+     #tntsys.trinity.forecastWYT = "D"
+     #self.trinity.forecastWYT = "D"
+     self.delta.forecastSTWYT = "D"
+    elif self.delta.forecastSTI[t] <= 1.35:
+     #model.trinity.forecastWYT = "BN"
+     #tntsys.trinity.forecastWYT = "BN"
+     #self.trinity.forecastWYT = "BN"
+     self.delta.forecastSTWYT = "BN"
+    elif self.delta.forecastSTI[t] <= 2:
+     #model.trinity.forecastWYT = "AN"
+     #tntsys.trinity.forecastWYT = "AN"
+     #self.trinity.forecastWYT = "AN"
+     self.delta.forecastSTWYT = "AN"
+    else:
+     #model.trinity.forecastWYT = "W"
+     #tntsys.trinity.forecastWYT = "W"
+     #self.trinity.forecastWYT = "W"
+     self.delta.forecastSTWYT = "W"
+    '''
 ##Index for Don Pedro Min Flows
 ############################
     if self.delta.forecastSJI[t] <= 2.1:
@@ -6653,8 +6924,7 @@ cdef class Model():
     else:
       self.donpedro.forecastWYT = "W"
       self.delta.forecastSJWYT = "W"
-    
-  
+
 ##Index for Exchequer Min Flows
 ############################	  
     if self.exchequer.snowflood_fnf[t] < .45:

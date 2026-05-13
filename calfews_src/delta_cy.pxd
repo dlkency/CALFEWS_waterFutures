@@ -10,10 +10,10 @@ cdef class Delta():
     public int T, omr_record_start, omr_rule_start, vamp_rule_start, first_empty_day_SWP, first_empty_day_CVP, \
                 iter_count
     
-    public str model_mode, key, forecastSCWYT, forecastSJWYT
+    public str model_mode, key, forecastSCWYT, forecastSJWYT, forecastSTWYT
 
     public list gains, gains_sac, gains_sj, depletions, vernalis_flow, eastside_streams, inflow, ccc, barkerslough, dmin, \
-                sodd_cvp, sodd_swp, TRP_pump, HRO_pump, outflow, surplus, x2, eri, forecastSRI, forecastSJI, sac_fnf, \
+                sodd_cvp, sodd_swp, TRP_pump, HRO_pump, outflow, surplus, x2, eri, forecastSRI, forecastSJI, forecastSTI, sac_fnf, \
                 hist_OMR, hist_TRP_pump, hist_HRO_pump, fish_condition, OMR, swp_allocation, cvp_allocation, uncontrolled_swp, \
                 uncontrolled_cvp, annual_HRO_pump, annual_TRP_pump, expected_depletion, remaining_outflow
 

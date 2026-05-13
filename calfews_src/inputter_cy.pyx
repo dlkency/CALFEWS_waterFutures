@@ -124,12 +124,14 @@ cdef class Inputter():
     self.kaweah = Reservoir(self, 'kaweah', 'KWH', self.model_mode, '1996-10-1')
     self.success = Reservoir(self, 'success', 'SUC', self.model_mode, '1996-10-1')
     self.isabella = Reservoir(self, 'isabella', 'ISB', self.model_mode, '1996-10-1')
+
+    self.trinity = Reservoir(self, 'trinity', 'TRT', self.model_mode, '1996-10-1')
     
     #self.reservoir_list = [self.shasta, self.oroville, self.folsom, self.yuba, self.newmelones, self.donpedro,
                  #self.exchequer, self.millerton, self.pineflat, self.kaweah, self.success, self.isabella,
                  #self.newhogan, self.pardee, self.consumnes]
     self.reservoir_list = [self.shasta, self.oroville, self.folsom, self.yuba, self.newmelones, self.donpedro,
-                            self.exchequer, self.millerton, self.pineflat, self.kaweah, self.success, self.isabella]
+                            self.exchequer, self.millerton, self.pineflat, self.kaweah, self.success, self.isabella, self.trinity]
 
     for reservoir_obj in self.reservoir_list:
       reservoir_obj.monthly = {}
@@ -754,6 +756,15 @@ cdef class Inputter():
 
 
   def read_new_fnf_data(self, flow_input_type, flow_input_source, start_month, first_leap_year, numYears):
+
+
+    print('FLOW INPUT')
+    print(flow_input_type)  
+    print('FLOW INPUT src')
+    print(flow_input_source)  
+    print('NUMYEARS')
+    print(numYears)
+
     monthcount = start_month - 1
     daycount = 0
     yearcount = 0
@@ -805,12 +816,26 @@ cdef class Inputter():
         reservoir.snowpack['new_melt_fnf'] = np.zeros(numYears - 1)
       for data_type in self.data_type_list:
         reservoir.monthly_new[data_type] = {}
-        reservoir.monthly_new[data_type]['flows'] = np.zeros((12, numYears - 1))
-        reservoir.monthly_new[data_type]['whitened'] = np.zeros((12, numYears - 1))
+        #reservoir.monthly_new[data_type]['flows'] = np.zeros((12, numYears - 1))
+        #reservoir.monthly_new[data_type]['whitened'] = np.zeros((12, numYears - 1))
+
+        reservoir.monthly_new[data_type]['flows'] = np.zeros((12, numYears))
+        reservoir.monthly_new[data_type]['whitened'] = np.zeros((12, numYears))
+
     for t in range(0, len(reservoir.fnf_new)):
       for reservoir in self.reservoir_list:
         if not np.isnan(reservoir.fnf_new[t]):
+        
+
+        
+          print('MONTHCOUNT')
+          print(monthcount)
+
+          print('yearcount')
+          print(yearcount)
           reservoir.monthly_new['fnf']['flows'][monthcount][yearcount] += reservoir.fnf_new[t]
+
+
           if reservoir.has_snow_new == 0:
             if monthcount > 2 and monthcount < 7:
               reservoir.snowpack['new_melt_fnf'][yearcount] += reservoir.fnf_new[t]

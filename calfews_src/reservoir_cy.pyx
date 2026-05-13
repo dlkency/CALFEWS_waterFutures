@@ -31,16 +31,32 @@ cdef class Reservoir():
     self.is_Reservoir = 1
     self.is_Waterbank = 0
 
+
+
+
     self.T = model.T
     self.days_through_month = [60, 91, 122, 150, 181]
     #self.hist_wyt = ['W', 'W', 'W', 'AN', 'D', 'D', 'AN', 'BN', 'AN', 'W', 'D', 'C', 'D', 'BN', 'W', 'BN', 'D', 'C', 'C', 'AN']
-    self.hist_wyt = ['W', 'W', 'W', 'W', 'AN', 'D', 'D', 'AN', 'BN', 'AN', 'W', 'D', 'C', 'D', 'BN', 'W', 'BN', 'D', 'C', 'C', 'BN', 'W', 'BN', 'W', 'D', 'C', 'C', 'W']
+    self.hist_wyt = ['W', 'W', 'W', 'W', 'AN', 'D', 'D', 'AN', 'BN', 'AN', 'W', 'D', 'C', 'D', 'BN', 'W', 'BN', 'D', 'C', 'C', 'BN', 'W', 'BN', 'W', 'D', 'C', 'C', 'W','AN']
 
     self.key = key
     self.name = name
     self.forecastWYT = "AN"
     self.epsilon = 1e-13
     
+    ##AHMED
+    #Storage override 
+    self.use_storage_override = False      # default off
+    self.override_last_t = -1              # inclusive cutoff index in [0..T-1]
+    self.S_obs = None                      # observed storage in the csv
+    self.storage_error = [0.0 for _ in range(self.T)]  # save errors of each reservoir
+
+    #only for printing 
+    self.debug_storage_override = 0
+    self.debug_storage_every = 1
+    self.debug_storage_until_t = -1
+
+
 	  ##Reservoir Parameters
     self.S = [0.0 for _ in range(self.T)]
     self.R = [0.0 for _ in range(self.T)]
@@ -55,6 +71,14 @@ cdef class Reservoir():
     self.days_til_full = [0.0 for _ in range(self.T)]
     self.flood_spill = [0.0 for _ in range(self.T)]
     self.flood_deliveries = [0.0 for _ in range(self.T)]
+    if self.key == "TRT":
+      self.diversions = [0.0 for _ in range(self.T)]
+      self.restoration = [0.0 for _ in range(self.T)]
+      self.daily_values_this_year = []
+      self.yearly_totals = []
+      self.trt_consumed_daily =[]
+      self.trt_consumed_yearly=[]
+
     if self.key == "SLS":
       #San Luis - State portion
       #San Luis Reservoir is off-line so it doesn't need the full reservoir class parameter set contained in the KEY_properties.json files
@@ -100,6 +124,32 @@ cdef class Reservoir():
       for k,v in json.load(open('calfews_src/reservoir/%s_properties.json' % key)).items():
           setattr(self,k,v)
       #load timeseries inputs from calfews_src-data.csv input file
+      if self.key == "TRT":
+        # Pick the inflow column by trying code and full name variants
+       df0 = model.df[0]
+       candidates = (
+       f"{key}_inf",        # code, e.g., "TRT_inf"
+       f"{name}_inf",       # full name, e.g., "trinity_inf"
+       f"{key.lower()}_inf",
+       f"{name.lower()}_inf",
+       f"{key.upper()}_inf",
+       f"{name.upper()}_inf",
+       )
+       inf_col = None
+       for c in candidates:
+        if c in df0.columns:
+         inf_col = c
+         break
+        if inf_col is None:
+         have = [c for c in df0.columns if c.endswith("_inf")]
+         raise KeyError(
+         f"Missing inflow column for name='{name}', code='{key}'. "
+         f"Tried {candidates}. Have (sample): {have[:10]}"
+        )
+
+        self.Q = [v * cfs_tafd for v in df0[inf_col].values]
+
+        
       self.Q = [_ * cfs_tafd for _ in model.df[0]['%s_inf'% key].values]
       self.E = [_ * cfs_tafd for _ in model.df[0]['%s_evap'% key].values]
       ####Note - Shasta FCI values are not right - the original calculation units are in AF, but it should be in CFS
@@ -199,14 +249,83 @@ cdef class Reservoir():
     self.reclaimed_carryover = [0.0 for _ in range(self.T)]
     self.contract_flooded = [0.0 for _ in range(self.T)]
 
+  #AHMED
+  '''
+  cpdef void apply_storage_override(self, int t):
+    cdef double s_obs
 
-  cdef void find_available_storage(self, int t, int m, int da, int dowy):
+    if (not self.use_storage_override) or (self.S_obs is None):
+        return
+    if t > self.override_last_t or t < 0:
+        return
+
+    # S_obs can be numpy array or list; indexing works in either case
+    s_obs = self.S_obs[t]
+
+    # Use sentinel -1.0 for "no value"
+    if s_obs >= 0.0:
+        self.storage_error[t] = s_obs - self.S[t]
+        self.S[t] = s_obs
+  '''
+
+  cpdef void apply_storage_override(self, int t):
+    cdef double s_obs, s_model_before, err
+    cdef Py_ssize_t nS, nObs, nErr
+
+    if (not self.use_storage_override) or (self.S_obs is None):
+        return
+
+    #make sure function overrides only until cutoff date    
+    if t < 0 or t > self.override_last_t:
+        return
+
+    nS = len(self.S)
+    nObs = len(self.S_obs)
+
+    #date alignment sanity 
+    if t >= nS or t >= nObs:
+        return
+        
+    #safer, could just write nErr = len()m create list to store daily error if storage error exists
+    if hasattr(self, "storage_error") and (self.storage_error is not None):
+        nErr = len(self.storage_error)
+    else:
+        nErr = 0
+    #attach code sentinel = -1 for missing data, if <0 then don't override
+    s_obs = self.S_obs[t]
+    if s_obs < 0.0:
+        return
+
+    s_model_before = self.S[t]
+    err = s_obs - s_model_before
+    #save error
+    if nErr > 0 and t < nErr:
+        self.storage_error[t] = err
+
+    self.S[t] = s_obs
+
+    # DEBUG PRINT
+    if getattr(self, "debug_storage_override", 0) == 1:
+        if (self.debug_storage_until_t < 0 or t <= self.debug_storage_until_t):
+            if (self.debug_storage_every <= 1) or (t % self.debug_storage_every == 0):
+                # prints: key, t, model before, obs, err
+                print("[STOR_OVR]", self.key, "t=", t,
+                      "S_model=", s_model_before,
+                      "S_obs=", s_obs,
+                      "err=", err)
+
+ 
+
+  cpdef void find_available_storage(self, int t, int m, int da, int dowy):
     ##this function uses the linear regression variables calculated in find_release_func (called before simulation loop) to figure out how
     ##much 'excess' storage is available to be released to the delta with the explicit intention of running the pumps.  This function is calculated
     ##each timestep before the reservoirs' individual step function is called
     cdef str wyt 
 
     wyt = self.forecastWYT
+
+    #AHMED
+    self.apply_storage_override(t)
 
 	  ###Find the target end of year storage, and the expected minimum releases, at the beginning of each water year
     if m == 10 and da == 1:
@@ -254,7 +373,7 @@ cdef class Reservoir():
     if dowy < self.days_through_month[self.melt_start]:
       self.rainflood_flows += self.Q[t]##add to the total flow observations 
     elif dowy < 304:
-      self.snowflood_flows += self.Q[t]##add to the total flow observations (
+      self.snowflood_flows += self.Q[t]##add to the total flow observations 
     else:
       self.baseline_flows += self.Q[t]
 
@@ -314,8 +433,366 @@ cdef class Reservoir():
         swp_extra = max(self.S[t] - self.lastYearEOS_target - self.oct_nov_min_release[wyt][dowy], 0.0)
 		
     return swp_extra
-	    
-  cdef void release_environmental(self, int t, int d, int m, int dowy, list first_d_of_month, str basinWYT):
+
+  def find_running_WYI_trt(self, t, m , da, dowy):
+
+   
+   if self.key == 'TRT':
+     print('INSIDE FIND RUNNING TRT')
+     #delta = Delta(model, 'delta', 'DEL', model.model_mode)
+     #t=model.T
+     startYear=1996
+     #for t in range(0,self.T):
+      # year_index = self.year[t] - startYear
+      # m = self.month[t]
+      # da = self.day_month[t]
+      # dowy = self.dowy[t]
+      # index_exceedence_trt = 5 #Trinity is 50%
+  
+     #delta=model.delta
+     #print('type of model reservoirrrrrr')
+     #print(model.reservoir_list)
+     #print(type(model.reservoir_list))
+     lastyearSTI=1.5 #WY 1996
+     rainflood_trt_obs = 0.0
+     snowflood_trt_obs = 0.0
+     #startYear=model.starting_year
+     index_exceedence_trt = 5
+     snowflood_trt_obs = 0.0
+     rainflood_trt_obs = 0.0
+     # for t in range(0,model.T):
+     #year_index = model.year[t] - startYear
+     #m = model.month[t]
+     #da = model.day_month[t]
+     #dowy = model.dowy[t]
+      
+  
+     #index_exceedence_trt = 5 #Trinity is 50%
+  
+
+     res_rain_forecast = 0.0
+     #for reservoir_obj in model.reservoir_list:
+     res_rain_forecast+=self.rainflood_fnf[t]+self.rainfnf_stds[dowy]*z_table_transform[index_exceedence_trt]
+     print('PASSED IN RES RAIN FORECASR')
+
+     if m >= 4 and m < 10:
+       trt_rain = rainflood_trt_obs
+       print('PASSED IN TRT RAIN')
+     else:
+       trt_rain=max(rainflood_trt_obs,res_rain_forecast)  
+       print('PASSED IN TRT2')
+
+     res_snow_forecast = 0.0
+     #for reservoir_obj in model.reservoir_list:
+     res_snow_forecast+=self.snowflood_fnf[t] + self.snowfnf_stds[dowy]*z_table_transform[index_exceedence_trt]  
+     print('PASSED IN RES SNOW FORECASR')
+  
+     if m >= 8 and m < 10:
+       trt_snow = snowflood_trt_obs
+       print('PASSED IN SNOW 1')
+     else:
+       trt_snow = max(snowflood_trt_obs, res_snow_forecast)
+       print('PASSED IN SNOW 2')
+  
+     #delta.forecastSTI[t] = trt_rain + trt_snow
+
+     fnf_forecast1=trt_rain+trt_snow
+     print('fnf forecast1')
+     print(fnf_forecast1)
+
+     if m >= 10 or m <= 3:
+       rainflood_trt_obs += self.fnf[t]
+       print('PASSED IN RAINFLOOD 1')
+     elif m < 8:
+       snowflood_trt_obs += self.fnf[t]
+       print('PASSED IN RAINFLOOD 1')
+
+     if m==9 and da==30:
+       lastyearSTI=rainflood_trt_obs+snowflood_trt_obs
+       rainflood_trt_obs = 0.0
+       snowflood_trt_obs = 0.0  
+       print('PASSED IN RAIN AND SNOW EQUAL ZERO')
+
+     print('`````TRT SNOW & RAIN````````')
+     print(snowflood_trt_obs)
+     print(rainflood_trt_obs)
+
+     fnf_forecast_trt=rainflood_trt_obs+snowflood_trt_obs
+
+     print('fnf_forecast_trt')
+     print(fnf_forecast_trt)
+
+   return
+  
+
+
+  def compute_diversion(self, t, m, y, fnf_forecast, eos_day, cfs_tafd, shasta_fcr):
+   if self.key == 'TRT':
+    print('IN COMPUTE DIVERSIONS')
+    print('KEY IN COMPUTE DIVERSIONS')
+    print(self.key)
+	#The total diversion volumes are hard coded. 
+    print('FORECAST WYT IN COMPUTE DIVERSION')
+    print(self.forecastWYT)
+    
+    if self.forecastWYT == "C":
+      rest_flow = 369  
+    elif self.forecastWYT == "D":
+      rest_flow = 453
+    elif self.forecastWYT == "BN":
+      rest_flow = 648
+    elif self.forecastWYT == "AN":
+      rest_flow = 702
+    else:
+      rest_flow = 817
+    
+    total_diversion =  fnf_forecast*1000 - rest_flow
+
+    if y < 2010:
+      if self.forecastWYT == "C":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "D":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "BN":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "AN":
+        total_diversion = max(min(total_diversion, 1400),50)
+      else:
+        total_diversion = max(min(total_diversion, 1400),50)
+
+    else:
+      if self.forecastWYT == "C":
+        total_diversion = max(min(total_diversion, 800),500)
+        print('IN TOTAL DIV CRITICALLY DRY')
+        print(total_diversion)
+      elif self.forecastWYT == "D":
+        total_diversion = max(min(total_diversion, 700),400)
+        print('IN TOTAL DIV DRY')
+        print(total_diversion)
+      elif self.forecastWYT == "BN":
+        #total_diversion = max(min(total_diversion, 400),150)
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target[self.forecastWYT], 400),150)
+      elif self.forecastWYT == "AN":
+        #total_diversion = max(min(total_diversion, 700),150)
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target[self.forecastWYT], 400),150)
+      else:
+        total_diversion = max(min(total_diversion, 300),150)
+		
+    if m == 10:
+      if self.S[t] < 1300:
+        self.consumed_releases = 0
+      elif self.S[t] < 1975:
+        self.consumed_releases = 800*cfs_tafd
+      else:
+        self.consumed_releases = 1600*cfs_tafd
+		
+    elif m == 11:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 800*cfs_tafd
+      else:
+        self.consumed_releases = 1600*cfs_tafd
+		
+    elif m == 12:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+		
+    elif m == 1:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+
+    elif m == 2:
+      if self.S[t] < 1850:
+        self.consumed_releases = 0
+      elif self.S[t] < 1900:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+		
+    elif m == 3:
+      self.consumed_releases = total_diversion*0.048/31
+
+    elif m == 4:
+      self.consumed_releases = total_diversion*0.071/30
+
+    elif m == 5:
+      self.consumed_releases = total_diversion*0.085/31
+
+    elif m == 6:
+      self.consumed_releases = total_diversion*0.201/30
+
+    elif m == 7:
+      self.consumed_releases = total_diversion*0.242/31
+
+    elif m == 8:
+      self.consumed_releases = total_diversion*0.201/31
+
+    else:
+      self.consumed_releases = total_diversion*0.152/30
+	  
+    #Adjust the consumed releases (i.e. diversions to max output of Spring Creek Tunnel)
+    self.consumed_releases = max(min(self.consumed_releases, 3750*cfs_tafd),0)
+	
+    #Adjust the operations based on Shasta operations 
+    if shasta_fcr > 0:
+      self.consumed_releases = 0    
+
+
+    
+  def compute_diversion_PREROD(self, t, m, y, fnf_forecast, eos_day, cfs_tafd, shasta_fcr):
+   if self.key == 'TRT':
+
+    print('KEY IN COMPUTE DIVERSIONS')
+    print(self.key)
+	#The total diversion volumes are hard coded. 
+    print('FORECAST WYT IN COMPUTE DIVERSION')
+    print(self.forecastWYT)
+
+    #self.forecastWYT = "C"
+
+    print('COMPUTE DIVC PREROD WYT')
+    print(self.forecastWYT)
+
+    
+    if self.forecastWYT == "C":
+      rest_flow = 369  
+    elif self.forecastWYT == "D":
+      rest_flow = 369
+    elif self.forecastWYT == "BN":
+      rest_flow = 369
+    elif self.forecastWYT == "AN":
+      rest_flow = 369
+    else:
+      rest_flow = 369
+    
+    total_diversion =  fnf_forecast*1000 - rest_flow
+    print('FORECASTWYT')
+    print(self.forecastWYT)
+
+    if y < 2010:
+      if self.forecastWYT == "C":
+ 
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      elif self.forecastWYT == "D":
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      elif self.forecastWYT == "BN":
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      elif self.forecastWYT == "AN":
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      else:
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+
+    else:
+      '''
+      if self.forecastWYT == "C":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "D":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "BN":
+        total_diversion = max(min(total_diversion, 1400),50)
+      elif self.forecastWYT == "AN":
+        total_diversion = max(min(total_diversion, 1400),50)
+      else:
+        total_diversion = max(min(total_diversion, 1400),50)
+      '''
+      if self.forecastWYT == "C":
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+        print('IN TOTAL DIV CRITICALLY DRY')
+        print(total_diversion)
+      elif self.forecastWYT == "D":
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+        print('IN TOTAL DIV DRY')
+        print(total_diversion)
+      elif self.forecastWYT == "BN":
+        #total_diversion = max(min(total_diversion, 400),150)
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      elif self.forecastWYT == "AN":
+        #total_diversion = max(min(total_diversion, 700),150)
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+      else:
+        total_diversion = max(min(total_diversion + self.S[eos_day] - self.carryover_target['C'], 1400),50)
+        
+    if m == 10:
+      if self.S[t] < 1300:
+        self.consumed_releases = 0
+      elif self.S[t] < 1975:
+        self.consumed_releases = 800*cfs_tafd
+      else:
+        self.consumed_releases = 1600*cfs_tafd
+		
+    elif m == 11:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 800*cfs_tafd
+      else:
+        self.consumed_releases = 1600*cfs_tafd
+		
+    elif m == 12:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+		
+    elif m == 1:
+      if self.S[t] < 1800:
+        self.consumed_releases = 0
+      elif self.S[t] < 1850:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+
+    elif m == 2:
+      if self.S[t] < 1850:
+        self.consumed_releases = 0
+      elif self.S[t] < 1900:
+        self.consumed_releases = 325*cfs_tafd
+      else:
+        self.consumed_releases = 650*cfs_tafd
+		
+    elif m == 3:
+      self.consumed_releases = total_diversion*0.048/31
+
+    elif m == 4:
+      self.consumed_releases = total_diversion*0.071/30
+
+    elif m == 5:
+      self.consumed_releases = total_diversion*0.085/31
+
+    elif m == 6:
+      self.consumed_releases = total_diversion*0.201/30
+
+    elif m == 7:
+      self.consumed_releases = total_diversion*0.242/31
+
+    elif m == 8:
+      self.consumed_releases = total_diversion*0.201/31
+
+    else:
+      self.consumed_releases = total_diversion*0.152/30
+	  
+    #Adjust the consumed releases (i.e. diversions to max output of Spring Creek Tunnel)
+    self.consumed_releases = max(min(self.consumed_releases, 3750*cfs_tafd),0)
+	
+    #Adjust the operations based on Shasta operations 
+    if shasta_fcr > 0:
+      self.consumed_releases = 0    
+       
+      
+    
+
+  cpdef void release_environmental(self, int t, int d, int m, int dowy, list first_d_of_month, str basinWYT):
     ###This function calculates how much water will be coming into the delta
     ###based on environmental requirements (and flood control releases).
     ###The additions to the delta contained in self.envmin represent the releases
@@ -344,7 +821,24 @@ cdef class Reservoir():
 
 	###What releases are needed to meet flow requirements further downstream (at a point we can calculate 'gains')
     downstream_target_release = self.temp_releases[basinWYT][m-1]*cfs_tafd - self.downstream[t]
-      
+    '''
+    if self.key == "TRT":
+      if y < 2002:
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+      elif y < 2004:
+        wyt = 'D'
+        reservoir_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+      elif y < 2006:
+        wyt = 'BN'
+        reservoir_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+      else:		
+        reservoir_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+    '''   
 	####FLOOD CONTROL
 	##Top of storage pool
     self.tocs[t], self.max_fcr = self.current_tocs(dowy, self.fci[t])
@@ -352,16 +846,252 @@ cdef class Reservoir():
     W = self.S[t] + self.Q[t]
     self.fcr = max(0.2*(W-self.tocs[t]),0.0)
 
+
+    ''' #Trinity specific flood rules (values are in cfs)
+    if self.key == "TRT":
+      if 32 <= dowy <= 151:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2060:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+  
+      elif 152 <= dowy <= 182:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2260:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+
+      else:
+        self.fcr = 0
+    '''
+
 	###Based on the above requirements, what flow will make it to the delta?
     self.envmin = max(reservoir_target_release, downstream_target_release,self.sjrr_release, self.fcr)
     self.envmin = min(self.envmin, W - self.dead_pool)
     self.envmin -= self.consumed_releases
+
+
+    #if self.key == "TRT":
+     # self.restoration[t] = self.envmin # #This sould be self.reservoir_target_release  
+
+
+  cpdef void release_environmental_trt(self, int t, int d, int m, int y,int dowy, list first_d_of_month, str basinWYT):
+    ###This function calculates how much water will be coming into the delta
+    ###based on environmental requirements (and flood control releases).
+    ###The additions to the delta contained in self.envmin represent the releases
+    ###from the reservoir, minus any calls on water rights that would come from this
+    ###reservoir.  This number does not include downstream 'gains' to the delta,
+    ###although when those gains can be used to meet demands which would otherwise 'call'
+    ###in their water rights, those gains are considered consumed before the delta but
+    ###no release is required from the reservoir (the reason for this is how water is 
+    ###accounted at the delta for dividing SWP/CVP pumping)
+    cdef:
+      double reservoir_target_release, downstream_target_release, W
+      str wyt
+      
+
+    wyt = self.forecastWYT
+    #wyt = 'AN'
+    print('WYT IN RELEASE ENV')
+    print(wyt)
+    print(self.key)
+
+    print('YEAR IN RELEASE ENV')
+    print(y)
+    	
+	####ENVIRONMENTAL FLOWS
+	##What releases are needed directly downstream of reservoir
+    self.basinuse = np.interp(d, first_d_of_month, self.nodd)
+    self.gains_to_delta += self.basinuse
+	
+    if self.nodd_meets_envmin:
+      reservoir_target_release = max(max(self.env_min_flow[wyt][m-1]*cfs_tafd - self.basinuse,0.0), self.variable_min_flow)
+    else:
+      reservoir_target_release = max(self.env_min_flow[wyt][m-1]*cfs_tafd, self.variable_min_flow)
+
+	###What releases are needed to meet flow requirements further downstream (at a point we can calculate 'gains')
+    downstream_target_release = self.temp_releases[basinWYT][m-1]*cfs_tafd - self.downstream[t]
+
+    if self.key == "TRT":
+      if y < 2002:
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+      elif y < 2004:
+        wyt = 'D'
+        reservoir_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+      elif y < 2006:
+        wyt = 'BN'
+        reservoir_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+      else:		
+        reservoir_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+
+	####FLOOD CONTROL
+	##Top of storage pool
+    self.tocs[t], self.max_fcr = self.current_tocs(dowy, self.fci[t])
+    #What size release needs to be made
+    W = self.S[t] + self.Q[t]
+    self.fcr = max(0.2*(W-self.tocs[t]),0.0)
+
+    if self.key == "TRT":
+      if 32 <= dowy <= 151:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2060:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+  
+      elif 152 <= dowy <= 182:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2260:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+
+      else:
+        self.fcr = 0
+
+	###Based on the above requirements, what flow will make it to the delta?
+    self.envmin = max(reservoir_target_release, downstream_target_release,self.sjrr_release, self.fcr)
+    self.envmin = min(self.envmin, W - self.dead_pool)
+    self.envmin -= self.consumed_releases
+
+    if self.key == "TRT":
+      print('PASSED IN SELF RESTORATION')
+      self.restoration[t] = reservoir_target_release # #This sould be self.reservoir_target_release
+	      
 	      
 
 
+  cpdef void release_environmental_trt1(self, int t, int d, int m, int dowy, int y, list first_d_of_month, str basinWYT):
+    ###This function calculates how much water will be coming into the delta
+    ###based on environmental requirements (and flood control releases).
+    ###The additions to the delta contained in self.envmin represent the releases
+    ###from the reservoir, minus any calls on water rights that would come from this
+    ###reservoir.  This number does not include downstream 'gains' to the delta,
+    ###although when those gains can be used to meet demands which would otherwise 'call'
+    ###in their water rights, those gains are considered consumed before the delta but
+    ###no release is required from the reservoir (the reason for this is how water is 
+    ###accounted at the delta for dividing SWP/CVP pumping)
+    cdef:
+      double reservoir_target_release, downstream_target_release, W
+      str wyt
+  
+    wyt = self.forecastWYT
+    	
+	####ENVIRONMENTAL FLOWS
+	##What releases are needed directly downstream of reservoir
+    self.basinuse = np.interp(d, first_d_of_month, self.nodd)
+    self.gains_to_delta += self.basinuse
+    
+    if self.nodd_meets_envmin:
+      reservoir_target_release = max(max(self.env_min_flow[wyt][m-1]*cfs_tafd - self.basinuse,0.0), self.variable_min_flow)
+    else:
+      reservoir_target_release = max(self.env_min_flow[wyt][m-1]*cfs_tafd, self.variable_min_flow)
+
+	###What releases are needed to meet flow requirements further downstream (at a point we can calculate 'gains')
+    downstream_target_release = self.temp_releases[basinWYT][m-1]*cfs_tafd - self.downstream[t]
+
+
+    print('RELEASE ENVIRONMENTALLLLL')
+
+    #Trinity specific flood rules (values are in cfs)
+    if self.key == "TRT":
+      if y < 2002:
+        print('RELEASE ENVIRONMENTALLLLL 1')
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+      elif y < 2004:
+        wyt = 'D'
+        reservoir_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+
+      elif y < 2006:
+        wyt = 'BN'
+        reservoir_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+        downstream_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+
+      else:		
+        reservoir_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+
+
+	####FLOOD CONTROL
+	##Top of storage pool
+    self.tocs[t], self.max_fcr = self.current_tocs(dowy, self.fci[t])
+	  
+    #What size release needs to be made
+    W = self.S[t] + self.Q[t]
+    self.fcr = max(0.2*(W-self.tocs[t]),0.0)
+	
+    #Trinity specific flood rules (values are in cfs)
+    if self.key == "TRT":
+      if 32 <= dowy <= 151:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2060:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+  
+      elif 152 <= dowy <= 182:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2260:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+
+      else:
+        self.fcr = 0
+
+	###Based on the above requirements, what flow will make it to the delta?
+    self.envmin = max(reservoir_target_release, downstream_target_release,self.sjrr_release, self.fcr)
+    self.envmin = min(self.envmin, W - self.dead_pool)
+    #self.envmin -= self.consumed_releases
+
+    if self.key == "TRT":
+      self.restoration[t] = reservoir_target_release # #This sould be self.reservoir_target_release
+	      
+  
   cdef step(self, int t):
     cdef double W
 
+    self.apply_storage_override(t)
 	  ###What are the contract obligations north-of-delta (only for Northern Reservoirs)
     self.envmin += (self.basinuse + self.consumed_releases)
 	  ##What is the constraining factor - flood, consumptive demands, or environment?
@@ -379,8 +1109,135 @@ cdef class Reservoir():
       self.S[t+1] = max(W - self.R[t] - self.E[t], 0) # mass balance update
     self.R_to_delta[t] = max(self.R[t] - self.basinuse - self.consumed_releases, 0) # delta calcs need this
 	
+  
 	
-  cdef void find_flow_pumping(self, int t, int m, int dowy, int year_index, list days_in_month, list dowy_eom, str wyt, str release):
+  
+  
+  
+  cpdef void release_environmental_trt_PREROD(self, int t, int d, int m, int dowy, int y, list first_d_of_month, str basinWYT):
+    ###This function calculates how much water will be coming into the delta
+    ###based on environmental requirements (and flood control releases).
+    ###The additions to the delta contained in self.envmin represent the releases
+    ###from the reservoir, minus any calls on water rights that would come from this
+    ###reservoir.  This number does not include downstream 'gains' to the delta,
+    ###although when those gains can be used to meet demands which would otherwise 'call'
+    ###in their water rights, those gains are considered consumed before the delta but
+    ###no release is required from the reservoir (the reason for this is how water is 
+    ###accounted at the delta for dividing SWP/CVP pumping)
+    cdef:
+      double reservoir_target_release, downstream_target_release, W
+      str wyt
+  
+    wyt = self.forecastWYT
+    	
+	####ENVIRONMENTAL FLOWS
+	##What releases are needed directly downstream of reservoir
+    self.basinuse = np.interp(d, first_d_of_month, self.nodd)
+    self.gains_to_delta += self.basinuse
+    
+    if self.nodd_meets_envmin:
+      reservoir_target_release = max(max(self.env_min_flow[wyt][m-1]*cfs_tafd - self.basinuse,0.0), self.variable_min_flow)
+    else:
+      reservoir_target_release = max(self.env_min_flow[wyt][m-1]*cfs_tafd, self.variable_min_flow)
+
+	###What releases are needed to meet flow requirements further downstream (at a point we can calculate 'gains')
+    downstream_target_release = self.temp_releases[basinWYT][m-1]*cfs_tafd - self.downstream[t]
+
+
+    print('RELEASE ENVIRONMENTALLLLL')
+
+    #Trinity specific flood rules (values are in cfs)
+    if self.key == "TRT":
+      if y < 2002:
+        print('RELEASE ENVIRONMENTALLLLL 1')
+
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+      elif y < 2004:
+        #wyt = 'D'
+        #reservoir_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+        #downstream_target_release = min(self.restoration_flows['D'][dowy]*cfs_tafd, 2000*cfs_tafd)
+        #print('RELEASE ENVIRONMENTALLLL 2')
+
+
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+      elif y < 2006:
+        #wyt = 'BN'
+        #reservoir_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+        #downstream_target_release = min(self.restoration_flows['BN'][dowy]*cfs_tafd, 6000*cfs_tafd)
+        #print('PRE RODDDDDD 2006 after')
+
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd	
+        print('PRE RODDDDDD 2006 after')	
+      else:		
+        #reservoir_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+        #downstream_target_release = self.restoration_flows[wyt][dowy]*cfs_tafd
+
+        #COMMENTED 2/14/2026, MAKE THEM ALL WYT = 'C' LIKE <2002
+ 
+        wyt = 'C'
+        reservoir_target_release = self.restoration_flows['C'][dowy]*cfs_tafd
+        downstream_target_release = self.restoration_flows['C'][dowy]*cfs_tafd		
+
+ 
+
+	####FLOOD CONTROL
+	##Top of storage pool
+    self.tocs[t], self.max_fcr = self.current_tocs(dowy, self.fci[t])
+	  
+    #What size release needs to be made
+    W = self.S[t] + self.Q[t]
+    self.fcr = max(0.2*(W-self.tocs[t]),0.0)
+	
+    #Trinity specific flood rules (values are in cfs)
+    if self.key == "TRT":
+      if 32 <= dowy <= 151:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2060:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+  
+      elif 152 <= dowy <= 182:
+        if self.S[t] < 1850:
+          self.fcr = 0
+        elif self.S[t] < 2260:
+          self.fcr = 3600*cfs_tafd
+        elif self.S[t] < 2450:
+          self.fcr = 6000*cfs_tafd
+        elif self.S[t] < 2506:
+          self.fcr = 9600*cfs_tafd
+        else:
+          self.fcr = 30000*cfs_tafd
+
+      else:
+        self.fcr = 0
+
+	###Based on the above requirements, what flow will make it to the delta?
+    self.envmin = max(reservoir_target_release, downstream_target_release,self.sjrr_release, self.fcr)
+    self.envmin = min(self.envmin, W - self.dead_pool)
+    #self.envmin -= self.consumed_releases
+
+    if self.key == "TRT":
+      self.restoration[t] = reservoir_target_release # #This sould be self.reservoir_target_release
+	      
+  
+  
+  
+  cpdef step_trt(self,int t):
+   self.step(t)
+
+  cpdef void find_flow_pumping(self, int t, int m, int dowy, int year_index, list days_in_month, list dowy_eom, str wyt, str release):
 	  ###This function allows us to predict, at a monthly step, how much
     ###flow might come into the reservoir, and the rate at which we will
     ###have to release it, starting right now, in order to avoid spilling water
