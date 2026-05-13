@@ -165,10 +165,12 @@ def model_attribute_nonzero(att, name, clean_output):
 
 
 ### generator to loop through important model attributes and return non-zero data
-def model_attribute_loop_generator(clean_output, modelno, modelso):
+def model_attribute_loop_generator(clean_output, modelno, modelso,trinity):
 
   ### output timeseries for reservoirs
-  for reservoir_obj in modelno.reservoir_list + modelso.reservoir_list + [modelso.dummy, modelso.dummy2, modelso.ecICS]:
+  print('TRINITY RES LISTTTT')
+  print(trinity.reservoir_list)
+  for reservoir_obj in modelno.reservoir_list + modelso.reservoir_list + trinity.reservoir_list:
     for key in ['S', 'R', 'R_to_delta', 'available_storage', 'outflow_release', 'days_til_full','contract_flooded',
                 'reclaimed_carryover','flood_spill','flood_deliveries','Q','SNPK','downstream','fnf']:
       try:
@@ -178,16 +180,43 @@ def model_attribute_loop_generator(clean_output, modelno, modelso):
           yield list(att), name
       except:
         pass
-
+  ### output timeseries for trinity diversions
+  for reservoir_obj in trinity.reservoir_list:
+    #if reservoir_obj.key == 'TRT':
+     print(reservoir_obj.key)
+     print('passed in output util1')
+     for key in ['diversions', 'restoration', 'envmin']:
+       try:
+         timeseries = reservoir_obj.__getattribute__(key)
+         print('PASSED IN UTIL2 BEFORE')
+         att, name= model_attribute_nonzero(timeseries, np.string_(reservoir_obj.name + '_' + key),clean_output)
+         print('passed in output util2')
+         if list(att):
+           yield list(att), name
+           print('passed in output util3')
+       except:
+         print('passed in output util4')
+         pass  
 
   ### output timeseries for delta
   for delta_obj in [modelno.delta]:
-    for key in ['HRO_pump', 'TRP_pump', 'x2', 'outflow', 'inflow', 'OMR', 'forecastSRI', 'forecastSJI',
+    for key in ['HRO_pump', 'TRP_pump', 'x2', 'outflow', 'inflow', 'OMR', 'forecastSRI', 'forecastSJI', 'forecastSTI'
                'uncontrolled_swp','uncontrolled_cvp','remaining_outflow','swp_allocation','cvp_allocation',
                'gains','gains_sac','gains_sj','depletions','vernalis_flow','eastside_streams']:
       try:
         timeseries = delta_obj.__getattribute__(key)
         att, name = model_attribute_nonzero(timeseries, np.string_('delta_' + key), clean_output)
+        if list(att):
+          yield list(att), name
+      except:
+        pass
+
+  for delta_obj in [trinity.delta]:
+    for key in ['forecastSTI']:
+      try:
+        timeseries = delta_obj.__getattribute__(key)
+        att, name = model_attribute_nonzero(timeseries, np.string_('delta_' + key), clean_output)
+        print('PRINTED FORECASTSTI')
         if list(att):
           yield list(att), name
       except:
@@ -214,7 +243,7 @@ def model_attribute_loop_generator(clean_output, modelno, modelso):
 
 
   ### output timeseries for districts & privates
-  for district_obj in modelso.district_list + modelso.urban_list + modelso.private_list + modelso.city_list + modelso.metro.mwd_member_list:
+  for district_obj in modelso.district_list + modelso.urban_list + modelso.private_list + modelso.city_list:
     for key, timeseries in district_obj.daily_supplies_full.items():
       try:
         att, name = model_attribute_nonzero(timeseries, np.string_(district_obj.name + '_' + key), clean_output)
@@ -265,7 +294,7 @@ def model_attribute_loop_generator(clean_output, modelno, modelso):
 
 
 # function to take northern & southern model, process & output data
-def data_output(results_folder, clean_output, modelno, modelso, objs):
+def data_output(results_folder, clean_output, modelno, modelso, objs, trinity):
   nt = len(modelno.shasta.baseline_inf)
   # with open(output_list_loc, 'r') as f:
   #   output_list = json.load(f)
@@ -280,7 +309,7 @@ def data_output(results_folder, clean_output, modelno, modelso, objs):
     col = 0
     chunknum = 0
     initial_write = 0
-    for (att, name) in model_attribute_loop_generator(clean_output, modelno, modelso):
+    for (att, name) in model_attribute_loop_generator(clean_output, modelno, modelso, trinity):
       if name:  ### end of dataset not yet reached
         if col < chunk:
           names.append(name)
