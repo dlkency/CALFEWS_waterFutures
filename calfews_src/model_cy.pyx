@@ -4225,11 +4225,11 @@ cdef class Model():
             elif district_obj.name == 'metropolitan' and reservoir_obj.key == 'SLS':
               if (district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact']) > self.epsilon:
                 if wyt == 'W':
-                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.8),0.0), 1.0)
-                elif wyt == 'C' or 'D':
-                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.62),0.0), 1.0)  
+                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.65),0.0), 1.0)
+                elif wyt == 'C' or 'D' or 'BN':
+                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.60),0.0), 1.0)  
                 else:
-                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.70),0.0), 1.0) 
+                  total_frac = min(max(min(district_obj.projected_supply['tableA']/((district_obj.projected_supply['tableA'] + district_obj.projected_supply['owensvalley'] + district_obj.projected_supply['coloradocompact'])),0.62),0.0), 1.0) 
                 if self.model_mode == 'validation':
                   if year_index in range(1,3):
                     total_frac = max(min(total_frac, 0.35), 0.0)
