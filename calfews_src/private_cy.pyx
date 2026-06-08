@@ -413,7 +413,7 @@ cdef class Private():
       #self.carryover[key] - individual district share of contract carryover
       #paper_balance[key] - keeps track of 'paper' groundwater trades (negative means they have accepted GW deliveries in exchange for trading some of their water stored in reservoir, positive means they sent their banked GW to another district in exchage for SW storage
       #turnback_pool[key] - how much water was bought/sold on the turnback pool(negative is sold, positive is bought)
-      district_storage = (water_available-tot_carryover)*project_contract[key]*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
+      district_storage = (water_available-max(tot_carryover, 0))*project_contract[key]*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
       #annual allocation - remaining (undelivered) district share of expected total contract allocation
 	    #same as above, but projected_allocation*self.project_contract[key] - individual share of expected total contract allocation, this includes contract water that has already been delivered to all contractors
       annual_allocation = projected_allocation*project_contract[key]*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
@@ -421,7 +421,7 @@ cdef class Private():
 
     elif balance_type == 'right':
       #same as above, but for contracts that are expressed as 'rights' instead of allocations
-      district_storage = (water_available-tot_carryover)*rights[key]['capacity']*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
+      district_storage = (water_available-max(tot_carryover, 0))*rights[key]['capacity']*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
       annual_allocation = projected_allocation*rights[key]['capacity']*self.private_fraction[district_name][wateryear] - self.deliveries[district_name][key][wateryear] + self.paper_balance[district_name][key] + self.carryover[district_name][key] + self.turnback_pool[district_name][key]
       storage_balance = current_water*rights[key]['capacity']*self.private_fraction[district_name][wateryear] + max(min(self.paper_balance[district_name][key],current_water), 0.0) + max(self.carryover[district_name][key] + self.turnback_pool[district_name][key] - self.deliveries[district_name][key][wateryear], 0.0)
     
@@ -534,6 +534,10 @@ cdef class Private():
 	  
     reallocated_water = max(initial_projected - max_carryover, 0.0)
     carryover = min(max_carryover, initial_projected)
+
+    #print('INIT Carryover' + str(self.name) + ': ' + str(carryover), end = ' ')
+    #print('INIT Carryover' + str(self.name) + ': ' + str(reallocated_water))
+
     self.carryover[district_name][key] = carryover
     self.turnback_pool[district_name][key] = 0.0	
     self.paper_balance[district_name][key] = 0.0

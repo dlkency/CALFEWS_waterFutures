@@ -379,7 +379,7 @@ cdef class District():
       #self.carryover[key] - individual district share of contract carryover
       #paper_balance[key] - keeps track of 'paper' groundwater trades (negative means they have accepted GW deliveries in exchange for trading some of their water stored in reservoir, positive means they sent their banked GW to another district in exchage for SW storage
       #turnback_pool[key] - how much water was bought/sold on the turnback pool(negative is sold, positive is bought)
-      district_storage = (water_available-tot_carryover)*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key]  + self.paper_balance[key] + self.turnback_pool[key]
+      district_storage = (water_available-max(tot_carryover,0))*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key]  + self.paper_balance[key] + self.turnback_pool[key]
       #annual allocation - remaining (undelivered) district share of expected total contract allocation
 	    #same as above, but projected_allocation*self.project_contract[key] - individual share of expected total contract allocation, this includes contract water that has already been delivered to all contractors
       annual_allocation = projected_allocation*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
@@ -387,7 +387,7 @@ cdef class District():
       
     elif balance_type == 'right':
       #same as above, but for contracts that are expressed as 'rights' instead of allocations
-      district_storage = (water_available-tot_carryover)*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
+      district_storage = (water_available-max(tot_carryover, 0))*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       annual_allocation = projected_allocation*self.rights[key]['capacity']*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       storage_balance = current_water*self.rights[key]['capacity']*frac_to_district + max(self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key] - self.deliveries[key][wateryear], 0.0)
     
@@ -424,7 +424,15 @@ cdef class District():
 
     reallocated_water = max(annual_allocation - max_carryover, 0.0)
     carryover = min(max_carryover, annual_allocation)
-
+    
+    #if key == 'tableA' and self.project_contract[key] != 0.0:
+      #print(str(self.name), end = ' ')
+      #print('Allocated: ' + str(existing_balance*self.project_contract[key]*frac_to_district), end = ' ')
+      #print('Deliveries: ' + str(self.deliveries[key][wateryear]), end = ' ')
+      #print('Other: ' + str(self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]), end = ' ')
+      #print('Max Carryover: ' + str(max_carryover), end = ' ')
+      #print('Actual Carryover: ' + str(carryover))
+        
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
@@ -450,6 +458,9 @@ cdef class District():
 
     reallocated_water = max(initial_projected - max_carryover, 0.0)
     carryover = min(max_carryover, initial_projected)
+    
+    #print('INIT Carryover' + str(self.name) + ': ' + str(carryover), end = ' ')
+    #print('INIT Carryover' + str(self.name) + ': ' + str(reallocated_water))
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
@@ -597,6 +608,7 @@ cdef class District():
 
       carryover_storage_proj -= (total_recharge*service_area_adjust)
       carryover_storage_proj = max(carryover_storage_proj, 0.0)
+
 		
       ##The amount of recharge a district wants is then saved and sent to the canal class where it 'looks' for an available spot to recharge the water
       #self.recharge_carryover[key] = max(carryover_release_proj, carryover_release_current, spill_release_carryover, spill_release_storage)
@@ -623,7 +635,13 @@ cdef class District():
     else:
       self.delivery_carryover[key] = 0.0
       self.recharge_carryover[key] = 0.0
-	  
+
+    #if key == 'tableA' and year_index <= 7:
+      #print(str(self.name) + " Spill Release Carryover " + str(spill_release_carryover), end = " ")
+      #print(str(self.name) + " Carryover Storage Proj " + str(carryover_storage_proj), end = " ")
+      #print(str(self.name) + " Recharge_Carryover " + str(self.recharge_carryover[key]))
+
+  
 
 
   cdef double get_urban_recovery_target(self, int t, int dowy, int wateryear, str wyt, dict pumping, double project_contract, int demand_days, int start_month) except -1:

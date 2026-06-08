@@ -3213,6 +3213,7 @@ static const char __pyx_k_y[] = "y";
 static const char __pyx_k_AN[] = "AN";
 static const char __pyx_k_BN[] = "BN";
 static const char __pyx_k_X2[] = "X2";
+static const char __pyx_k__8[] = "_";
 static const char __pyx_k_df[] = "df";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_pd[] = "pd";
@@ -3223,8 +3224,7 @@ static const char __pyx_k_NMI[] = "NMI";
 static const char __pyx_k_NML[] = "NML";
 static const char __pyx_k_OMR[] = "OMR";
 static const char __pyx_k_XXX[] = "XXX";
-static const char __pyx_k__20[] = "_";
-static const char __pyx_k__23[] = "*";
+static const char __pyx_k__11[] = "*";
 static const char __pyx_k_cvp[] = "cvp";
 static const char __pyx_k_key[] = "key";
 static const char __pyx_k_max[] = "max";
@@ -3390,7 +3390,6 @@ static const char __pyx_k_omr_flow_factor[] = "omr_flow_factor";
 static const char __pyx_k_omr_prob_factor[] = "omr_prob_factor";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_TAX_FREE_EXPORTS[] = "TAX FREE EXPORTS";
 static const char __pyx_k_cvp_flood_volume[] = "cvp_flood_volume";
 static const char __pyx_k_delta_depletions[] = "delta_depletions";
 static const char __pyx_k_depletions_short[] = "depletions_short";
@@ -3399,7 +3398,6 @@ static const char __pyx_k_uncontrolled_cvp[] = "uncontrolled_cvp";
 static const char __pyx_k_uncontrolled_swp[] = "uncontrolled_swp";
 static const char __pyx_k_vernalis_trigger[] = "vernalis_trigger";
 static const char __pyx_k_matplotlib_pyplot[] = "matplotlib.pyplot";
-static const char __pyx_k_CVP_SURPLUS_INFLOW[] = "CVP SURPLUS INFLOW";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_cvp_over_dead_pool[] = "cvp_over_dead_pool";
 static const char __pyx_k_cvp_stored_release[] = "cvp_stored_release";
@@ -3411,16 +3409,6 @@ static const char __pyx_k_available_storage_2[] = "available_storage_2";
 static const char __pyx_k_short_starting_year[] = "short_starting_year";
 static const char __pyx_k_calfews_src_delta_cy[] = "calfews_src.delta_cy";
 static const char __pyx_k_delta_outflow_factor[] = "delta_outflow_factor";
-static const char __pyx_k_TRP_PUMP_LESS_THAN_EPSILON[] = "TRP PUMP LESS THAN EPSILON";
-static const char __pyx_k_CVP_FRAC_TIMES_TAX_FREE_EXP[] = "CVP FRAC TIMES TAX FREE EXP";
-static const char __pyx_k_HRO_PUMP_REMAINING_TAX_FREE[] = "HRO PUMP = REMAINING TAX FREE";
-static const char __pyx_k_HRO_PUMP_SWP_SURPLUS_INFLOW[] = "HRO PUMP = SWP SURPLUS INFLOW";
-static const char __pyx_k_TRP_PUMP_CVP_SURPLUS_INFLOW[] = "TRP PUMP = CVP SURPLUS INFLOW";
-static const char __pyx_k_TRP_PUMP_REMAINING_TAX_FREE[] = "TRP PUMP = REMAINING TAX FREE";
-static const char __pyx_k_Passed_in_cvp_surplus_less_than[] = "Passed in cvp surplus less than cvp frac";
-static const char __pyx_k_Passed_in_cvp_surplus_more_than[] = "Passed in cvp surplus more than cvp frac";
-static const char __pyx_k_Passed_in_swp_surplus_less_than[] = "Passed in swp surplus less than cvp frac";
-static const char __pyx_k_SELF_TRP_PUMP_MORE_THAN_CVP_MAX[] = "SELF TRP PUMP MORE THAN CVP MAX";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0[] = "Incompatible checksums (0x%x vs (0xb43b614, 0x3622e97, 0x8953ab0) = (HRO_pump, OMR, T, TRP_pump, annual_HRO_pump, annual_TRP_pump, barkerslough, ccc, cvp_allocation, cvp_aval_stor, cvp_delta_outflow_pct, d_1641_export, delta_uncontrolled_remaining, depletions, dmin, eastside_streams, ec_target, epsilon, eri, expected_depletion, expected_outflow, export_ratio, final_allocation_cvp, final_allocation_swp, first_empty_day_CVP, first_empty_day_SWP, fish_condition, forecastCVPPUMP, forecastSCWYT, forecastSJI, forecastSJWYT, forecastSRI, forecastSTI, forecastSTWYT, forecastSWPPUMP, gains, gains_sac, gains_sj, hist_HRO_pump, hist_OMR, hist_TRP_pump, inflow, iter_count, key, last_year_vamp, max_tax_free, min_outflow, model_mode, model_params, new_vamp_rule, omr_addition, omr_record_start, omr_regression, omr_reqr, omr_rule_start, outflow, pump_max, remaining_outflow, remaining_tax_free_storage, rio_gains, rio_vista_min, sac_fnf, san_joaquin_add, san_joaquin_export_ratio, san_joaquin_min, san_joaquin_min_flow, sodd_cvp, sodd_swp, surplus, swp_allocation, swp_aval_stor, swp_delta_outflow_pct, target_allocation, total_inflow, uncontrolled_cvp, uncontrolled_swp, vamp_flows, vamp_rule_start, vernalis_flow, vernalis_gains, x2, x2_dict, x2constraint))";
 static const char __pyx_k_calfews_src_delta_Delta_properti[] = "calfews_src/delta/Delta_properties.json";
 static PyObject *__pyx_n_u_AN;
@@ -3428,8 +3416,6 @@ static PyObject *__pyx_n_u_BN;
 static PyObject *__pyx_n_s_BRK_pump;
 static PyObject *__pyx_n_u_C;
 static PyObject *__pyx_n_s_CCC_pump;
-static PyObject *__pyx_kp_u_CVP_FRAC_TIMES_TAX_FREE_EXP;
-static PyObject *__pyx_kp_u_CVP_SURPLUS_INFLOW;
 static PyObject *__pyx_n_u_CVP_allocation;
 static PyObject *__pyx_n_u_D;
 static PyObject *__pyx_n_u_D1641_dates;
@@ -3439,8 +3425,6 @@ static PyObject *__pyx_n_s_DataFrame;
 static PyObject *__pyx_n_s_Delta;
 static PyObject *__pyx_n_s_EAST_gains;
 static PyObject *__pyx_n_u_EXC;
-static PyObject *__pyx_kp_u_HRO_PUMP_REMAINING_TAX_FREE;
-static PyObject *__pyx_kp_u_HRO_PUMP_SWP_SURPLUS_INFLOW;
 static PyObject *__pyx_n_s_HRO_pump;
 static PyObject *__pyx_n_u_HRO_pump;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0;
@@ -3450,23 +3434,15 @@ static PyObject *__pyx_n_u_NML;
 static PyObject *__pyx_kp_u_None;
 static PyObject *__pyx_n_s_OMR;
 static PyObject *__pyx_n_u_OMR;
-static PyObject *__pyx_kp_u_Passed_in_cvp_surplus_less_than;
-static PyObject *__pyx_kp_u_Passed_in_cvp_surplus_more_than;
-static PyObject *__pyx_kp_u_Passed_in_swp_surplus_less_than;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_n_s_SAC_gains;
 static PyObject *__pyx_n_u_SCINDEX;
-static PyObject *__pyx_kp_u_SELF_TRP_PUMP_MORE_THAN_CVP_MAX;
 static PyObject *__pyx_n_u_SJINDEX;
 static PyObject *__pyx_n_s_SJ_gains;
 static PyObject *__pyx_n_u_SWP_allocation;
 static PyObject *__pyx_n_s_Series;
 static PyObject *__pyx_n_s_StopIteration;
 static PyObject *__pyx_n_s_T;
-static PyObject *__pyx_kp_u_TAX_FREE_EXPORTS;
-static PyObject *__pyx_kp_u_TRP_PUMP_CVP_SURPLUS_INFLOW;
-static PyObject *__pyx_kp_u_TRP_PUMP_LESS_THAN_EPSILON;
-static PyObject *__pyx_kp_u_TRP_PUMP_REMAINING_TAX_FREE;
 static PyObject *__pyx_n_s_TRP_pump;
 static PyObject *__pyx_n_u_TRP_pump;
 static PyObject *__pyx_n_u_TRTINDEX;
@@ -3474,8 +3450,8 @@ static PyObject *__pyx_n_s_T_short;
 static PyObject *__pyx_n_u_W;
 static PyObject *__pyx_n_u_X2;
 static PyObject *__pyx_n_u_XXX;
-static PyObject *__pyx_n_u__20;
-static PyObject *__pyx_n_s__23;
+static PyObject *__pyx_n_s__11;
+static PyObject *__pyx_n_u__8;
 static PyObject *__pyx_n_s_add_subplot;
 static PyObject *__pyx_n_u_adjustment;
 static PyObject *__pyx_n_s_alpha;
@@ -3981,21 +3957,9 @@ static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
-static PyObject *__pyx_tuple__8;
-static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
-static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
-static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__14;
-static PyObject *__pyx_tuple__15;
-static PyObject *__pyx_tuple__16;
-static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_tuple__18;
-static PyObject *__pyx_tuple__19;
-static PyObject *__pyx_tuple__22;
-static PyObject *__pyx_tuple__24;
-static PyObject *__pyx_codeobj__21;
+static PyObject *__pyx_codeobj__9;
 /* Late includes */
 
 /* "calfews_src/delta_cy.pyx":12
@@ -22998,84 +22962,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  *     cvp_surplus_inflow = cvp_flows + cvp_frac * surplus
  *     swp_surplus_inflow = swp_flows + swp_frac * surplus             # <<<<<<<<<<<<<<
  * 
- *     print('CVP SURPLUS INFLOW')
+ *     #print('CVP SURPLUS INFLOW')
  */
   __pyx_v_swp_surplus_inflow = (__pyx_v_swp_flows + (__pyx_v_swp_frac * __pyx_v_surplus));
-
-  /* "calfews_src/delta_cy.pyx":899
- *     swp_surplus_inflow = swp_flows + swp_frac * surplus
- * 
- *     print('CVP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     print(cvp_surplus_inflow)
- * 
- */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 899, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "calfews_src/delta_cy.pyx":900
- * 
- *     print('CVP SURPLUS INFLOW')
- *     print(cvp_surplus_inflow)             # <<<<<<<<<<<<<<
- * 
- *     print('TAX FREE EXPORTS')
- */
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_cvp_surplus_inflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 900, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 900, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-  /* "calfews_src/delta_cy.pyx":902
- *     print(cvp_surplus_inflow)
- * 
- *     print('TAX FREE EXPORTS')             # <<<<<<<<<<<<<<
- *     print(tax_free_exports)
- * 
- */
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 902, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-  /* "calfews_src/delta_cy.pyx":903
- * 
- *     print('TAX FREE EXPORTS')
- *     print(tax_free_exports)             # <<<<<<<<<<<<<<
- * 
- *     print('CVP FRAC TIMES TAX FREE EXP')
- */
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_tax_free_exports); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 903, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 903, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "calfews_src/delta_cy.pyx":905
- *     print(tax_free_exports)
- * 
- *     print('CVP FRAC TIMES TAX FREE EXP')             # <<<<<<<<<<<<<<
- *     print(cvp_frac*tax_free_exports)
- * 
- */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 905, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "calfews_src/delta_cy.pyx":906
- * 
- *     print('CVP FRAC TIMES TAX FREE EXP')
- *     print(cvp_frac*tax_free_exports)             # <<<<<<<<<<<<<<
- * 
- *     ##################allocate tax free exports between swp and cvp, if it reaches its capped intake additional cvp flows wont be exports
- */
-  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_cvp_frac * __pyx_v_tax_free_exports)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 906, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 906, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "calfews_src/delta_cy.pyx":909
  * 
@@ -23092,7 +22981,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  *     if cvp_surplus_inflow < cvp_frac*tax_free_exports:
  *       self.TRP_pump[t] = max(cvp_surplus_inflow, 0.0)             # <<<<<<<<<<<<<<
  *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
- *       print('Passed in cvp surplus less than cvp frac')
+ *       #print('Passed in cvp surplus less than cvp frac')
  */
     __pyx_t_5 = 0.0;
     __pyx_t_9 = __pyx_v_cvp_surplus_inflow;
@@ -23101,20 +22990,20 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     } else {
       __pyx_t_8 = __pyx_t_9;
     }
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 910, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 910, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 910, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 910, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 910, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":911
  *     if cvp_surplus_inflow < cvp_frac*tax_free_exports:
  *       self.TRP_pump[t] = max(cvp_surplus_inflow, 0.0)
  *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)             # <<<<<<<<<<<<<<
- *       print('Passed in cvp surplus less than cvp frac')
+ *       #print('Passed in cvp surplus less than cvp frac')
  *       if swp_surplus_inflow > remaining_tax_free:
  */
     __pyx_t_8 = 0.0;
@@ -23126,91 +23015,58 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_v_remaining_tax_free = (__pyx_v_tax_free_exports - __pyx_t_9);
 
-    /* "calfews_src/delta_cy.pyx":912
- *       self.TRP_pump[t] = max(cvp_surplus_inflow, 0.0)
- *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
- *       print('Passed in cvp surplus less than cvp frac')             # <<<<<<<<<<<<<<
- *       if swp_surplus_inflow > remaining_tax_free:
- *         self.HRO_pump[t] = remaining_tax_free
- */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 912, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
     /* "calfews_src/delta_cy.pyx":913
  *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
- *       print('Passed in cvp surplus less than cvp frac')
+ *       #print('Passed in cvp surplus less than cvp frac')
  *       if swp_surplus_inflow > remaining_tax_free:             # <<<<<<<<<<<<<<
  *         self.HRO_pump[t] = remaining_tax_free
- *         print('HRO PUMP = REMAINING TAX FREE')
+ *         #print('HRO PUMP = REMAINING TAX FREE')
  */
     __pyx_t_6 = ((__pyx_v_swp_surplus_inflow > __pyx_v_remaining_tax_free) != 0);
     if (__pyx_t_6) {
 
       /* "calfews_src/delta_cy.pyx":914
- *       print('Passed in cvp surplus less than cvp frac')
+ *       #print('Passed in cvp surplus less than cvp frac')
  *       if swp_surplus_inflow > remaining_tax_free:
  *         self.HRO_pump[t] = remaining_tax_free             # <<<<<<<<<<<<<<
- *         print('HRO PUMP = REMAINING TAX FREE')
+ *         #print('HRO PUMP = REMAINING TAX FREE')
  *       else:
  */
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_remaining_tax_free); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 914, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_remaining_tax_free); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 914, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 914, __pyx_L1_error)
       }
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 914, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-      /* "calfews_src/delta_cy.pyx":915
- *       if swp_surplus_inflow > remaining_tax_free:
- *         self.HRO_pump[t] = remaining_tax_free
- *         print('HRO PUMP = REMAINING TAX FREE')             # <<<<<<<<<<<<<<
- *       else:
- *         self.HRO_pump[t] = swp_surplus_inflow
- */
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 915, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 914, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
       /* "calfews_src/delta_cy.pyx":913
  *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
- *       print('Passed in cvp surplus less than cvp frac')
+ *       #print('Passed in cvp surplus less than cvp frac')
  *       if swp_surplus_inflow > remaining_tax_free:             # <<<<<<<<<<<<<<
  *         self.HRO_pump[t] = remaining_tax_free
- *         print('HRO PUMP = REMAINING TAX FREE')
+ *         #print('HRO PUMP = REMAINING TAX FREE')
  */
       goto __pyx_L5;
     }
 
     /* "calfews_src/delta_cy.pyx":917
- *         print('HRO PUMP = REMAINING TAX FREE')
+ *         #print('HRO PUMP = REMAINING TAX FREE')
  *       else:
  *         self.HRO_pump[t] = swp_surplus_inflow             # <<<<<<<<<<<<<<
- *         print('HRO PUMP = SWP SURPLUS INFLOW')
+ *         #print('HRO PUMP = SWP SURPLUS INFLOW')
  *     elif swp_surplus_inflow < swp_frac*tax_free_exports:
  */
     /*else*/ {
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_swp_surplus_inflow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 917, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_swp_surplus_inflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 917, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 917, __pyx_L1_error)
       }
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 917, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-      /* "calfews_src/delta_cy.pyx":918
- *       else:
- *         self.HRO_pump[t] = swp_surplus_inflow
- *         print('HRO PUMP = SWP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     elif swp_surplus_inflow < swp_frac*tax_free_exports:
- *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
- */
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 918, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 917, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_L5:;
 
@@ -23226,7 +23082,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
 
   /* "calfews_src/delta_cy.pyx":919
  *         self.HRO_pump[t] = swp_surplus_inflow
- *         print('HRO PUMP = SWP SURPLUS INFLOW')
+ *         #print('HRO PUMP = SWP SURPLUS INFLOW')
  *     elif swp_surplus_inflow < swp_frac*tax_free_exports:             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
@@ -23235,11 +23091,11 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
   if (__pyx_t_6) {
 
     /* "calfews_src/delta_cy.pyx":920
- *         print('HRO PUMP = SWP SURPLUS INFLOW')
+ *         #print('HRO PUMP = SWP SURPLUS INFLOW')
  *     elif swp_surplus_inflow < swp_frac*tax_free_exports:
  *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)             # <<<<<<<<<<<<<<
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
- *       print('Passed in swp surplus less than cvp frac')
+ *       #print('Passed in swp surplus less than cvp frac')
  */
     __pyx_t_9 = 0.0;
     __pyx_t_8 = __pyx_v_swp_surplus_inflow;
@@ -23248,20 +23104,20 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     } else {
       __pyx_t_5 = __pyx_t_8;
     }
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 920, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 920, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 920, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 920, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 920, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":921
  *     elif swp_surplus_inflow < swp_frac*tax_free_exports:
  *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)             # <<<<<<<<<<<<<<
- *       print('Passed in swp surplus less than cvp frac')
+ *       #print('Passed in swp surplus less than cvp frac')
  *       if cvp_surplus_inflow > remaining_tax_free:
  */
     __pyx_t_5 = 0.0;
@@ -23273,97 +23129,64 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_v_remaining_tax_free = (__pyx_v_tax_free_exports - __pyx_t_8);
 
-    /* "calfews_src/delta_cy.pyx":922
- *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
- *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
- *       print('Passed in swp surplus less than cvp frac')             # <<<<<<<<<<<<<<
- *       if cvp_surplus_inflow > remaining_tax_free:
- *         self.TRP_pump[t] = remaining_tax_free
- */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 922, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
     /* "calfews_src/delta_cy.pyx":923
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
- *       print('Passed in swp surplus less than cvp frac')
+ *       #print('Passed in swp surplus less than cvp frac')
  *       if cvp_surplus_inflow > remaining_tax_free:             # <<<<<<<<<<<<<<
  *         self.TRP_pump[t] = remaining_tax_free
- *         print('TRP PUMP = REMAINING TAX FREE')
+ *         #print('TRP PUMP = REMAINING TAX FREE')
  */
     __pyx_t_6 = ((__pyx_v_cvp_surplus_inflow > __pyx_v_remaining_tax_free) != 0);
     if (__pyx_t_6) {
 
       /* "calfews_src/delta_cy.pyx":924
- *       print('Passed in swp surplus less than cvp frac')
+ *       #print('Passed in swp surplus less than cvp frac')
  *       if cvp_surplus_inflow > remaining_tax_free:
  *         self.TRP_pump[t] = remaining_tax_free             # <<<<<<<<<<<<<<
- *         print('TRP PUMP = REMAINING TAX FREE')
+ *         #print('TRP PUMP = REMAINING TAX FREE')
  *       else:
  */
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_remaining_tax_free); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 924, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_remaining_tax_free); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 924, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 924, __pyx_L1_error)
       }
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 924, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-      /* "calfews_src/delta_cy.pyx":925
- *       if cvp_surplus_inflow > remaining_tax_free:
- *         self.TRP_pump[t] = remaining_tax_free
- *         print('TRP PUMP = REMAINING TAX FREE')             # <<<<<<<<<<<<<<
- *       else:
- *         self.TRP_pump[t] = cvp_surplus_inflow
- */
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 925, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 924, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
       /* "calfews_src/delta_cy.pyx":923
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
- *       print('Passed in swp surplus less than cvp frac')
+ *       #print('Passed in swp surplus less than cvp frac')
  *       if cvp_surplus_inflow > remaining_tax_free:             # <<<<<<<<<<<<<<
  *         self.TRP_pump[t] = remaining_tax_free
- *         print('TRP PUMP = REMAINING TAX FREE')
+ *         #print('TRP PUMP = REMAINING TAX FREE')
  */
       goto __pyx_L6;
     }
 
     /* "calfews_src/delta_cy.pyx":927
- *         print('TRP PUMP = REMAINING TAX FREE')
+ *         #print('TRP PUMP = REMAINING TAX FREE')
  *       else:
  *         self.TRP_pump[t] = cvp_surplus_inflow             # <<<<<<<<<<<<<<
- *         print('TRP PUMP = CVP SURPLUS INFLOW')
+ *         #print('TRP PUMP = CVP SURPLUS INFLOW')
  *     else:
  */
     /*else*/ {
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_v_cvp_surplus_inflow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 927, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_cvp_surplus_inflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 927, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 927, __pyx_L1_error)
       }
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 927, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-      /* "calfews_src/delta_cy.pyx":928
- *       else:
- *         self.TRP_pump[t] = cvp_surplus_inflow
- *         print('TRP PUMP = CVP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     else:
- *       self.HRO_pump[t] = swp_surplus_inflow
- */
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 928, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 927, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_L6:;
 
     /* "calfews_src/delta_cy.pyx":919
  *         self.HRO_pump[t] = swp_surplus_inflow
- *         print('HRO PUMP = SWP SURPLUS INFLOW')
+ *         #print('HRO PUMP = SWP SURPLUS INFLOW')
  *     elif swp_surplus_inflow < swp_frac*tax_free_exports:             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
  *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
@@ -23372,76 +23195,65 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
   }
 
   /* "calfews_src/delta_cy.pyx":930
- *         print('TRP PUMP = CVP SURPLUS INFLOW')
+ *         #print('TRP PUMP = CVP SURPLUS INFLOW')
  *     else:
  *       self.HRO_pump[t] = swp_surplus_inflow             # <<<<<<<<<<<<<<
  *       self.TRP_pump[t] = cvp_surplus_inflow
- *       print('Passed in cvp surplus more than cvp frac')
+ *       #print('Passed in cvp surplus more than cvp frac')
  */
   /*else*/ {
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_swp_surplus_inflow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 930, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_swp_surplus_inflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 930, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 930, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 930, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 930, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":931
  *     else:
  *       self.HRO_pump[t] = swp_surplus_inflow
  *       self.TRP_pump[t] = cvp_surplus_inflow             # <<<<<<<<<<<<<<
- *       print('Passed in cvp surplus more than cvp frac')
+ *       #print('Passed in cvp surplus more than cvp frac')
  *     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]
  */
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_cvp_surplus_inflow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 931, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_cvp_surplus_inflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 931, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 931, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 931, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-    /* "calfews_src/delta_cy.pyx":932
- *       self.HRO_pump[t] = swp_surplus_inflow
- *       self.TRP_pump[t] = cvp_surplus_inflow
- *       print('Passed in cvp surplus more than cvp frac')             # <<<<<<<<<<<<<<
- *     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]
- *     cvp_remaining = cvp_flows  + cvp_frac * surplus - self.TRP_pump[t]
- */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 932, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 931, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __pyx_L4:;
 
   /* "calfews_src/delta_cy.pyx":933
  *       self.TRP_pump[t] = cvp_surplus_inflow
- *       print('Passed in cvp surplus more than cvp frac')
+ *       #print('Passed in cvp surplus more than cvp frac')
  *     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]             # <<<<<<<<<<<<<<
  *     cvp_remaining = cvp_flows  + cvp_frac * surplus - self.TRP_pump[t]
  * 
  */
-  __pyx_t_7 = PyFloat_FromDouble((__pyx_v_swp_flows + (__pyx_v_swp_frac * __pyx_v_surplus))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 933, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_swp_flows + (__pyx_v_swp_frac * __pyx_v_surplus))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 933, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 933, __pyx_L1_error)
   }
-  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 933, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyNumber_Subtract(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 933, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 933, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_15 = PyNumber_Subtract(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 933, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_15); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 933, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
   __pyx_v_swp_remaining = __pyx_t_8;
 
   /* "calfews_src/delta_cy.pyx":934
- *       print('Passed in cvp surplus more than cvp frac')
+ *       #print('Passed in cvp surplus more than cvp frac')
  *     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]
  *     cvp_remaining = cvp_flows  + cvp_frac * surplus - self.TRP_pump[t]             # <<<<<<<<<<<<<<
  * 
@@ -23453,14 +23265,14 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 934, __pyx_L1_error)
   }
-  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 934, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = PyNumber_Subtract(__pyx_t_15, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 934, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 934, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = PyNumber_Subtract(__pyx_t_15, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 934, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 934, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 934, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_cvp_remaining = __pyx_t_8;
 
   /* "calfews_src/delta_cy.pyx":936
@@ -23481,8 +23293,8 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 936, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_t_16, __pyx_t_13, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 936, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_t_16, __pyx_t_13, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 936, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_8 = 0.0;
   __pyx_t_5 = (__pyx_v_cvp_remaining * __pyx_v_export_ratio);
   if (((__pyx_t_8 > __pyx_t_5) != 0)) {
@@ -23490,12 +23302,12 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
   } else {
     __pyx_t_9 = __pyx_t_5;
   }
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 936, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyNumber_InPlaceAdd(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 936, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 936, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_15 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 936, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (unlikely(__pyx_t_16 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 936, __pyx_L1_error)
@@ -23531,18 +23343,18 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
   } else {
     __pyx_t_5 = __pyx_t_8;
   }
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 937, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = PyNumber_InPlaceAdd(__pyx_t_15, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 937, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 937, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_15, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 937, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (unlikely(__pyx_t_16 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 937, __pyx_L1_error)
   }
-  if (unlikely(__Pyx_SetItemInt(__pyx_t_16, __pyx_t_13, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 937, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  if (unlikely(__Pyx_SetItemInt(__pyx_t_16, __pyx_t_13, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 937, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
   /* "calfews_src/delta_cy.pyx":940
@@ -23602,13 +23414,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 943, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 943, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_cvp_max); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 943, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 943, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_15 = PyObject_RichCompare(__pyx_t_7, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_15); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 943, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_cvp_max); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 943, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_15 = PyObject_RichCompare(__pyx_t_4, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_15); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 943, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_15); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 943, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
   if (__pyx_t_6) {
@@ -23618,7 +23430,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  *     if self.TRP_pump[t] > cvp_max:
  *       self.TRP_pump[t] = cvp_max             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
- *       print('SELF TRP PUMP MORE THAN CVP MAX')
+ *       #print('SELF TRP PUMP MORE THAN CVP MAX')
  */
     __pyx_t_15 = PyFloat_FromDouble(__pyx_v_cvp_max); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 944, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
@@ -23633,7 +23445,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  *     if self.TRP_pump[t] > cvp_max:
  *       self.TRP_pump[t] = cvp_max
  *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)             # <<<<<<<<<<<<<<
- *       print('SELF TRP PUMP MORE THAN CVP MAX')
+ *       #print('SELF TRP PUMP MORE THAN CVP MAX')
  *     if self.HRO_pump[t] > swp_max:
  */
     __pyx_t_8 = 0.0;
@@ -23643,31 +23455,31 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 945, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = PyNumber_Subtract(__pyx_t_15, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_17 = __pyx_v_swp_max;
-    __pyx_t_4 = PyFloat_FromDouble(((__pyx_v_cvp_flows + __pyx_v_swp_flows) + __pyx_v_surplus)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Subtract(__pyx_t_15, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_17 = __pyx_v_swp_max;
+    __pyx_t_7 = PyFloat_FromDouble(((__pyx_v_cvp_flows + __pyx_v_swp_flows) + __pyx_v_surplus)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 945, __pyx_L1_error)
     }
     __pyx_t_15 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_12 = PyNumber_Subtract(__pyx_t_4, __pyx_t_15); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Subtract(__pyx_t_7, __pyx_t_15); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_7, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_7 = PyObject_RichCompare(__pyx_t_4, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_6) {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_15 = __pyx_t_7;
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_15 = __pyx_t_4;
     } else {
       __Pyx_INCREF(__pyx_t_12);
       __pyx_t_15 = __pyx_t_12;
@@ -23676,10 +23488,10 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     __Pyx_INCREF(__pyx_t_15);
     __pyx_t_12 = __pyx_t_15;
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_17); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_4, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_t_17); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_6) {
@@ -23692,13 +23504,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_15 = __pyx_t_12;
     }
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_INCREF(__pyx_t_15);
-    __pyx_t_7 = __pyx_t_15;
+    __pyx_t_4 = __pyx_t_15;
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __pyx_t_12 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_12, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_12, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -23708,30 +23520,19 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_15 = __pyx_t_1;
       __pyx_t_1 = 0;
     } else {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_15 = __pyx_t_7;
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_15 = __pyx_t_4;
     }
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __pyx_t_15;
-    __Pyx_INCREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __pyx_t_15;
+    __Pyx_INCREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 945, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-    /* "calfews_src/delta_cy.pyx":946
- *       self.TRP_pump[t] = cvp_max
- *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
- *       print('SELF TRP PUMP MORE THAN CVP MAX')             # <<<<<<<<<<<<<<
- *     if self.HRO_pump[t] > swp_max:
- *       self.HRO_pump[t] = swp_max
- */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 946, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":943
  *     cvp_max = max(min(cvp_pump, cvp_max), 0.0)
@@ -23744,7 +23545,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
 
   /* "calfews_src/delta_cy.pyx":947
  *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
- *       print('SELF TRP PUMP MORE THAN CVP MAX')
+ *       #print('SELF TRP PUMP MORE THAN CVP MAX')
  *     if self.HRO_pump[t] > swp_max:             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = swp_max
  *       self.TRP_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.HRO_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.HRO_pump[t],cvp_max),0.0)
@@ -23753,19 +23554,19 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 947, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 947, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 947, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_15 = PyFloat_FromDouble(__pyx_v_swp_max); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 947, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_t_15, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 947, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_1 = PyObject_RichCompare(__pyx_t_4, __pyx_t_15, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 947, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
   __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 947, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
     /* "calfews_src/delta_cy.pyx":948
- *       print('SELF TRP PUMP MORE THAN CVP MAX')
+ *       #print('SELF TRP PUMP MORE THAN CVP MAX')
  *     if self.HRO_pump[t] > swp_max:
  *       self.HRO_pump[t] = swp_max             # <<<<<<<<<<<<<<
  *       self.TRP_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.HRO_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.HRO_pump[t],cvp_max),0.0)
@@ -23796,8 +23597,8 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_15 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_7 = PyNumber_Subtract(__pyx_t_1, __pyx_t_15); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 949, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Subtract(__pyx_t_1, __pyx_t_15); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __pyx_t_17 = __pyx_v_cvp_max;
@@ -23813,12 +23614,12 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_15 = PyObject_RichCompare(__pyx_t_7, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_15); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __pyx_t_15 = PyObject_RichCompare(__pyx_t_4, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_15); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 949, __pyx_L1_error)
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_15); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     if (__pyx_t_6) {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_1 = __pyx_t_7;
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_1 = __pyx_t_4;
     } else {
       __Pyx_INCREF(__pyx_t_12);
       __pyx_t_1 = __pyx_t_12;
@@ -23829,53 +23630,53 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_15 = PyFloat_FromDouble(__pyx_t_17); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_15, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __pyx_t_7 = PyObject_RichCompare(__pyx_t_15, __pyx_t_12, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_6) {
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_t_17); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 949, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_1 = __pyx_t_4;
-      __pyx_t_4 = 0;
+      __pyx_t_7 = PyFloat_FromDouble(__pyx_t_17); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 949, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_1 = __pyx_t_7;
+      __pyx_t_7 = 0;
     } else {
       __Pyx_INCREF(__pyx_t_12);
       __pyx_t_1 = __pyx_t_12;
     }
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_7 = __pyx_t_1;
+    __pyx_t_4 = __pyx_t_1;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_12 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_12, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __pyx_t_7 = PyObject_RichCompare(__pyx_t_12, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (__pyx_t_6) {
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 949, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_1 = __pyx_t_4;
-      __pyx_t_4 = 0;
-    } else {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_1 = __pyx_t_7;
-    }
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __pyx_t_1;
-    __Pyx_INCREF(__pyx_t_7);
+    if (__pyx_t_6) {
+      __pyx_t_7 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 949, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_1 = __pyx_t_7;
+      __pyx_t_7 = 0;
+    } else {
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_1 = __pyx_t_4;
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __pyx_t_1;
+    __Pyx_INCREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 949, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 949, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":947
  *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
- *       print('SELF TRP PUMP MORE THAN CVP MAX')
+ *       #print('SELF TRP PUMP MORE THAN CVP MAX')
  *     if self.HRO_pump[t] > swp_max:             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = swp_max
  *       self.TRP_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.HRO_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.HRO_pump[t],cvp_max),0.0)
@@ -23893,15 +23694,15 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 951, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 951, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 951, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->epsilon); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 951, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyObject_RichCompare(__pyx_t_7, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 951, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 951, __pyx_L1_error)
+  __pyx_t_7 = PyObject_RichCompare(__pyx_t_4, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 951, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 951, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (__pyx_t_6) {
 
     /* "calfews_src/delta_cy.pyx":952
@@ -23909,29 +23710,29 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  *     if self.TRP_pump[t] < self.epsilon:
  *       self.HRO_pump[t] = max(self.HRO_pump[t] + self.TRP_pump[t],0.0)             # <<<<<<<<<<<<<<
  *       self.TRP_pump[t] = 0.0
- *       print('TRP PUMP LESS THAN EPSILON')
+ *       #print('TRP PUMP LESS THAN EPSILON')
  */
     __pyx_t_8 = 0.0;
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 952, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 952, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 952, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 952, __pyx_L1_error)
     }
     __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 952, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = PyNumber_Add(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 952, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 952, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Add(__pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 952, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_12 = PyObject_RichCompare(__pyx_t_4, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 952, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 952, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_12 = PyObject_RichCompare(__pyx_t_7, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 952, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 952, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     if (__pyx_t_6) {
@@ -23940,25 +23741,25 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_1 = __pyx_t_12;
       __pyx_t_12 = 0;
     } else {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_1 = __pyx_t_7;
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_1 = __pyx_t_4;
     }
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __pyx_t_1;
-    __Pyx_INCREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __pyx_t_1;
+    __Pyx_INCREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 952, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 952, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->HRO_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 952, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":953
  *     if self.TRP_pump[t] < self.epsilon:
  *       self.HRO_pump[t] = max(self.HRO_pump[t] + self.TRP_pump[t],0.0)
  *       self.TRP_pump[t] = 0.0             # <<<<<<<<<<<<<<
- *       print('TRP PUMP LESS THAN EPSILON')
+ *       #print('TRP PUMP LESS THAN EPSILON')
  *     elif self.HRO_pump[t] < self.epsilon:
  */
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
@@ -23966,17 +23767,6 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __PYX_ERR(0, 953, __pyx_L1_error)
     }
     if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_float_0_0, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 953, __pyx_L1_error)
-
-    /* "calfews_src/delta_cy.pyx":954
- *       self.HRO_pump[t] = max(self.HRO_pump[t] + self.TRP_pump[t],0.0)
- *       self.TRP_pump[t] = 0.0
- *       print('TRP PUMP LESS THAN EPSILON')             # <<<<<<<<<<<<<<
- *     elif self.HRO_pump[t] < self.epsilon:
- *       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)
- */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 954, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
     /* "calfews_src/delta_cy.pyx":951
  *       self.TRP_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.HRO_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.HRO_pump[t],cvp_max),0.0)
@@ -23990,7 +23780,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
 
   /* "calfews_src/delta_cy.pyx":955
  *       self.TRP_pump[t] = 0.0
- *       print('TRP PUMP LESS THAN EPSILON')
+ *       #print('TRP PUMP LESS THAN EPSILON')
  *     elif self.HRO_pump[t] < self.epsilon:             # <<<<<<<<<<<<<<
  *       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)
  *       self.HRO_pump[t] = 0.0
@@ -23999,19 +23789,19 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 955, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 955, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 955, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->epsilon); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 955, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_12 = PyObject_RichCompare(__pyx_t_7, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 955, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_12 = PyObject_RichCompare(__pyx_t_4, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 955, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 955, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
   if (__pyx_t_6) {
 
     /* "calfews_src/delta_cy.pyx":956
- *       print('TRP PUMP LESS THAN EPSILON')
+ *       #print('TRP PUMP LESS THAN EPSILON')
  *     elif self.HRO_pump[t] < self.epsilon:
  *       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)             # <<<<<<<<<<<<<<
  *       self.HRO_pump[t] = 0.0
@@ -24030,35 +23820,35 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 956, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = PyNumber_Add(__pyx_t_12, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 956, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Add(__pyx_t_12, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 956, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_12 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 956, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_12, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 956, __pyx_L1_error)
+    __pyx_t_7 = PyObject_RichCompare(__pyx_t_12, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 956, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 956, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (__pyx_t_6) {
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 956, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_1 = __pyx_t_4;
-      __pyx_t_4 = 0;
-    } else {
-      __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_1 = __pyx_t_7;
-    }
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 956, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __pyx_t_1;
-    __Pyx_INCREF(__pyx_t_7);
+    if (__pyx_t_6) {
+      __pyx_t_7 = PyFloat_FromDouble(__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 956, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_1 = __pyx_t_7;
+      __pyx_t_7 = 0;
+    } else {
+      __Pyx_INCREF(__pyx_t_4);
+      __pyx_t_1 = __pyx_t_4;
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __pyx_t_1;
+    __Pyx_INCREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 956, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 956, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 956, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "calfews_src/delta_cy.pyx":957
  *     elif self.HRO_pump[t] < self.epsilon:
@@ -24075,7 +23865,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
 
     /* "calfews_src/delta_cy.pyx":955
  *       self.TRP_pump[t] = 0.0
- *       print('TRP PUMP LESS THAN EPSILON')
+ *       #print('TRP PUMP LESS THAN EPSILON')
  *     elif self.HRO_pump[t] < self.epsilon:             # <<<<<<<<<<<<<<
  *       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)
  *       self.HRO_pump[t] = 0.0
@@ -24107,29 +23897,29 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 963, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_17 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_17 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 963, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_7); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_10 = ((struct __pyx_vtabstruct_11calfews_src_8delta_cy_Delta *)__pyx_v_self->__pyx_vtab)->meet_OMR_requirement(__pyx_v_self, __pyx_v_t, __pyx_v_m, __pyx_v_y, __pyx_v_dowy, __pyx_t_17, __pyx_t_8);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_t_10.f0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_10.f0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_1 = PyFloat_FromDouble(__pyx_t_10.f1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 963, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 963, __pyx_L1_error)
   }
-  if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 963, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  if (unlikely(__Pyx_SetItemInt(__pyx_v_self->TRP_pump, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 963, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 963, __pyx_L1_error)
@@ -24150,38 +23940,38 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 967, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 967, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PyNumber_Subtract(__pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 967, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = PyNumber_Subtract(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 967, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 967, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = PyNumber_Subtract(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 967, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_self->depletions == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 967, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->depletions, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 967, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PyNumber_Add(__pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->depletions, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 967, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = PyNumber_Add(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_self->outflow == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(0, 967, __pyx_L1_error)
   }
-  if (unlikely(__Pyx_SetItemInt(__pyx_v_self->outflow, __pyx_v_t, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 967, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (unlikely(__Pyx_SetItemInt(__pyx_v_self->outflow, __pyx_v_t, __pyx_t_7, int, 1, __Pyx_PyInt_From_int, 1, 1, 1) < 0)) __PYX_ERR(0, 967, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "calfews_src/delta_cy.pyx":968
  * ########################### more exports today = less outflow, less x2, more salinity ---> less surplus
@@ -24204,13 +23994,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 969, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->outflow, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 969, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_self->epsilon); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 969, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->outflow, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 969, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_4, __pyx_t_7, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 969, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->epsilon); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 969, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_7, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 969, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 969, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_6) {
@@ -24228,28 +24018,28 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       }
       __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_self->x2, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 970, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = PyNumber_Multiply(__pyx_float_0_945, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyFloat_AddCObj(__pyx_float_10_16, __pyx_t_7, 10.16, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_Multiply(__pyx_float_0_945, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 970, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_log10); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyFloat_AddCObj(__pyx_float_10_16, __pyx_t_4, 10.16, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_log10); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       if (unlikely(__pyx_v_self->outflow == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 970, __pyx_L1_error)
       }
-      __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->outflow, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->outflow, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_tafd_cfs); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 970, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_3 = PyNumber_Multiply(__pyx_t_4, __pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Multiply(__pyx_t_7, __pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 970, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_15 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_12))) {
@@ -24261,17 +24051,17 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
           __Pyx_DECREF_SET(__pyx_t_12, function);
         }
       }
-      __pyx_t_7 = (__pyx_t_15) ? __Pyx_PyObject_Call2Args(__pyx_t_12, __pyx_t_15, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_12, __pyx_t_3);
+      __pyx_t_4 = (__pyx_t_15) ? __Pyx_PyObject_Call2Args(__pyx_t_12, __pyx_t_15, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_12, __pyx_t_3);
       __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_12 = PyNumber_Multiply(__pyx_float_1_487, __pyx_t_7); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_float_1_487, __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 970, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Subtract(__pyx_t_1, __pyx_t_12); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = PyNumber_Subtract(__pyx_t_1, __pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       if (unlikely(__pyx_v_self->x2 == Py_None)) {
@@ -24279,8 +24069,8 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
         __PYX_ERR(0, 970, __pyx_L1_error)
       }
       __pyx_t_2 = (__pyx_v_t + 1);
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->x2, __pyx_t_2, __pyx_t_7, long, 1, __Pyx_PyInt_From_long, 1, 1, 1) < 0)) __PYX_ERR(0, 970, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_self->x2, __pyx_t_2, __pyx_t_4, long, 1, __Pyx_PyInt_From_long, 1, 1, 1) < 0)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
       /* "calfews_src/delta_cy.pyx":969
  *     self.outflow[t] = cvp_flows + swp_flows + unstored_flows - self.TRP_pump[t] - self.HRO_pump[t] + self.depletions[t]
@@ -24304,13 +24094,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 972, __pyx_L1_error)
       }
-      __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->x2, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 972, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_float_0_945, __pyx_t_7); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 972, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->x2, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 972, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_12 = PyNumber_Multiply(__pyx_float_0_945, __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 972, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyFloat_AddCObj(__pyx_float_10_16, __pyx_t_12, 10.16, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 972, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = __Pyx_PyFloat_AddCObj(__pyx_float_10_16, __pyx_t_12, 10.16, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 972, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 972, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -24335,9 +24125,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_3 = PyNumber_Multiply(__pyx_float_1_487, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 972, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_12 = PyNumber_Subtract(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 972, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Subtract(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 972, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (unlikely(__pyx_v_self->x2 == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -24387,8 +24177,8 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->hist_TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyNumber_Add(__pyx_t_12, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 977, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Add(__pyx_t_12, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 977, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (unlikely(__pyx_v_self->hist_HRO_pump == Py_None)) {
@@ -24397,9 +24187,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->hist_HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_12 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 977, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Add(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -24407,8 +24197,8 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyNumber_Subtract(__pyx_t_12, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 977, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Subtract(__pyx_t_12, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 977, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
@@ -24417,9 +24207,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     }
     __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_12 = PyNumber_Subtract(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 977, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Subtract(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 977, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (unlikely(__pyx_v_self->OMR == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -24450,12 +24240,12 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 979, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyNumber_Multiply(__pyx_float_16000_0, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 979, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Multiply(__pyx_float_16000_0, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 979, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_12, __pyx_t_7, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 979, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_t_12, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 979, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 979, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_6) {
@@ -24469,13 +24259,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  */
       __pyx_t_3 = PyFloat_FromDouble((__pyx_v_self->vernalis_gains * 0.471)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 980, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 980, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_float_83_0, __pyx_t_7); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 980, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 980, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_12 = PyNumber_Multiply(__pyx_float_83_0, __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 980, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Add(__pyx_t_3, __pyx_t_12); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 980, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = PyNumber_Add(__pyx_t_3, __pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 980, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
@@ -24497,9 +24287,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_911, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 980, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_Subtract(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 980, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Subtract(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 980, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (unlikely(__pyx_v_self->OMR == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -24529,12 +24319,12 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 981, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = PyNumber_Multiply(__pyx_float_28000_0, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 981, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = PyNumber_Multiply(__pyx_float_28000_0, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 981, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_7, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 981, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 981, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 981, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_6) {
@@ -24548,13 +24338,13 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
  */
       __pyx_t_3 = PyFloat_FromDouble((__pyx_v_self->vernalis_gains * 0.681)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 982, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 982, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_1 = PyNumber_Multiply(__pyx_float_3008_0, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 982, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 982, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_1 = PyNumber_Multiply(__pyx_float_3008_0, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 982, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Subtract(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 982, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = PyNumber_Subtract(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 982, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
@@ -24576,9 +24366,9 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __pyx_t_3 = PyNumber_Multiply(__pyx_float_0_94, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 982, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_12 = PyNumber_Subtract(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 982, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Subtract(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 982, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (unlikely(__pyx_v_self->OMR == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -24609,28 +24399,28 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_step(struct __pyx_obj_11calfe
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_cfs_tafd); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 984, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = PyNumber_Multiply(__pyx_float_1644_0, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 984, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = PyNumber_Multiply(__pyx_float_1644_0, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 984, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyNumber_Subtract(__pyx_t_12, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 984, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Subtract(__pyx_t_12, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 984, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (unlikely(__pyx_v_self->TRP_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 984, __pyx_L1_error)
       }
-      __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 984, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_self->TRP_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 984, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (unlikely(__pyx_v_self->HRO_pump == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 984, __pyx_L1_error)
       }
       __pyx_t_12 = __Pyx_GetItemInt_List(__pyx_v_self->HRO_pump, __pyx_v_t, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 984, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_1 = PyNumber_Add(__pyx_t_7, __pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 984, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Add(__pyx_t_4, __pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 984, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __pyx_t_12 = PyNumber_Multiply(__pyx_float_0_94, __pyx_t_1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 984, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
@@ -25097,7 +24887,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_create_flow_shapes_omr(struct
  *       fnf_ind = model.df_short[0]['%s_fnf'% fnf_keys].values / 1000000.0
  *       fnf_series += fnf_ind
  */
-  __pyx_t_3 = __pyx_tuple__16; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
+  __pyx_t_3 = __pyx_tuple__4; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
   for (;;) {
     if (__pyx_t_4 >= 4) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
@@ -25232,7 +25022,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_create_flow_shapes_omr(struct
       __Pyx_DECREF_SET(__pyx_t_2, function);
     }
   }
-  __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_tuple__17) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_tuple__17);
+  __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_tuple__5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_tuple__5);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1022, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -25266,7 +25056,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_create_flow_shapes_omr(struct
       __Pyx_DECREF_SET(__pyx_t_5, function);
     }
   }
-  __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_tuple__17) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_tuple__17);
+  __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_tuple__5) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_tuple__5);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1023, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -25605,7 +25395,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_create_flow_shapes_omr(struct
         __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_tuple__18) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_tuple__18);
+    __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_tuple__6) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_tuple__6);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1039, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -26002,7 +25792,7 @@ static void __pyx_f_11calfews_src_8delta_cy_5Delta_create_flow_shapes_omr(struct
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         }
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_5, __pyx_tuple__19); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1057, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_5, __pyx_tuple__7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1057, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_XDECREF_SET(__pyx_v_r, __pyx_t_1);
@@ -26943,10 +26733,10 @@ static PyObject *__pyx_pf_11calfews_src_8delta_cy_5Delta_32accounting_as_df(stru
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
     __pyx_t_3 = 0;
-    __Pyx_INCREF(__pyx_n_u__20);
+    __Pyx_INCREF(__pyx_n_u__8);
     __pyx_t_9 += 1;
-    __Pyx_GIVEREF(__pyx_n_u__20);
-    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_n_u__20);
+    __Pyx_GIVEREF(__pyx_n_u__8);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_n_u__8);
     __pyx_t_3 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Unicode(__pyx_v_n), __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1087, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_10 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_10) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_10;
@@ -37583,7 +37373,7 @@ static PyObject *__pyx_pf_11calfews_src_8delta_cy___pyx_unpickle_Delta(CYTHON_UN
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__21)
+  __Pyx_TraceFrameInit(__pyx_codeobj__9)
   __Pyx_RefNannySetupContext("__pyx_unpickle_Delta", 0);
   __Pyx_TraceCall("__pyx_unpickle_Delta", __pyx_f[2], 1, 0, __PYX_ERR(2, 1, __pyx_L1_error));
 
@@ -37596,7 +37386,7 @@ static PyObject *__pyx_pf_11calfews_src_8delta_cy___pyx_unpickle_Delta(CYTHON_UN
  */
   __pyx_t_1 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__22, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(2, 4, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_tuple__10, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(2, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
@@ -40827,8 +40617,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_BRK_pump, __pyx_k_BRK_pump, sizeof(__pyx_k_BRK_pump), 0, 0, 1, 1},
   {&__pyx_n_u_C, __pyx_k_C, sizeof(__pyx_k_C), 0, 1, 0, 1},
   {&__pyx_n_s_CCC_pump, __pyx_k_CCC_pump, sizeof(__pyx_k_CCC_pump), 0, 0, 1, 1},
-  {&__pyx_kp_u_CVP_FRAC_TIMES_TAX_FREE_EXP, __pyx_k_CVP_FRAC_TIMES_TAX_FREE_EXP, sizeof(__pyx_k_CVP_FRAC_TIMES_TAX_FREE_EXP), 0, 1, 0, 0},
-  {&__pyx_kp_u_CVP_SURPLUS_INFLOW, __pyx_k_CVP_SURPLUS_INFLOW, sizeof(__pyx_k_CVP_SURPLUS_INFLOW), 0, 1, 0, 0},
   {&__pyx_n_u_CVP_allocation, __pyx_k_CVP_allocation, sizeof(__pyx_k_CVP_allocation), 0, 1, 0, 1},
   {&__pyx_n_u_D, __pyx_k_D, sizeof(__pyx_k_D), 0, 1, 0, 1},
   {&__pyx_n_u_D1641_dates, __pyx_k_D1641_dates, sizeof(__pyx_k_D1641_dates), 0, 1, 0, 1},
@@ -40838,8 +40626,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Delta, __pyx_k_Delta, sizeof(__pyx_k_Delta), 0, 0, 1, 1},
   {&__pyx_n_s_EAST_gains, __pyx_k_EAST_gains, sizeof(__pyx_k_EAST_gains), 0, 0, 1, 1},
   {&__pyx_n_u_EXC, __pyx_k_EXC, sizeof(__pyx_k_EXC), 0, 1, 0, 1},
-  {&__pyx_kp_u_HRO_PUMP_REMAINING_TAX_FREE, __pyx_k_HRO_PUMP_REMAINING_TAX_FREE, sizeof(__pyx_k_HRO_PUMP_REMAINING_TAX_FREE), 0, 1, 0, 0},
-  {&__pyx_kp_u_HRO_PUMP_SWP_SURPLUS_INFLOW, __pyx_k_HRO_PUMP_SWP_SURPLUS_INFLOW, sizeof(__pyx_k_HRO_PUMP_SWP_SURPLUS_INFLOW), 0, 1, 0, 0},
   {&__pyx_n_s_HRO_pump, __pyx_k_HRO_pump, sizeof(__pyx_k_HRO_pump), 0, 0, 1, 1},
   {&__pyx_n_u_HRO_pump, __pyx_k_HRO_pump, sizeof(__pyx_k_HRO_pump), 0, 1, 0, 1},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0, __pyx_k_Incompatible_checksums_0x_x_vs_0, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0), 0, 0, 1, 0},
@@ -40849,23 +40635,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_None, __pyx_k_None, sizeof(__pyx_k_None), 0, 1, 0, 0},
   {&__pyx_n_s_OMR, __pyx_k_OMR, sizeof(__pyx_k_OMR), 0, 0, 1, 1},
   {&__pyx_n_u_OMR, __pyx_k_OMR, sizeof(__pyx_k_OMR), 0, 1, 0, 1},
-  {&__pyx_kp_u_Passed_in_cvp_surplus_less_than, __pyx_k_Passed_in_cvp_surplus_less_than, sizeof(__pyx_k_Passed_in_cvp_surplus_less_than), 0, 1, 0, 0},
-  {&__pyx_kp_u_Passed_in_cvp_surplus_more_than, __pyx_k_Passed_in_cvp_surplus_more_than, sizeof(__pyx_k_Passed_in_cvp_surplus_more_than), 0, 1, 0, 0},
-  {&__pyx_kp_u_Passed_in_swp_surplus_less_than, __pyx_k_Passed_in_swp_surplus_less_than, sizeof(__pyx_k_Passed_in_swp_surplus_less_than), 0, 1, 0, 0},
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_SAC_gains, __pyx_k_SAC_gains, sizeof(__pyx_k_SAC_gains), 0, 0, 1, 1},
   {&__pyx_n_u_SCINDEX, __pyx_k_SCINDEX, sizeof(__pyx_k_SCINDEX), 0, 1, 0, 1},
-  {&__pyx_kp_u_SELF_TRP_PUMP_MORE_THAN_CVP_MAX, __pyx_k_SELF_TRP_PUMP_MORE_THAN_CVP_MAX, sizeof(__pyx_k_SELF_TRP_PUMP_MORE_THAN_CVP_MAX), 0, 1, 0, 0},
   {&__pyx_n_u_SJINDEX, __pyx_k_SJINDEX, sizeof(__pyx_k_SJINDEX), 0, 1, 0, 1},
   {&__pyx_n_s_SJ_gains, __pyx_k_SJ_gains, sizeof(__pyx_k_SJ_gains), 0, 0, 1, 1},
   {&__pyx_n_u_SWP_allocation, __pyx_k_SWP_allocation, sizeof(__pyx_k_SWP_allocation), 0, 1, 0, 1},
   {&__pyx_n_s_Series, __pyx_k_Series, sizeof(__pyx_k_Series), 0, 0, 1, 1},
   {&__pyx_n_s_StopIteration, __pyx_k_StopIteration, sizeof(__pyx_k_StopIteration), 0, 0, 1, 1},
   {&__pyx_n_s_T, __pyx_k_T, sizeof(__pyx_k_T), 0, 0, 1, 1},
-  {&__pyx_kp_u_TAX_FREE_EXPORTS, __pyx_k_TAX_FREE_EXPORTS, sizeof(__pyx_k_TAX_FREE_EXPORTS), 0, 1, 0, 0},
-  {&__pyx_kp_u_TRP_PUMP_CVP_SURPLUS_INFLOW, __pyx_k_TRP_PUMP_CVP_SURPLUS_INFLOW, sizeof(__pyx_k_TRP_PUMP_CVP_SURPLUS_INFLOW), 0, 1, 0, 0},
-  {&__pyx_kp_u_TRP_PUMP_LESS_THAN_EPSILON, __pyx_k_TRP_PUMP_LESS_THAN_EPSILON, sizeof(__pyx_k_TRP_PUMP_LESS_THAN_EPSILON), 0, 1, 0, 0},
-  {&__pyx_kp_u_TRP_PUMP_REMAINING_TAX_FREE, __pyx_k_TRP_PUMP_REMAINING_TAX_FREE, sizeof(__pyx_k_TRP_PUMP_REMAINING_TAX_FREE), 0, 1, 0, 0},
   {&__pyx_n_s_TRP_pump, __pyx_k_TRP_pump, sizeof(__pyx_k_TRP_pump), 0, 0, 1, 1},
   {&__pyx_n_u_TRP_pump, __pyx_k_TRP_pump, sizeof(__pyx_k_TRP_pump), 0, 1, 0, 1},
   {&__pyx_n_u_TRTINDEX, __pyx_k_TRTINDEX, sizeof(__pyx_k_TRTINDEX), 0, 1, 0, 1},
@@ -40873,8 +40651,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_W, __pyx_k_W, sizeof(__pyx_k_W), 0, 1, 0, 1},
   {&__pyx_n_u_X2, __pyx_k_X2, sizeof(__pyx_k_X2), 0, 1, 0, 1},
   {&__pyx_n_u_XXX, __pyx_k_XXX, sizeof(__pyx_k_XXX), 0, 1, 0, 1},
-  {&__pyx_n_u__20, __pyx_k__20, sizeof(__pyx_k__20), 0, 1, 0, 1},
-  {&__pyx_n_s__23, __pyx_k__23, sizeof(__pyx_k__23), 0, 0, 1, 1},
+  {&__pyx_n_s__11, __pyx_k__11, sizeof(__pyx_k__11), 0, 0, 1, 1},
+  {&__pyx_n_u__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 1, 0, 1},
   {&__pyx_n_s_add_subplot, __pyx_k_add_subplot, sizeof(__pyx_k_add_subplot), 0, 0, 1, 1},
   {&__pyx_n_u_adjustment, __pyx_k_adjustment, sizeof(__pyx_k_adjustment), 0, 1, 0, 1},
   {&__pyx_n_s_alpha, __pyx_k_alpha, sizeof(__pyx_k_alpha), 0, 0, 1, 1},
@@ -41057,7 +40835,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 37, __pyx_L1_error)
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 40, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 304, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 899, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 1061, __pyx_L1_error)
   __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 1086, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -41101,138 +40879,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "calfews_src/delta_cy.pyx":899
- *     swp_surplus_inflow = swp_flows + swp_frac * surplus
- * 
- *     print('CVP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     print(cvp_surplus_inflow)
- * 
- */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_u_CVP_SURPLUS_INFLOW); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 899, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
-
-  /* "calfews_src/delta_cy.pyx":902
- *     print(cvp_surplus_inflow)
- * 
- *     print('TAX FREE EXPORTS')             # <<<<<<<<<<<<<<
- *     print(tax_free_exports)
- * 
- */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_u_TAX_FREE_EXPORTS); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 902, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-
-  /* "calfews_src/delta_cy.pyx":905
- *     print(tax_free_exports)
- * 
- *     print('CVP FRAC TIMES TAX FREE EXP')             # <<<<<<<<<<<<<<
- *     print(cvp_frac*tax_free_exports)
- * 
- */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_CVP_FRAC_TIMES_TAX_FREE_EXP); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 905, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
-
-  /* "calfews_src/delta_cy.pyx":912
- *       self.TRP_pump[t] = max(cvp_surplus_inflow, 0.0)
- *       remaining_tax_free = tax_free_exports - max(cvp_surplus_inflow, 0.0)
- *       print('Passed in cvp surplus less than cvp frac')             # <<<<<<<<<<<<<<
- *       if swp_surplus_inflow > remaining_tax_free:
- *         self.HRO_pump[t] = remaining_tax_free
- */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_Passed_in_cvp_surplus_less_than); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 912, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-
-  /* "calfews_src/delta_cy.pyx":915
- *       if swp_surplus_inflow > remaining_tax_free:
- *         self.HRO_pump[t] = remaining_tax_free
- *         print('HRO PUMP = REMAINING TAX FREE')             # <<<<<<<<<<<<<<
- *       else:
- *         self.HRO_pump[t] = swp_surplus_inflow
- */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_HRO_PUMP_REMAINING_TAX_FREE); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 915, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
-
-  /* "calfews_src/delta_cy.pyx":918
- *       else:
- *         self.HRO_pump[t] = swp_surplus_inflow
- *         print('HRO PUMP = SWP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     elif swp_surplus_inflow < swp_frac*tax_free_exports:
- *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
- */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_HRO_PUMP_SWP_SURPLUS_INFLOW); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 918, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
-
-  /* "calfews_src/delta_cy.pyx":922
- *       self.HRO_pump[t] = max(swp_surplus_inflow, 0.0)
- *       remaining_tax_free = tax_free_exports - max(swp_surplus_inflow, 0.0)
- *       print('Passed in swp surplus less than cvp frac')             # <<<<<<<<<<<<<<
- *       if cvp_surplus_inflow > remaining_tax_free:
- *         self.TRP_pump[t] = remaining_tax_free
- */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Passed_in_swp_surplus_less_than); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 922, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
-
-  /* "calfews_src/delta_cy.pyx":925
- *       if cvp_surplus_inflow > remaining_tax_free:
- *         self.TRP_pump[t] = remaining_tax_free
- *         print('TRP PUMP = REMAINING TAX FREE')             # <<<<<<<<<<<<<<
- *       else:
- *         self.TRP_pump[t] = cvp_surplus_inflow
- */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_TRP_PUMP_REMAINING_TAX_FREE); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 925, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
-
-  /* "calfews_src/delta_cy.pyx":928
- *       else:
- *         self.TRP_pump[t] = cvp_surplus_inflow
- *         print('TRP PUMP = CVP SURPLUS INFLOW')             # <<<<<<<<<<<<<<
- *     else:
- *       self.HRO_pump[t] = swp_surplus_inflow
- */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_TRP_PUMP_CVP_SURPLUS_INFLOW); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 928, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
-
-  /* "calfews_src/delta_cy.pyx":932
- *       self.HRO_pump[t] = swp_surplus_inflow
- *       self.TRP_pump[t] = cvp_surplus_inflow
- *       print('Passed in cvp surplus more than cvp frac')             # <<<<<<<<<<<<<<
- *     swp_remaining = swp_flows  + swp_frac * surplus - self.HRO_pump[t]
- *     cvp_remaining = cvp_flows  + cvp_frac * surplus - self.TRP_pump[t]
- */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_Passed_in_cvp_surplus_more_than); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 932, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
-
-  /* "calfews_src/delta_cy.pyx":946
- *       self.TRP_pump[t] = cvp_max
- *       self.HRO_pump[t] = max(min(cvp_flows + swp_flows + surplus - self.TRP_pump[t], (cvp_flows + swp_flows + unstored_flows)*export_ratio - self.TRP_pump[t],swp_max),0.0)
- *       print('SELF TRP PUMP MORE THAN CVP MAX')             # <<<<<<<<<<<<<<
- *     if self.HRO_pump[t] > swp_max:
- *       self.HRO_pump[t] = swp_max
- */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_u_SELF_TRP_PUMP_MORE_THAN_CVP_MAX); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 946, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
-
-  /* "calfews_src/delta_cy.pyx":954
- *       self.HRO_pump[t] = max(self.HRO_pump[t] + self.TRP_pump[t],0.0)
- *       self.TRP_pump[t] = 0.0
- *       print('TRP PUMP LESS THAN EPSILON')             # <<<<<<<<<<<<<<
- *     elif self.HRO_pump[t] < self.epsilon:
- *       self.TRP_pump[t] = max(self.TRP_pump[t] + self.HRO_pump[t],0.0)
- */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_u_TRP_PUMP_LESS_THAN_EPSILON); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 954, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
-
   /* "calfews_src/delta_cy.pyx":1015
  * 
  *     fnf_series = np.zeros(len(model.df_short[0]))
@@ -41240,9 +40886,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *       fnf_ind = model.df_short[0]['%s_fnf'% fnf_keys].values / 1000000.0
  *       fnf_series += fnf_ind
  */
-  __pyx_tuple__16 = PyTuple_Pack(4, __pyx_n_u_NML, __pyx_n_u_DNP, __pyx_n_u_EXC, __pyx_n_u_MIL); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 1015, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__4 = PyTuple_Pack(4, __pyx_n_u_NML, __pyx_n_u_DNP, __pyx_n_u_EXC, __pyx_n_u_MIL); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 1015, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
 
   /* "calfews_src/delta_cy.pyx":1022
  *     numYears = endYear - startYear
@@ -41251,9 +40897,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     self.omr_regression['intercept'] = np.zeros((365,12))
  *     monthly_flow = np.zeros((12, (endYear - startYear)))
  */
-  __pyx_tuple__17 = PyTuple_Pack(2, __pyx_int_365, __pyx_int_12); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 1022, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_int_365, __pyx_int_12); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 1022, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
 
   /* "calfews_src/delta_cy.pyx":1039
  *         fig = plt.figure()
@@ -41262,9 +40908,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *       for mm in range(0,12):
  *         if x <= model.dowy_eom[model.non_leap_year][mm]:
  */
-  __pyx_tuple__18 = PyTuple_Pack(2, __pyx_int_12, __pyx_int_2); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 1039, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_int_12, __pyx_int_2); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 1039, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
 
   /* "calfews_src/delta_cy.pyx":1057
  *           coef_save[mm][0] = coef[0]
@@ -41273,9 +40919,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *           #print(x, end = " ")
  *           #print(mm, end = " ")
  */
-  __pyx_tuple__19 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_1); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 1057, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_1); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 1057, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
   /* "(tree fragment)":4
  *     cdef object __pyx_PickleError
@@ -41284,19 +40930,19 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         from pickle import PickleError as __pyx_PickleError
  *         raise __pyx_PickleError("Incompatible checksums (0x%x vs (0xb43b614, 0x3622e97, 0x8953ab0) = (HRO_pump, OMR, T, TRP_pump, annual_HRO_pump, annual_TRP_pump, barkerslough, ccc, cvp_allocation, cvp_aval_stor, cvp_delta_outflow_pct, d_1641_export, delta_uncontrolled_remaining, depletions, dmin, eastside_streams, ec_target, epsilon, eri, expected_depletion, expected_outflow, export_ratio, final_allocation_cvp, final_allocation_swp, first_empty_day_CVP, first_empty_day_SWP, fish_condition, forecastCVPPUMP, forecastSCWYT, forecastSJI, forecastSJWYT, forecastSRI, forecastSTI, forecastSTWYT, forecastSWPPUMP, gains, gains_sac, gains_sj, hist_HRO_pump, hist_OMR, hist_TRP_pump, inflow, iter_count, key, last_year_vamp, max_tax_free, min_outflow, model_mode, model_params, new_vamp_rule, omr_addition, omr_record_start, omr_regression, omr_reqr, omr_rule_start, outflow, pump_max, remaining_outflow, remaining_tax_free_storage, rio_gains, rio_vista_min, sac_fnf, san_joaquin_add, san_joaquin_export_ratio, san_joaquin_min, san_joaquin_min_flow, sodd_cvp, sodd_swp, surplus, swp_allocation, swp_aval_stor, swp_delta_outflow_pct, target_allocation, total_inflow, uncontrolled_cvp, uncontrolled_swp, vamp_flows, vamp_rule_start, vernalis_flow, vernalis_gains, x2, x2_dict, x2constraint))" % __pyx_checksum)
  */
-  __pyx_tuple__22 = PyTuple_Pack(3, __pyx_int_188986900, __pyx_int_56766103, __pyx_int_143997616); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(2, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_tuple__10 = PyTuple_Pack(3, __pyx_int_188986900, __pyx_int_56766103, __pyx_int_143997616); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(2, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Delta(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__24 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Delta, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Delta, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -41768,9 +41414,9 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s__23);
-  __Pyx_GIVEREF(__pyx_n_s__23);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__23);
+  __Pyx_INCREF(__pyx_n_s__11);
+  __Pyx_GIVEREF(__pyx_n_s__11);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__11);
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_matplotlib_pyplot, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -41810,9 +41456,9 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s__23);
-  __Pyx_GIVEREF(__pyx_n_s__23);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s__23);
+  __Pyx_INCREF(__pyx_n_s__11);
+  __Pyx_GIVEREF(__pyx_n_s__11);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s__11);
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_util, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;

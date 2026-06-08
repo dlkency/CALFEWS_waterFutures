@@ -373,9 +373,9 @@ class Metropolitan():
     model.reservoir_contract['ICS'] = [model.coloradocompact]
     model.reservoir_contract['DUMMY2'] = [model.owensvalley]
 
-    for district_obj in self.district_list:
+    for district_obj in model.district_list:
       district_obj.carryover_rights = {}
-      for contract_obj in self.contract_list:
+      for contract_obj in model.contract_list:
         if contract_obj.type == 'right':
           if district_obj.has_pesticide: #probably will be able to get rid of this for these - there are no rights in this part of the model
             district_obj.carryover_rights[contract_obj.name] = contract_obj.carryover*district_obj.rights[contract_obj.name]['carryover']*(1.0-district_obj.private_fraction[0])
@@ -481,7 +481,8 @@ class Metropolitan():
     y = model.year[t]
     year_index = y - model.starting_year
 
-    imported_supplies = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')  #Historic Import Data MET UWMP
+    #imported_supplies = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')
+    imported_supplies = pd.read_csv('calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')  #Historic Import Data MET UWMP
     imported_supplies['Colorado River Aqueduct'] = imported_supplies['Colorado River Aqueduct'] / 1000
     imported_supplies['LA Aqueduct'] = imported_supplies['LA Aqueduct'] / 1000
     imported_supplies['Sum Surface'] = imported_supplies['Sum Surface'] / 1000
@@ -521,7 +522,8 @@ class Metropolitan():
   #########################################################################################
   #Assigns Metropolitan Annual Demand (MDD) to the aggregation of their observed deliveries
   #########################################################################################
-    validation = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')
+    #validation = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')
+    validation = pd.read_csv('calfews_src/MET UWMP Supply Data_CALFEWS 1996_2024_format.csv')
     metropolitan_profile = [0.0643, 0.0607, 0.0673, 0.0758, 0.0857, 0.0974, 0.1069, 0.106, 0.0975, 0.0917, 0.0785, 0.0681]
     historical_swp_final_percent = [1,1,1,1,.9,.39,.7,.9,.65,.9,1,.6,.35,.4,.5,.8,.65,.35,.05,.2,.6,.85,.35,.75,.3,.05,.05,1,.4]
     recharge_names = ['antelopekern', 'crestline','coachellavalley', 'desert', 'mojavewater', 'sanbernadino', 'sangorgonio', 'ventura', 'palmdale', 'sangabriel', 'santaclarita']
@@ -562,44 +564,45 @@ class Metropolitan():
     validation.set_index('Water Year', inplace=True)
 
     for i in range(1996, 2025):
-      if wateryear == i-1996:
-        if i == 1996:
-          model.metropolitan.MDD = 1*(validation['Sum Surface'][wateryear]/1000)
-        else:
-          model.metropolitan.MDD = 1*(validation['Sum Surface'][wateryear + 1]/1000)
+      if model.model_mode == 'validation':
+        if wateryear == i-1996:
+          if i == 1996:
+            model.metropolitan.MDD = 1*(validation['Sum Surface'][wateryear]/1000)
+          else:
+            model.metropolitan.MDD = 1*(validation['Sum Surface'][wateryear + 1]/1000)
+      else:
+        if i == model.year[t]:
+          model.metropolitan.MDD = validation['Sum Surface'][i - 1996]/1000
+        #elif i == model.year[t]:
+          #model.metropolitan.MDD = validation['Sum Surface'][i - 1996]/1000
+          
 
     for district_obj in [getattr(model, name) for name in recharge_names]:
-      for i in range(1996, 2024):
-        if wateryear == i-1996:
-          if wateryear == 0:
-            district_obj.MDD = 1*4170.0*district_obj.project_contract['tableA']*historical_swp_final_percent[i-1996]
-          else:
-            district_obj.MDD = 1*4170.0*district_obj.project_contract['tableA']*historical_swp_final_percent[i-1995]
-        if i != 2005 and i != 1998:  
-          if district_obj.name in ['santaclarita','antelopekern', 'coachellavalley']:
-            district_obj.MDD = max(district_obj.MDD, 30)
-            if district_obj.MDD >= 25:
-              district_obj.must_fill = 1
+      if model.model_mode == 'validation' or model.model_mode == 'simulation':
+        for i in range(1996, 2024):
+          if wateryear == i-1996:
+            if wateryear == 0:
+              district_obj.MDD = 1*4170.0*district_obj.project_contract['tableA']*historical_swp_final_percent[i-1996]
             else:
-              district_obj.must_fill = 0
-          if district_obj.name in ['sanbernadino']:
-            district_obj.MDD = max(district_obj.MDD, 60)
-            if district_obj.MDD >= 60:
-              district_obj.must_fill = 1
-            else:
-              district_obj.must_fill = 0
-          elif district_obj.name == 'crestline':
-            district_obj.MDD = max(district_obj.MDD, 1)
-            if district_obj.MDD == 1:
-              district_obj.must_fill = 1
-            else:
-              district_obj.must_fill = 0
-          else:
-            district_obj.MDD = max(district_obj.MDD, 5)
-            if district_obj.MDD >= 5:
-              district_obj.must_fill = 1
-            else:
-              district_obj.must_fill = 0
+              district_obj.MDD = 1*4170.0*district_obj.project_contract['tableA']*historical_swp_final_percent[i-1995]
+      #else:
+        #district_obj.MDD = max(district_obj.project_contract['tableA']*model.swp_allocation[t], district_obj.project_contract['tableA']*4170.0*0.4) #### import WYT from model and translate what the anticipated SWP reduction is going to be -- used to be 4170*.4
+      
+      if district_obj.name in ['santaclarita','antelopekern', 'coachellavalley', 'desert']: #'desert'
+        district_obj.MDD = max(district_obj.MDD, 15)
+        district_obj.must_fill = 1
+      elif district_obj.name in ['sanbernadino']:
+        district_obj.MDD = max(district_obj.MDD, 20) #drought year direct deliveries ~18,500 AF, rest of SWP allocation used for rec
+        district_obj.must_fill = 1
+      elif district_obj.name == 'crestline':
+        district_obj.MDD = max(district_obj.MDD, 1)
+      else:
+        district_obj.MDD = max(district_obj.MDD, 5)
+        district_obj.must_fill = 1
+      
+    #if model.year[t] >= 2011:
+      #print('Year ' + str(model.year[t]) + ' otherswp project_contract TableA: ' + str(model.otherswp.project_contract['tableA']))
+          
     return
 
   def colorado_pumping(self, model, t, wyt):
@@ -616,7 +619,8 @@ class Metropolitan():
     #Import Lake Mead Water Level on Jan. 1 of the Water Year from the October, update it on Actual Jan. 1 - https://www.usbr.gov/uc/water/hydrodata/
     #####################################################################################################################################################
     
-    inputdata = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/Mead_Elv_CALFEWS.csv')
+    #inputdata = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/Mead_Elv_CALFEWS.csv')
+    inputdata = pd.read_csv('calfews_src/Mead_Elv_CALFEWS.csv')
     #if dowy >= 0:
       #lakemead_level_oct = inputdata.iloc[model.year[t]-1996][0] #this is set up as actual october 1st rn, I want it to be the USBR projection of jan 1 water level from oct 1
     #if dowy >= 92:
@@ -630,7 +634,7 @@ class Metropolitan():
     ###########################################################################################################################
 
     if model.model_mode == 'validation':
-      if model.year[t] < 2003:
+      if model.year[t] < 2002:
         ruleset = 'sevenparties'
       elif model.year[t] < 2019:
         ruleset = 'QSA'
@@ -641,7 +645,11 @@ class Metropolitan():
       else:
         ruleset = 'lbDCP'
     else:
-      ruleset = 'lbDCP'  #THIS IS WHERE WE WOULD WRITE OUT ANY ALTERNATIVE rulesets for simulation mode, set to current operating rules for now
+      if model.year[t] < 2002:
+        ruleset = 'lbDCP' #ruleset = 'sevenparties'
+      else:
+        ruleset = 'lbDCP'  #THIS IS WHERE WE WOULD WRITE OUT ANY ALTERNATIVE rulesets for simulation mode, set to current operating rules for now
+      lakemead_level_jan = 1060
 
     if ruleset == 'lbDCP' or ruleset == 'IRA': ###will have to build in some planning variable so that the model has some idea of what to expect based on the October Storage
       if lakemead_level_jan < 1045: #my understanding is that nearly the entirety of CA's DCP responsibility is currently held by Metropolitan, hence these values
@@ -669,17 +677,17 @@ class Metropolitan():
       pr1_consumptive = 0 #will need to build these out, 0 rn for testing
       pr1_conservation = 0 #will need to build these out, 0 rn for testing
       if dowy == 180:
-        if wyt == 'W' or 'AN':
-          pr1_consumptive = 415 #heavy assumptions
+        if wyt == 'W' or wyt == 'AN':
+          pr1_consumptive = 450 #heavy assumptions
           pr1_conservation = 0
         elif wyt == 'BN':
-          pr1_consumptive = 435
+          pr1_consumptive = 430
           pr1_conservation = 0
         elif wyt == 'D':
-          pr1_consumptive = 460 
+          pr1_consumptive = 415 
           pr1_conservation = 0
         elif wyt == 'C':
-          pr1_consumptive = 500 
+          pr1_consumptive = 405
           pr1_conservation = 0
 
       pr1_usage = pr1_consumptive + pr1_conservation
@@ -696,22 +704,34 @@ class Metropolitan():
       pr3a_consumptive = 0 #will need to build these out, 0 for testing
       pr3a_conservation = 0 #will need to build these out, 0 for testing
       if dowy == 180:
-        if wyt == 'W' or 'AN':
-          pr3a_consumptive = 3425 #heavy assumptions
+        if wyt == 'W' or wyt == 'AN':
+          pr3a_consumptive = 3470 #heavy assumptions
           pr3a_conservation = 0
         elif wyt == 'BN':
-          pr3a_consumptive = 3450
+          pr3a_consumptive = 3430
           pr3a_conservation = 0
         elif wyt == 'D':
-          pr3a_consumptive = 3500 
+          pr3a_consumptive = 3420
           pr3a_conservation = 0
         elif wyt == 'C':
-          pr3a_consumptive = 3550 
+          pr3a_consumptive = 3410 
           pr3a_conservation = 0
       pr3a_usage = pr3a_consumptive + pr3a_conservation
       pr3a_adjustment = pr3a_cutoff - pr3a_usage
+
+      if dowy == 180 and model.model_mode == 'validation':
+        if model.year[t] <= 2005:
+          pr3a_adjustment = pr3a_adjustment + 220 ###QSA beginning october but CA diversions limited to 4.4 MAF
+        elif model.year[t] <= 2010:
+          pr3a_adjustment = pr3a_adjustment + 150
+      else:
+        pass
+      
       if dowy != 180:
         pr3a_adjustment = 0 ####PLACEHOLDER#####
+
+      model.metropolitan.projected_supply['coloradocompact'] += pr1_adjustment
+      model.metropolitan.projected_supply['coloradocompact'] += pr3a_adjustment
 
     ############################################################################################################################################################
     #Assign Water Transfers to MET/SDCWA from other seven-party agreement partners
@@ -724,8 +744,13 @@ class Metropolitan():
     quechan_forbearance = 6.5
     needles_lowerCOsupply = 0
     IID_All_American_Savings = 105
-    if model.year[t] <= 2023:
+    if model.year[t] <= 2023 and model.model_mode == 'validation':
       PVID_fallowing = 70
+    else:
+      if ruleset == 'IRA':
+        PVID_fallowing = 0
+      else:
+        PVID_fallowing = 70
 
     if model.model_mode == 'validation':
       if model.year[t] == 2004:
@@ -793,38 +818,84 @@ class Metropolitan():
       SDCWA_exchange = 227.7
       sanluisrey_exchange = 16
       SNWA_storage_exchange = 0
+      needles_lowerCOsupply = 8.1
 
     if dowy == 0 and ruleset == 'sevenparties':
       model.metropolitan.projected_supply['coloradocompact'] = 1200
     elif dowy == 0:
       model.metropolitan.projected_supply['coloradocompact'] = 550 ###model.metropolitan.project_contract['coloradocompact']*model.coloradocompact.total #### BASE PRIORITY 4 = 550 check on this later
       model.metropolitan.projected_supply['coloradocompact'] -= dcp_contribution #assess any dcp system conservation based on lake mead level onto the forecasted supply for metropolitan
-      if model.year[t] >= 1996:
+      if model.model_mode == 'validation':
+        if model.year[t] >= 1996:
+          model.metropolitan.projected_supply['coloradocompact'] += IID_All_American_Savings
+        if model.year[t] >= 2005:
+          model.metropolitan.projected_supply['coloradocompact'] += PVID_fallowing
+          model.metropolitan.projected_supply['coloradocompact'] += SDCWA_exchange
+        if model.year[t] >= 2007:
+          model.metropolitan.projected_supply['coloradocompact'] += needles_lowerCOsupply
+          model.metropolitan.projected_supply['coloradocompact'] += quechan_forbearance
+        if model.year[t] >= 2008:
+          model.metropolitan.projected_supply['coloradocompact'] += SNWA_storage_exchange
+          model.metropolitan.projected_supply['coloradocompact'] += sanluisrey_exchange
+        if model.year[t] in range(2016,2019) or range(2020, 2025):
+          bard_fallowing = 4 ###will have to find a way to get some variance in here too.
+          model.metropolitan.projected_supply['coloradocompact'] += bard_fallowing
+      else:
         model.metropolitan.projected_supply['coloradocompact'] += IID_All_American_Savings
-      if model.year[t] >= 2005:
         model.metropolitan.projected_supply['coloradocompact'] += PVID_fallowing
         model.metropolitan.projected_supply['coloradocompact'] += SDCWA_exchange
-      if model.year[t] >= 2007:
         model.metropolitan.projected_supply['coloradocompact'] += needles_lowerCOsupply
         model.metropolitan.projected_supply['coloradocompact'] += quechan_forbearance
-      if model.year[t] >= 2008:
         model.metropolitan.projected_supply['coloradocompact'] += SNWA_storage_exchange
         model.metropolitan.projected_supply['coloradocompact'] += sanluisrey_exchange
-      if model.year[t] in range(2016,2019) or range(2020, 2025):
-        bard_fallowing = 4 ###will have to find a way to get some variance in here too.
-        model.metropolitan.projected_supply['coloradocompact'] += bard_fallowing
 
-      if wyt == 'W' and model.year[t] >= 2006:
+      if wyt == 'W' and model.year[t] >= 2006 and model.model_mode == 'validation':
         self.oct_ICS_bool = True
         model.metropolitan.projected_supply['coloradocompact'] -= self.oct_ICS_adjustment
+      elif model.model_mode != 'validation' and wyt == 'W' and ruleset != 'sevenparties':
+        self.oct_ICS_bool = True
+        model.metropolitan.projected_supply['coloradocompact'] -= self.oct_ICS_adjustment
+        
+    #################################################################################################
+    #Whitewater Rapids Recharge Facility CRA Exchange Deliveries to Coachella Valley Water District
+    #################################################################################################
+
+    if model.model_mode == 'validation':
+      if dowy == 0:
+        CVWD_df = pd.read_csv('calfews_src/CVWD_CRAval.csv') ####WRRF deliveries/total adjustment from CRA Diversions to Supply Available to Service Area + SDCWA 
+        CVWD_adjustment = CVWD_df['Non Service Area Supply'][model.year[t] - 1995] #this has not been adjusted for water years yet, may have to do the ol' (3/4)x+(1/4)y aggregation --> actually use average CRA diversion profile to reaggregate
+        model.metropolitan.projected_supply['coloradocompact'] -= CVWD_adjustment
+    else:
+      if dowy == 0:
+        if ruleset  == 'sevenparties':
+          CVWD_adjustment = 120
+          if wyt != 'W': 
+            CVWD_adjustment = 70
+        else:
+          CVWD_adjustment = 0
+        model.metropolitan.projected_supply['coloradocompact'] -= CVWD_adjustment
+      if dowy == 180:
+        if wyt == 'W':
+          CVWD_adjustment = 200
+        elif wyt == 'AN':
+          CVWD_adjustment = 100
+        elif wyt == 'BN':
+          CVWD_adjustment = 60
+        elif wyt == 'D':
+          CVWD_adjustment = 30
+        else:
+          CVWD_adjustment = 15
+        model.metropolitan.projected_supply['coloradocompact'] -= CVWD_adjustment
+
+    ####This will need to be replaced with 6 yr aggregation, IID obligations, TableA transfer setups eventually, but need to get the rest operating smoothly before we can start testing that
       
     ################################################################################################
-    # ICS Usage
+    # ICS Usage/Withdrawal
     ################################################################################################
 
-    if model.year[t] >= 2006:
+    if (model.model_mode == 'validation' and model.year[t] >= 2006) or model.model_mode == 'simulation':
       CA_EC_ICS_delivery_limit = 400
-      if model.year[t] >= 2010: ###example, build out with programs
+      if model.year[t] >= 2010 and model.model_mode == 'validation': 
         eligible_storage_capacity = 200
       else:
         eligible_storage_capacity = 100
@@ -834,66 +905,60 @@ class Metropolitan():
     if model.year[t] >= 2017:
       CA_EC_ICS_annual_storage_limit = 450
 
-    if dowy == 180 and ruleset != 'sevenparties' and model.year[t] >= 2006:
-      annual_demand = (.62)*model.metropolitan.MDD  #.5488
-      model.metropolitan.projected_supply['coloradocompact'] += pr1_adjustment
-      model.metropolitan.projected_supply['coloradocompact'] += pr3a_adjustment
-      pre_ICS_supply = model.metropolitan.projected_supply['tableA'] + model.metropolitan.projected_supply['owensvalley'] + model.metropolitan.projected_supply['coloradocompact'] - 200 #adjustment for laa uncertainty
-      if self.oct_ICS_bool == True:
-        pre_ICS_supply += self.oct_ICS_adjustment
-        self.oct_ICS_bool = False
-      if model.year[t] > 2006:
-        if annual_demand > pre_ICS_supply and lakemead_level_jan > 1025 and model.ecICS.S[t] != 0:
-          self.withdraw_bool = True
-          withdraw_request = annual_demand - pre_ICS_supply
-          if withdraw_request <= CA_EC_ICS_delivery_limit and model.ecICS.S[t] >= withdraw_request:
-            model.metropolitan.projected_supply['coloradocompact'] += withdraw_request
-            model.ecICS.S[t] -= withdraw_request
-          elif withdraw_request > CA_EC_ICS_delivery_limit and model.ecICS.S[t] >= withdraw_request:
-            model.metropolitan.projected_supply['coloradocompact'] += CA_EC_ICS_delivery_limit
-            model.ecICS.S[t] -= CA_EC_ICS_delivery_limit
-          elif withdraw_request > model.ecICS.S[t]:
-            model.metropolitan.projected_supply['coloradocompact'] += model.ecICS.S[t]
-            model.ecICS.S[t] = 0
-          else:  
+    if wyt == 'W':
+      carryover_expected = 210
+    elif wyt == 'AN':
+      carryover_expected = 190
+    elif wyt == 'BN' or wyt == 'D':
+      carryover_expected = 170
+    else:
+      carryover_expected = 150
+
+    if (model.model_mode == 'validation' and model.year[t] >= 2006) or model.model_mode != 'validation':
+      if dowy == 180 and ruleset != 'sevenparties':
+        annual_demand = (.615)*model.metropolitan.MDD  #.5488
+        pre_ICS_supply = model.metropolitan.projected_supply['tableA'] + model.metropolitan.projected_supply['owensvalley'] + model.metropolitan.projected_supply['coloradocompact'] - carryover_expected #adjustment for expected SWP carryover creation on TableA
+        if self.oct_ICS_bool == True:
+          pre_ICS_supply += self.oct_ICS_adjustment
+          self.oct_ICS_bool = False
+        if model.year[t] > 2006:
+          if annual_demand > pre_ICS_supply and lakemead_level_jan > 1025 and model.ecICS.S[t] != 0:
+            self.withdraw_bool = True
+            withdraw_request = annual_demand - pre_ICS_supply
+            if withdraw_request <= CA_EC_ICS_delivery_limit and model.ecICS.S[t] >= withdraw_request:
+              model.metropolitan.projected_supply['coloradocompact'] += withdraw_request
+              model.ecICS.S[t] -= withdraw_request
+            elif withdraw_request > CA_EC_ICS_delivery_limit and model.ecICS.S[t] >= withdraw_request:
+              model.metropolitan.projected_supply['coloradocompact'] += CA_EC_ICS_delivery_limit
+              model.ecICS.S[t] -= CA_EC_ICS_delivery_limit
+            elif withdraw_request > model.ecICS.S[t]:
+              model.metropolitan.projected_supply['coloradocompact'] += model.ecICS.S[t]
+              model.ecICS.S[t] = 0
+            else:  
+              self.withdraw_bool = False
+          else:
             self.withdraw_bool = False
         else:
           self.withdraw_bool = False
-      else:
-        self.withdraw_bool = False
-    #else:
-      #withdraw_bool = False
-    
 
     #################################################################################################
-    #ICS Adjustments 
+    #ICS Deposits 
     #################################################################################################
-
-    if dowy == 364 and self.withdraw_bool == False and model.year[t] >= 2006: ###is dowy an array we're iterating through here, for last day of the water year could you do something like dowy[-1]?
-      available_capacity = max(CA_EC_ICS_capacity - model.ecICS.S[t], 0)
-      deposit_volume = model.metropolitan.projected_supply['coloradocompact']
-      #print('Available Capacity: ' + str(available_capacity), end = ' ')
-      #print('Deposit Volume/EOY projected supply: ' + str(deposit_volume))
-      if deposit_volume <= CA_EC_ICS_annual_storage_limit and available_capacity >= deposit_volume:
-        model.ecICS.S[t] += deposit_volume
-      elif deposit_volume <= CA_EC_ICS_annual_storage_limit and deposit_volume >= available_capacity:
-        model.ecICS.S[t] += available_capacity
-      elif deposit_volume >= CA_EC_ICS_annual_storage_limit:
-        model.ecICS.S[t] += min(available_capacity, CA_EC_ICS_delivery_limit)
-      else: 
-        pass
-
-    #################################################################################################
-    #WWRF deliveries are important to correctly adjust CRA down to MET deliveries
-    #################################################################################################
-
-    ### TEMPORARY HARDCODE FOR THESE ADJUSTMENTS TO TEST THE REST OF THE CODE
-    if dowy == 0:
-      CVWD_df = pd.read_csv(r'C:/Users/evan/OneDrive\Documents/GitHub/CALFEWSv2/calfews_src/CVWD_CRAval.csv') ####WRRF deliveries/total adjustment from CRA Diversions to Supply Available to Service Area + SDCWA
-      CVWD_adjustment = CVWD_df['Non Service Area Supply'][model.year[t] - 1995] #this has not been adjusted for water years yet, may have to do the ol' (3/4)x+(1/4)y aggregation --> actually use average CRA diversion profile to reaggregate
-      model.metropolitan.projected_supply['coloradocompact'] -= CVWD_adjustment
-
-    ####This will need to be replaced with 6 yr aggregation, IID obligations, TableA transfer setups eventually, but need to get the rest operating smoothly before we can start testing that
+    if (model.model_mode == 'validation' and model.year[t] >= 2006) or model.model_mode != 'validation':
+      if dowy == 364 and self.withdraw_bool == False: ###is dowy an array we're iterating through here, for last day of the water year could you do something like dowy[-1]?
+        available_capacity = max(CA_EC_ICS_capacity - model.ecICS.S[t], 0)
+        deposit_volume = model.metropolitan.projected_supply['coloradocompact']
+        #print('Available Capacity: ' + str(available_capacity), end = ' ')
+        #print('Deposit Volume/EOY projected supply: ' + str(deposit_volume))
+        if wyt != 'C':
+          if deposit_volume <= CA_EC_ICS_annual_storage_limit and available_capacity >= deposit_volume:
+            model.ecICS.S[t] += deposit_volume
+          elif deposit_volume <= CA_EC_ICS_annual_storage_limit and deposit_volume >= available_capacity:
+            model.ecICS.S[t] += available_capacity
+          elif deposit_volume >= CA_EC_ICS_annual_storage_limit:
+            model.ecICS.S[t] += min(available_capacity, CA_EC_ICS_delivery_limit)
+        else: 
+          pass
 
     #################################################################################################
     #Assign Projected Supply to the Dummy Reservoir
@@ -951,11 +1016,13 @@ class Metropolitan():
           owens_valley_runoff = 64.0
     else:
       if wyt == 'W':
-        owens_valley_runoff = 246.0
-      elif wyt == 'AN' or 'BN':
-        owens_valley_runoff = 192.0
+        owens_valley_runoff = 440.0
+      elif wyt == 'AN':
+        owens_valley_runoff = 340.6
+      elif wyt == 'BN':
+        owens_valley_runoff = 220.0
       elif wyt == 'D':
-        owens_valley_runoff = 143.0
+        owens_valley_runoff = 150.0
       else:
         owens_valley_runoff = 71.4
     laa_supply = mono_basin_diversions +  owens_valley_runoff
