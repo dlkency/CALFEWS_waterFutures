@@ -1,11 +1,26 @@
 {
   "contract_list": ["tableA", "kern"],
-  "turnout_list": ["knr", "xvc"],
-  "in_leiu_banking": false,
-  "leiu_recovery": 0.0,
-  "in_district_direct_recharge": 0.0,
-  "in_district_storage": 0.0,
-  "loss_rate": 0.1,
+  "turnout_list": ["knr", "xvc", "caa"],
+  "in_leiu_banking": true,
+  "participant_list": ["KND","MET", "CWO", "ID4", "RRB"],
+  "leiu_ownership": {
+    "KND": 0.4,
+    "MET": 0.6,
+    "CWO": 0.0,
+    "ID4": 0.0,
+    "RRB": 0.0
+  },
+  "inleiucap": {
+    "KND": 99999.9,
+    "MET": 250.0,
+    "CWO": 99999.9,
+    "ID4": 99999.9,
+    "RRB": 99999.9
+  },
+  "leiu_recovery": 0.286,
+  "in_district_direct_recharge": 300.0,
+  "in_district_storage": 0.320,
+  "loss_rate": 0.11,
   "recovery_fraction": 0.5,
   "surface_water_sa" : 1.0,
   "must_fill" : 0,

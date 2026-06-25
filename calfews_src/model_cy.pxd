@@ -34,7 +34,8 @@ cdef class Model():
 
     public dict delta_gains_regression, canal_reservoir, canal_contract, canal_priority, reservoir_contract, contract_turnouts, \
                 contract_reservoir, reservoir_canal, canal_district, pumping_turnback, max_tax_free, district_keys, \
-                contract_keys, allocation_losses, district_keys_len, canal_district_len, canal_by_name
+                contract_keys, allocation_losses, district_keys_len, canal_district_len, canal_by_name, \
+                met_leiu_annual_delivery_cap
 
 
     public Reservoir shasta, oroville, folsom, yuba, newmelones, donpedro, exchequer, millerton, sanluisstate, sanluisfederal, \
@@ -70,6 +71,8 @@ cdef class Model():
   cdef double get_restricted_district_access(self, list canals_passed_through, District district) except * 
 
   cdef double set_restricted_district_access(self, list canals_passed_through, District district, double deliveries) except *
+
+  cdef double met_leiu_annual_remaining(self, str host_key, int wateryear) except *
   
   cdef void find_node_demand_bank(self, Waterbank bank_node, Canal canal, int canal_loc, list contract_list, list priority_list, str contract_canal, int dowy, int wateryear, str search_type, list type_list, list canals_passed_through) except *
 

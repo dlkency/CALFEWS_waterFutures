@@ -55,7 +55,7 @@ cdef class District():
 
   cdef (double, double) update_balance(self, int t, int wateryear, double water_available, double projected_allocation, double current_water, str key, double tot_carryover, str balance_type)
 
-  cdef (double, double) calc_carryover(self, double existing_balance, int wateryear, str balance_type, str key)
+  cdef (double, double) calc_carryover(self, double existing_balance, int wateryear, str balance_type, str key, str model_mode)
 
   cdef (double, double) calc_carryover_from_pre(self, int wateryear, str balance_type, str key, double initial_projected)
 

@@ -398,7 +398,7 @@ cdef class District():
 	
 
 
-  cdef (double, double) calc_carryover(self, double existing_balance, int wateryear, str balance_type, str key):
+  cdef (double, double) calc_carryover(self, double existing_balance, int wateryear, str balance_type, str key, str model_mode):
     #at the end of each wateryear, we tally up the full allocation to the contract, how much was used (and moved around in other balances - carryover, 'paper balance' and turnback_pools) to figure out how much each district can 'carryover' to the next year
     cdef:
       double frac_to_district, annual_allocation, max_carryover, reallocated_water, carryover
@@ -412,8 +412,8 @@ cdef class District():
       frac_to_district = 1.0
     
     if balance_type == 'contract':
-      if self.name == 'metropolitan' and key == 'tableA' and wateryear < 4:
-        self.project_contract[key] = .4613
+      if self.name == 'metropolitan' and key == 'tableA' and wateryear < 4 and model_mode == 'validation':
+        self.project_contract[key] = .46495
         annual_allocation = existing_balance*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
       else:
         annual_allocation = existing_balance*self.project_contract[key]*frac_to_district - self.deliveries[key][wateryear] + self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]
@@ -431,8 +431,7 @@ cdef class District():
       #print('Deliveries: ' + str(self.deliveries[key][wateryear]), end = ' ')
       #print('Other: ' + str(self.carryover[key] + self.paper_balance[key] + self.turnback_pool[key]), end = ' ')
       #print('Max Carryover: ' + str(max_carryover), end = ' ')
-      #print('Actual Carryover: ' + str(carryover))
-        
+      #print('Actual Carryover: ' + str(carryover))  
     self.carryover[key] = carryover
     self.paper_balance[key] = 0.0
     self.turnback_pool[key] = 0.0
@@ -490,6 +489,16 @@ cdef class District():
       existing_carryover += max(self.carryover[contract_key] - self.deliveries[contract_key][wateryear], 0.0)
 	
     total_needs = self.annualdemand[0]*self.seepage*self.surface_water_sa*self.recovery_fraction
+    
+    #if self.name == 'metropolitan':
+      #print('Wateryear: ' + str(wateryear + 1997) + ' dowy' + str(dowy), end = ' ')
+      #print('Available: ' + (str(total_balance + total_recovery)), end = ' ')
+      #print('Demand: ' + (str(total_needs + target_eoy)))
+
+    if self.name == 'metropolitan':
+      total_balance -= 300 #expected carryover storage in San Luis/ICS
+      total_balance = max(total_balance, 0.0)
+
     if (total_balance + total_recovery) < total_needs + target_eoy:
       if existing_carryover > self.epsilon:
         self.use_recovery = 0.0
@@ -513,7 +522,7 @@ cdef class District():
     #contract - i.e., how much of the allocation will not be able to be recharged before the reservoir spills
     cdef:
       double total_recharge, total_recharge2, carryover_storage_proj, spill_release_carryover, service_area_adjust, adjusted_sw_sa, days_left, days_left2, \
-              this_month_recharge, this_month_recharge2, total_available_for_recharge
+              this_month_recharge, this_month_recharge2, total_available_for_recharge, residual_demand, tableA_bankable, tableA_available
       int is_reachable, monthcounter, monthcounter_loop, next_year_counter
       str x, y
 
@@ -522,6 +531,8 @@ cdef class District():
     carryover_storage_proj = 0.0
     spill_release_carryover = 0.0
     is_reachable = 0
+    if self.name == 'metropolitan' and key == 'tableA':
+      self.contract_list = ['tableA']
     self.dynamic_recharge_cap[key] = 999.0
     self.days_to_fill[key] = min(numdays_fillup, numdays_fillup2)
     for x in reachable_turnouts:
@@ -630,11 +641,19 @@ cdef class District():
           self.recharge_carryover[key] = max(carryover_storage_proj, 0.0)*max(self.carryover[key] - self.deliveries[key][wateryear], 0.0)/total_available_for_recharge
         else:
           self.recharge_carryover[key] = 0.0
+
+      if self.name == 'metropolitan' and key == 'tableA':
+        tableA_available = max(self.projected_supply['tableA'], 0.0)#max(min(self.current_balance['tableA'], self.projected_supply['tableA']), 0.0)
+        self.recharge_carryover[key] = min(self.recharge_carryover[key], tableA_available)
+
       self.dynamic_recharge_cap[key] = min(total_recharge2, total_recharge)
       ##Similar conditions also calculate the amount of regular tableA deliveries for direct irrigation to request
     else:
       self.delivery_carryover[key] = 0.0
       self.recharge_carryover[key] = 0.0
+
+    if self.name == 'metropolitan' and key == 'tableA':
+      self.contract_list = ['tableA', 'coloradocompact', 'owensvalley']
 
     #if key == 'tableA' and year_index <= 7:
       #print(str(self.name) + " Spill Release Carryover " + str(spill_release_carryover), end = " ")
@@ -692,24 +711,43 @@ cdef class District():
     total_recharge_ability = 0.0
     for contract_key in self.contract_list:
       total_projected_supply += self.projected_supply[contract_key]
+    #if self.name == 'metropolitan' and key == 'tableA':
+      #print('total_proj_supply: ' + str(total_projected_supply))
     for month_count in range(0, 6):
       # total recharge Jun,Jul,Aug,Sep
       total_recharge_ability += self.max_direct_recharge[month_count]*days_in_month[year_index][month_count + 3] + self.max_leiu_recharge[month_count]*days_in_month[year_index][month_count + 3]
 
     if total_projected_supply > self.epsilon:
-      contract_fraction = max(min(self.projected_supply[key]/total_projected_supply, 1.0), 0.0)
+      if self.name == 'metropolitan':
+        contract_fraction = max(max(min(self.projected_supply[key]/total_projected_supply, 1.0), 0.45), 0.0)
+      else:
+        contract_fraction = max(min(self.projected_supply[key]/total_projected_supply, 1.0), 0.0)
+      #if key == 'tableA' and self.name == 'metropolitan':
+        #print('TableA contract_fraction: ' + str(contract_fraction))
     else:
       contract_fraction = 0.0
 
+    if self.name == 'metropolitan':
+      self.contract_list = ['tableA']
     #districts sell water if their projected contracts are greater than their remaining annual demand, plus their remaining recharge capacity in this water year, plus their recharge capacity in the next water year (through January)
     if key in self.contract_list:
-      self.turnback_sales = max(self.projected_supply[key] - self.carryover_rights[key] - (self.annualdemand[0] +  total_recharge_ability)*contract_fraction, 0.0)
+      if self.name == 'metropolitan' and key == 'tableA':
+        self.turnback_sales = max(self.projected_supply[key] - self.contract_carryover_list[key] - (self.annualdemand[0] +  total_recharge_ability)*contract_fraction, 0.0)
+      else:
+        self.turnback_sales = max(self.projected_supply[key] - self.carryover_rights[key] - (self.annualdemand[0] +  total_recharge_ability)*contract_fraction, 0.0)
+      #if self.name == 'metropolitan':
+        #print('Prj Supply: ' + str(self.projected_supply[key]))
+        #print('Carryover Right: ' + str(self.carryover_rights[key]))
+        #print('Demand Share: ' + str((self.annualdemand[0] +  total_recharge_ability)*contract_fraction))
+        #print('Turnback Sales: ' + str(self.turnback_sales))
       if self.in_leiu_banking:
         self.turnback_purchases = 0.0
       else:
         #districts buy turnback water if their annual demands are greater than their projected supply plus their capacity to recover banked groundwater
         self.turnback_purchases = max(self.annualdemand[0]*contract_fraction - self.projected_supply[key] - self.max_recovery*122*contract_fraction, 0.0)
-
+    
+    if self.name == 'metropolitan':
+      self.contract_list = ['tableA', 'coloradocompact', 'owensvalley']
     return self.turnback_sales, self.turnback_purchases	  
       
 
@@ -721,6 +759,8 @@ cdef class District():
       double sellers_frac, buyers_frac, total_projected_supply
       str contract_key
 
+    if self.name == 'metropolitan':
+      self.contract_list = ['tableA']
     if min(turnback_sellers, turnback_buyers) > self.epsilon:
       sellers_frac = -1*min(turnback_sellers, turnback_buyers)/turnback_sellers
       buyers_frac = min(turnback_sellers, turnback_buyers)/turnback_buyers
@@ -737,6 +777,9 @@ cdef class District():
         else:
           self.turnback_pool[key] = max(self.turnback_purchases, 0.0)*buyers_frac
         self.projected_supply[key] += max(self.turnback_purchases, 0.0)*buyers_frac
+    
+    if self.name == 'metropolitan':
+      self.contract_list = ['tableA', 'coloradocompact', 'owensvalley']
 	
 #####################################################################################################################
 #####################################################################################################################
@@ -857,6 +900,16 @@ cdef class District():
       total_carryover_recharge = 0.0
       total_current_balance = 0.0
       for contract_obj in contract_list:
+        if self.name == 'metropolitan' and contract_obj.name == 'tableA':
+          banking_ytd = (self.deliveries['SMI_recharged'][wateryear] + self.deliveries['MJV_recharged'][wateryear] + self.deliveries['ARV_recharged'][wateryear] + self.deliveries['HDT_recharged'][wateryear] + self.deliveries['KND_recharged'][wateryear])
+          consumptive_ytd = (self.deliveries['tableA'][wateryear] - banking_ytd + self.deliveries['coloradocompact'][wateryear]+ self.deliveries['owensvalley'][wateryear])
+          remaining_mdd = max(self.MDD - consumptive_ytd, 0.0)
+          if dowy >= 225 and dowy <= 300 and remaining_mdd > self.epsilon:
+            return 0.0   # no banking until MDD met
+          #else:
+            #total_carryover_recharge += max(self.recharge_carryover[contract_obj.name], 0.0)
+            #total_current_balance += max(self.current_balance[contract_obj.name], 0.0)
+            #return min(total_carryover_recharge, total_current_balance, max(bank_capacity - bank_space, 0.0))
         total_carryover_recharge += max(self.recharge_carryover[contract_obj.name], 0.0)
         total_current_balance += max(self.current_balance[contract_obj.name], 0.0)
       return min(total_carryover_recharge, total_current_balance, max(bank_capacity - bank_space, 0.0))
@@ -1177,6 +1230,7 @@ cdef class District():
     total_carryover_recharge = 0.0
     total_current_balance = 0.0
     delivery_by_contract = {}
+
     for contract_obj in contract_list:
       if search_type == 'flood':
         total_current_balance += 1.0

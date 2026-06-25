@@ -2,18 +2,20 @@
   "contract_list": ["tableA"],
   "turnout_list": ["caa"],
   "in_leiu_banking": true,
-  "participant_list": ["MJV", "AVK"],  
+  "participant_list": ["MJV", "AVK", "MET"],  
   "leiu_ownership": {
     "MJV": 1.0,
-    "AVK": 0.0
+    "AVK": 0.0,
+    "MET": 0.0
   },
   "inleiucap": {
     "MJV": 999999.9,
-    "AVK": 999999.9
+    "AVK": 999999.9,
+    "MET": 390.0
   },
   "leiu_recovery": 0.286027397,
-  "in_district_direct_recharge": 200.0,
-  "in_district_storage": 0.0,
+  "in_district_direct_recharge": 300.0,
+  "in_district_storage": 0.425,
   "loss_rate": 0.1,
   "recovery_fraction": 1.0,
   "surface_water_sa" : 1.0,
