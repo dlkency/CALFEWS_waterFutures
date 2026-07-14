@@ -1068,12 +1068,16 @@ class Metropolitan():
     reservoir_obj.uncontrolled_available = 0.0 ### maximum volume 'above' flood control, w/o releases
     reservoir_obj.numdays_fillup[release] = 999.99 ### number of days until reservoir fills
     reservoir_obj.numdays_fillup['lookahead'] = 999.99
-    if reservoir_obj.name == 'dummy':
-      reservoir_obj.min_daily_uncontrolled = (self.cra_supplies*model.metropolitan.urban_profile[m-1])/model.days_in_month[year_index][m-1]
+    if model.model_mode != 'validation':
+      reservoir_obj.min_daily_uncontrolled = 0.0
       reservoir_obj.max_daily_uncontrolled = reservoir_obj.min_daily_uncontrolled
-    else:
-      reservoir_obj.min_daily_uncontrolled = (self.laa_supplies*model.metropolitan.urban_profile[m-1])/model.days_in_month[year_index][m-1]
-      reservoir_obj.max_daily_uncontrolled = reservoir_obj.min_daily_uncontrolled
+    else: 
+      if reservoir_obj.name == 'dummy':
+        reservoir_obj.min_daily_uncontrolled = (self.cra_supplies*model.metropolitan.urban_profile[m-1])/model.days_in_month[year_index][m-1]
+        reservoir_obj.max_daily_uncontrolled = reservoir_obj.min_daily_uncontrolled
+      else:
+        reservoir_obj.min_daily_uncontrolled = (self.laa_supplies*model.metropolitan.urban_profile[m-1])/model.days_in_month[year_index][m-1]
+        reservoir_obj.max_daily_uncontrolled = reservoir_obj.min_daily_uncontrolled
     return
   
   def dummy_canal_direction(self, attribute_dict):

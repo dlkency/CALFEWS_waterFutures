@@ -1292,6 +1292,20 @@ cdef class Inputter():
 
     dates_for_df = dates_for_output[start_counter:(end_counter + 1)]
     df_for_output = pd.DataFrame(index=dates_for_df)
+    for col in [
+      "DUMMY_inf", "DUMMY2_inf", "ICS_inf",
+      "DUMMY_fnf", "DUMMY2_fnf", "ICS_fnf",
+      "DUMMY_otf", "DUMMY2_otf", "ICS_otf",
+      "DUMMY_gains", "DUMMY2_gains", "ICS_gains",
+      "DUMMY_evap", "DUMMY2_evap", "ICS_evap",
+      "DUMMY_fci", "DUMMY2_fci", "ICS_fci",
+      "DUMMY_snow", "DUMMY2_snow", "ICS_snow",
+      "DUMMY_precip", "DUMMY2_precip", "ICS_precip",
+      "DUMMY_storage", "DUMMY2_storage", "ICS_storage",
+
+    ]:
+      df_for_output[col] = 0.0
+
     for reservoir_obj in self.reservoir_list:
       reservoir_obj.daily_df_data = {}
       if reservoir_obj.has_snow_new == 0:

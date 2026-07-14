@@ -2715,8 +2715,8 @@ cdef class Model():
     else: 
       self.ecICS.S[t] = self.ecICS.S[t-1]
     if dowy == 0 or dowy == 92 or dowy == 180 or dowy == 364:
-      if dowy == 0:
-        self.metro.met_imported_historical(self, t)
+#      if dowy == 0:
+#        self.metro.met_imported_historical(self, t)
       for reservoir_obj in self.metro.dummy_reservoir_list:
         if reservoir_obj.name == 'dummy2' and (dowy == 0 or dowy == 180):
           self.metro.owens_valley_pumping(self, t, wyt)  #self.metro.met_assign_supply(reservoir_obj, t)
@@ -6028,7 +6028,7 @@ cdef class Model():
       list new_columns 
       dict column_counts 
   
-    trace = "results/usbr_testing_val/results.hdf5" ##### Change this to a Validation Run ####
+    trace = "results/short_test_v4/results.hdf5" ##### Change this to a Validation Run ####
     datDaily = get_results_sensitivity_number_outside_model(trace, '')
     
     new_columns = []
