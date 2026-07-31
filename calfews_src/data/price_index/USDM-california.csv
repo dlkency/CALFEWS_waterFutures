@@ -1,4 +1,4 @@
-MapDate,StateAbbreviation,None,D0,D1,D2,D3,D4,ValidStart,ValidEnd,StatisticFormatID
+Date,StateAbbreviation,None,D0,D1,D2,D3,D4,ValidStart,ValidEnd,StatisticFormatID
 20241119,CA,28.61,71.39,16.88,5.5,0.95,0,11/19/2024,11/25/2024,1
 20241112,CA,25.51,74.49,17,5.5,0.95,0,11/12/2024,11/18/2024,1
 20241105,CA,25.53,74.47,12.26,4.3,0,0,11/5/2024,11/11/2024,1

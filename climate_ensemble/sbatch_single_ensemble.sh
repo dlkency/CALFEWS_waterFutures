@@ -8,36 +8,33 @@
 #SBATCH --error=job_status/err_%j.err
 #SBATCH --array=1996-2024
 
-module load python/3.8.8
-source ../myenv/bin/activate
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate myenv
+
+python -c "
+import sys
+assert sys.version_info[:2] == (3, 8), f'Python 3.8 is required, but found {sys.version}'
+print('Confirmed: Python 3.8')
+"
 
 label=$1
-echo "This is the first label variable:" "$label"
 year=$SLURM_ARRAY_TASK_ID
-echo "This is the first year variable:" "$year"
 year_label="${year}_${label}"
-echo "This is when you combine the two variables:" "$year_label"
-echo "This is when you combine the two variables with brackets:" "${year_label}"
 
 results_base='/proj/characklab/projects/danli/CALFEWS_results/'
-results="${year_label}"
+job_results_dir="${results_base}${year_label}"
 
 echo "${year_label}"
-echo "${results}"
-#sleep $(( (year - 1996) * 5 ))
+echo "${job_results_dir}"
 
-# Create results directory
-mkdir -p ${results_base}${results}
+mkdir -p "${job_results_dir}"
 
-sed "s/sourcehere/${year_label}/" climate_ensemble/runtime_params_climate_tmp.ini > runtime_params_${year_label}.ini
+sed "s/sourcehere/${year_label}/" climate_ensemble/runtime_params_climate_tmp.ini > "${job_results_dir}/runtime_params.ini"
 
-echo "This is after sed command:" "${year_label}"
-
-
-
-# Copy the modified runtime parameters file to results directory
-cp runtime_params_${year_label}.ini ${results_base}${results}
-mv ${results_base}${results}/runtime_params_${year_label}.ini ${results_base}${results}/runtime_params.ini
-
-# Run the Python script
-time python3 -W ignore run_main_cy.py $results 1 1 "${year}-9-30" ${results_base}${results}
+time python3 -W ignore run_main_cy.py \
+    "${job_results_dir}" \
+    1 \
+    1 \
+    "${year}-09-30" \
+    "${job_results_dir}" \
+    "${year}-09-30"
